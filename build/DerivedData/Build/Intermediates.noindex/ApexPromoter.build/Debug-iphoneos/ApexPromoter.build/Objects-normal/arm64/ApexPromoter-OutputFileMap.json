@@ -1,0 +1,59 @@
+{
+  "" : {
+    "diagnostics" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ApexPromoter-primary.dia",
+    "emit-module-dependencies" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ApexPromoter-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ApexPromoter-primary-emit-module.dia",
+    "pch" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ApexPromoter-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ApexPromoter-primary.swiftdeps"
+  },
+  "/Users/fengwang/Documents/trae_projects/autowrite/ApexPromoter/ApexPromoterApp.swift" : {
+    "const-values" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ApexPromoterApp.swiftconstvalues",
+    "dependencies" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ApexPromoterApp.d",
+    "diagnostics" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ApexPromoterApp.dia",
+    "index-unit-output-path" : "/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ApexPromoterApp.o",
+    "llvm-bc" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ApexPromoterApp.bc",
+    "object" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ApexPromoterApp.o",
+    "swift-dependencies" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ApexPromoterApp.swiftdeps",
+    "swiftmodule" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ApexPromoterApp~partial.swiftmodule"
+  },
+  "/Users/fengwang/Documents/trae_projects/autowrite/ApexPromoter/Models/Models.swift" : {
+    "const-values" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/Models.swiftconstvalues",
+    "dependencies" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/Models.d",
+    "diagnostics" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/Models.dia",
+    "index-unit-output-path" : "/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/Models.o",
+    "llvm-bc" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/Models.bc",
+    "object" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/Models.o",
+    "swift-dependencies" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/Models.swiftdeps",
+    "swiftmodule" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/Models~partial.swiftmodule"
+  },
+  "/Users/fengwang/Documents/trae_projects/autowrite/ApexPromoter/Services/ProductCatalog.swift" : {
+    "const-values" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ProductCatalog.swiftconstvalues",
+    "dependencies" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ProductCatalog.d",
+    "diagnostics" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ProductCatalog.dia",
+    "index-unit-output-path" : "/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ProductCatalog.o",
+    "llvm-bc" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ProductCatalog.bc",
+    "object" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ProductCatalog.o",
+    "swift-dependencies" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ProductCatalog.swiftdeps",
+    "swiftmodule" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/ProductCatalog~partial.swiftmodule"
+  },
+  "/Users/fengwang/Documents/trae_projects/autowrite/ApexPromoter/Theme/Theme.swift" : {
+    "const-values" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/Theme.swiftconstvalues",
+    "dependencies" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/Theme.d",
+    "diagnostics" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/Theme.dia",
+    "index-unit-output-path" : "/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/Theme.o",
+    "llvm-bc" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/Theme.bc",
+    "object" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/Theme.o",
+    "swift-dependencies" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/Theme.swiftdeps",
+    "swiftmodule" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/Theme~partial.swiftmodule"
+  },
+  "/Users/fengwang/Documents/trae_projects/autowrite/ApexPromoter/Views/RootView.swift" : {
+    "const-values" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/RootView.swiftconstvalues",
+    "dependencies" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/RootView.d",
+    "diagnostics" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/RootView.dia",
+    "index-unit-output-path" : "/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/RootView.o",
+    "llvm-bc" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/RootView.bc",
+    "object" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/RootView.o",
+    "swift-dependencies" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/RootView.swiftdeps",
+    "swiftmodule" : "/Users/fengwang/Documents/trae_projects/autowrite/build/DerivedData/Build/Intermediates.noindex/ApexPromoter.build/Debug-iphoneos/ApexPromoter.build/Objects-normal/arm64/RootView~partial.swiftmodule"
+  }
+}

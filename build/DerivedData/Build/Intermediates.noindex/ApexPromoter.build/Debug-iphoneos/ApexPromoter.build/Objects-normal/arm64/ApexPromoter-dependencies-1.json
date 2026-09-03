@@ -1,0 +1,589 @@
+[
+  {
+    "isFramework" : true,
+    "moduleName" : "Accessibility",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/Accessibility.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "Combine",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/Combine.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "CoreData",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/CoreData.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "CoreFoundation",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/CoreFoundation.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "CoreGraphics",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/CoreGraphics.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "CoreImage",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/CoreImage.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "CoreText",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/CoreText.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "CoreTransferable",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/CoreTransferable.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "CoreVideo",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/CoreVideo.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "Darwin",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/Darwin.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "DataDetection",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/DataDetection.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "DeveloperToolsSupport",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/DeveloperToolsSupport.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "Dispatch",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/Dispatch.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "FileProvider",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/FileProvider.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "Foundation",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/Foundation.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "Metal",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/Metal.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "OSLog",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/OSLog.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "ObjectiveC",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/ObjectiveC.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "Observation",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/Observation.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "QuartzCore",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/QuartzCore.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "Spatial",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/Spatial.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "Swift",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/Swift.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "SwiftData",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/SwiftData.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "SwiftOnoneSupport",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/SwiftOnoneSupport.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "SwiftUI",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/SwiftUI.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "SwiftUICore",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/SwiftUICore.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "Symbols",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/Symbols.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "System",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/System.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "UIKit",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/UIKit.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "UniformTypeIdentifiers",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/UniformTypeIdentifiers.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "XPC",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/XPC.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "_Builtin_float",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/_Builtin_float.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "_Concurrency",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/_Concurrency.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "_DarwinFoundation1",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/_DarwinFoundation1.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "_DarwinFoundation2",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/_DarwinFoundation2.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "_DarwinFoundation3",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/_DarwinFoundation3.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "_StringProcessing",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/_StringProcessing.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "os",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/os.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "simd",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/iphoneos\/prebuilt-modules\/26.5\/simd.swiftmodule\/arm64e-apple-ios.swiftmodule"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/Accessibility.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/Accessibility-800VOJR9BIRY5NM4AIBA5G5UW.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Accessibility"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/CFNetwork.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/CFNetwork-DUFRNM0UD7SJC93NYA770A3J7.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CFNetwork"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/CoreData.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/CoreData-CLQTCL15O05HD61W2OKPUHLD0.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreData"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/CoreFoundation.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/CoreFoundation-B9KJN60VRQD8WKXPMXC9CIX8P.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreFoundation"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/CoreGraphics.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/CoreGraphics-23FLU4UKOROD1Q7Q8KT046G77.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreGraphics"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/CoreImage.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/CoreImage-CQ1FEPBJ26HH0QLUXML8LJQZY.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreImage"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/CoreText.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/CoreText-7S6MT6KCYJ21HN7SGLMFR3ML.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreText"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/CoreTransferable.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/CoreTransferable-AOFSPHYN6U1KVQAEJGJEHUOBI.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreTransferable"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/CoreVideo.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/CoreVideo-LVWH3MED3YD942OS05AMI363.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreVideo"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/usr\/include\/Darwin.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/Darwin-57LKHZMY4LQA1Q2BNVKQ36F11.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Darwin"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/DataDetection.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/DataDetection-7N0TWR7GP6XN9A4AZGUFBXZYR.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "DataDetection"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/DeveloperToolsSupport.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/DeveloperToolsSupport-3DZ5UEV15PJQ9SGDQBZVTJREK.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "DeveloperToolsSupport"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/usr\/include\/dispatch.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/Dispatch-DW789C8QHM1S4CC50UMHVYO72.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Dispatch"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/FileProvider.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/FileProvider-BYB4LXC7HOHHSQ20WXO8EF639.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "FileProvider"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/Foundation.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/Foundation-7IW5CWDOIQ6ZP6VEMHUNVKWFG.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Foundation"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/IOSurface.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/IOSurface-8SMAK397TOYDUNR73UOGJ0EGP.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "IOSurface"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/ImageIO.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/ImageIO-5HITP1ZW0KVXP5QX5EXOGWYWS.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "ImageIO"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/usr\/include\/DarwinBasic.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/MachO-1KSE1DGF7O7KNI6O2VUWN9OUC.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "MachO"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/Metal.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/Metal-ALZ2V98RU29LDOTIGRPY02Y7T.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Metal"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/OSLog.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/OSLog-1QL8B5DTI0DQNO7VP7X4JSKK3.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "OSLog"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/usr\/include\/ObjectiveC.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/ObjectiveC-E6MTAWSHTKP8GH9UTMIJHG03S.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "ObjectiveC"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/OpenGLES.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/OpenGLES-47X1SUDYDHAMSG4O9LIT5LOS6.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "OpenGLES"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/QuartzCore.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/QuartzCore-XJ0F0VE5BJLA939OK31SB0D9.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "QuartzCore"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/Security.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/Security-7E7GREX30LY6AX1LPG1C5SUQZ.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Security"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/usr\/include\/Spatial\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/Spatial-BN5GRR0FFUDHG1YRB5M3JSUT4.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Spatial"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/usr\/lib\/swift\/shims\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/SwiftShims-EHYPWG84U09HBZJ6EL89GSZ7S.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "SwiftShims"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/SwiftUI.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/SwiftUI-ADRZYKQDP1W4O3EWBSVKHHRSE.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "SwiftUI"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/SwiftUICore.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/SwiftUICore-2C0ACNMPLANS7K3REROCSJQX3.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "SwiftUICore"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/Symbols.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/Symbols-2ZEDTQS2PFLB3UTS2L0OJF9FT.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Symbols"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/UIKit-4VBHQLSOIFNMZRSP88JQ63A5V.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "UIKit"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/SubFrameworks\/UIUtilities.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/UIUtilities-EXT3K9U6YVFV521YEWQF04PUA.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "UIUtilities"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/UniformTypeIdentifiers.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/UniformTypeIdentifiers-DUO7H7PG4M1B3EFI7CA2LFNEO.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "UniformTypeIdentifiers"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/System\/Library\/Frameworks\/UserNotifications.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/UserNotifications-Y79KJVRJC8JINVM1JQMAEGS8.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "UserNotifications"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/usr\/include\/xpc.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/XPC-95N916G792ABJDIWFSEHSFB5I.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "XPC"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/usr\/include\/DarwinFoundation1.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/_AvailabilityInternal-6QLAP7IC11AQ7J7Z2JO25CQTC.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_AvailabilityInternal"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/_Builtin_float-64L51B5NVK6QYWCLLD7BR3FI0.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_float"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/_Builtin_intrinsics-DTUXRL0YYRB0925F753TTC73G.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_intrinsics"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/_Builtin_inttypes-DJ3RZK2S366K45PM2RRBJENXE.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_inttypes"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/_Builtin_limits-D5HN8XDYZWBK9VERARSEL3A3H.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_limits"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/_Builtin_stdarg-7DGAXFKTZ3ET79429UTYE25GO.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_stdarg"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/_Builtin_stdatomic-CE3DJKJ36ASHZC2MAX693ZU2K.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_stdatomic"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/_Builtin_stdbool-EDVLMF2F5Z5QUN9DJEBNUPGDY.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_stdbool"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/_Builtin_stddef-B9FH8DGCMZ1H4CN00FOKEKU1V.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_stddef"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/_Builtin_stdint-E1GF85FGOVPKLXYYTXEUVLDHW.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_stdint"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/_Builtin_tgmath-4AHHD8HRSVI1Y13PSYY86O06I.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_tgmath"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/usr\/include\/DarwinFoundation1.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/_DarwinFoundation1-49BRNG4MWN9NRVJKSCRDTTW1G.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_DarwinFoundation1"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/usr\/include\/DarwinFoundation2.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/_DarwinFoundation2-ZAFOZDUB1G9S4768M2UR07UI.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_DarwinFoundation2"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/usr\/include\/DarwinFoundation3.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/_DarwinFoundation3-5H3JT3J5NNFGI37LX4U56B9CB.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_DarwinFoundation3"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/usr\/lib\/swift\/shims\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/_SwiftConcurrencyShims-1GXZAEDU18XKBSNV39MDA0HS5.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_SwiftConcurrencyShims"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/usr\/include\/os.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/os-3PI9ZI2MJZMMAY9PFSRPDOB47.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "os"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/usr\/include\/os.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/os_object-6O1TNWBG6DLXKRKD4206J2PZ6.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "os_object"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/usr\/include\/os.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/os_workgroup-5KOPP13YOI7X7YFY0RA1PDO6J.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "os_workgroup"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/ptrauth-CUMPDB3T3BLBLTWHKJL1Q7LDI.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "ptrauth"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/ptrcheck-BHT5J2MTX3ALLE78QEQAVX2MT.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "ptrcheck"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/usr\/include\/simd\/module.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/simd-6Z5P9UE564I92AHIA74KAFSL9.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "simd"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS.sdk\/usr\/include\/DarwinFoundation2.modulemap",
+    "clangModulePath" : "\/Users\/fengwang\/Documents\/trae_projects\/autowrite\/build\/DerivedData\/ModuleCache.noindex\/sys_types-EEMVGDT9S4B02STB3T6XRAGPH.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "sys_types"
+  }
+]

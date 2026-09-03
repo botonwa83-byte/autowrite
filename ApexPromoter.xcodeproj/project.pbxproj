@@ -1,0 +1,472 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		16AF2481F3F44D639AD03A1F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE5B3DAE7060C98160CDB4 /* Theme.swift */; };
+		2C1345A191E2492DA7EE04AB /* ContentGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D90AE9346FF6B98FC8D52E4 /* ContentGenerator.swift */; };
+		35D4EB008BEAA5A945066C04 /* ContentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CD734E7EEE4161C70E0A85 /* ContentTests.swift */; };
+		3C736194A7641763F6D0F8A8 /* RootViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0481BA1E0B40D24D617A351 /* RootViewTests.swift */; };
+		44D3C80FCDADA3550E84824B /* ProductCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8428C46D1733573E95B8E3 /* ProductCatalog.swift */; };
+		7FDC92C6B17E8179D479E93B /* ApexPromoterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8EAFE69F69D2F1794F6D0 /* ApexPromoterApp.swift */; };
+		B100FCF717C49FAC51DCEC73 /* products.json in Resources */ = {isa = PBXBuildFile; fileRef = C71C7410CE798403930E9317 /* products.json */; };
+		CE9CE7A1FCAE93F6F85A663D /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8F8C8E07B2D1BA5F30EC33 /* RootView.swift */; };
+		E3D4EA457787132C9F9D21EF /* ContentValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5465F8DF136D2A7FDCA0D0F7 /* ContentValidator.swift */; };
+		F1CAF8DF1DBBCDF958AC9ED3 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA774D01FA554386D43EBBA /* Models.swift */; };
+		FB9160108BE73C65EBDC8A63 /* ProductCatalogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6507FE245213ACEA1CE69FEE /* ProductCatalogTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AF7539703293CA6D5DE94065 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 85455BFD4811D8E3D79673E0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9331BB0492B401CDC8210612;
+			remoteInfo = ApexPromoter;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5465F8DF136D2A7FDCA0D0F7 /* ContentValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentValidator.swift; sourceTree = "<group>"; };
+		5EFE5B3DAE7060C98160CDB4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		6507FE245213ACEA1CE69FEE /* ProductCatalogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCatalogTests.swift; sourceTree = "<group>"; };
+		72A8EAFE69F69D2F1794F6D0 /* ApexPromoterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApexPromoterApp.swift; sourceTree = "<group>"; };
+		7CAEA3362D030E13738D9347 /* ApexPromoterTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ApexPromoterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D90AE9346FF6B98FC8D52E4 /* ContentGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentGenerator.swift; sourceTree = "<group>"; };
+		A0481BA1E0B40D24D617A351 /* RootViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewTests.swift; sourceTree = "<group>"; };
+		AB8F8C8E07B2D1BA5F30EC33 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		ACA774D01FA554386D43EBBA /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		C489D8117C9BFDD47B846984 /* ApexPromoter.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ApexPromoter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C71C7410CE798403930E9317 /* products.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = products.json; sourceTree = "<group>"; };
+		C9CD734E7EEE4161C70E0A85 /* ContentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTests.swift; sourceTree = "<group>"; };
+		FF8428C46D1733573E95B8E3 /* ProductCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCatalog.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		1BD5A6AE364206CAE478C549 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C489D8117C9BFDD47B846984 /* ApexPromoter.app */,
+				7CAEA3362D030E13738D9347 /* ApexPromoterTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1EA4E605607B53246FDDBD11 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AB8F8C8E07B2D1BA5F30EC33 /* RootView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		303DBFD7E745A8C56E52758D = {
+			isa = PBXGroup;
+			children = (
+				AFD3C5B051321A1D5E305A85 /* ApexPromoter */,
+				7F4104B906CB03453165F3C2 /* ApexPromoterTests */,
+				1BD5A6AE364206CAE478C549 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7F4104B906CB03453165F3C2 /* ApexPromoterTests */ = {
+			isa = PBXGroup;
+			children = (
+				C9CD734E7EEE4161C70E0A85 /* ContentTests.swift */,
+				6507FE245213ACEA1CE69FEE /* ProductCatalogTests.swift */,
+				A0481BA1E0B40D24D617A351 /* RootViewTests.swift */,
+			);
+			path = ApexPromoterTests;
+			sourceTree = "<group>";
+		};
+		8F197C87554BD2674669D893 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				ACA774D01FA554386D43EBBA /* Models.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9B4F07A2196C5171B1B1CB59 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				5EFE5B3DAE7060C98160CDB4 /* Theme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		AFD3C5B051321A1D5E305A85 /* ApexPromoter */ = {
+			isa = PBXGroup;
+			children = (
+				72A8EAFE69F69D2F1794F6D0 /* ApexPromoterApp.swift */,
+				8F197C87554BD2674669D893 /* Models */,
+				C89168B72BFDFAEE48CF3BB8 /* Resources */,
+				C4A5C821AA5EFBDC338FD563 /* Services */,
+				9B4F07A2196C5171B1B1CB59 /* Theme */,
+				1EA4E605607B53246FDDBD11 /* Views */,
+			);
+			path = ApexPromoter;
+			sourceTree = "<group>";
+		};
+		C4A5C821AA5EFBDC338FD563 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				8D90AE9346FF6B98FC8D52E4 /* ContentGenerator.swift */,
+				5465F8DF136D2A7FDCA0D0F7 /* ContentValidator.swift */,
+				FF8428C46D1733573E95B8E3 /* ProductCatalog.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		C89168B72BFDFAEE48CF3BB8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C71C7410CE798403930E9317 /* products.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9331BB0492B401CDC8210612 /* ApexPromoter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4C034478AE7A16FEBE0D99B6 /* Build configuration list for PBXNativeTarget "ApexPromoter" */;
+			buildPhases = (
+				BC836C6442C7C690DF7027FF /* Sources */,
+				0D38C83248DF8126F378EA01 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ApexPromoter;
+			packageProductDependencies = (
+			);
+			productName = ApexPromoter;
+			productReference = C489D8117C9BFDD47B846984 /* ApexPromoter.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E8F4DD2404599F3C69958F0D /* ApexPromoterTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A814827E2086A83AC604FA31 /* Build configuration list for PBXNativeTarget "ApexPromoterTests" */;
+			buildPhases = (
+				9ACC66B8BC6147D2703D6386 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A0373CC7023F31ECC5C4177C /* PBXTargetDependency */,
+			);
+			name = ApexPromoterTests;
+			packageProductDependencies = (
+			);
+			productName = ApexPromoterTests;
+			productReference = 7CAEA3362D030E13738D9347 /* ApexPromoterTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		85455BFD4811D8E3D79673E0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = F61347A5C14FB01F47C5AA2F /* Build configuration list for PBXProject "ApexPromoter" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 303DBFD7E745A8C56E52758D;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 1BD5A6AE364206CAE478C549 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9331BB0492B401CDC8210612 /* ApexPromoter */,
+				E8F4DD2404599F3C69958F0D /* ApexPromoterTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0D38C83248DF8126F378EA01 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B100FCF717C49FAC51DCEC73 /* products.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9ACC66B8BC6147D2703D6386 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35D4EB008BEAA5A945066C04 /* ContentTests.swift in Sources */,
+				FB9160108BE73C65EBDC8A63 /* ProductCatalogTests.swift in Sources */,
+				3C736194A7641763F6D0F8A8 /* RootViewTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BC836C6442C7C690DF7027FF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7FDC92C6B17E8179D479E93B /* ApexPromoterApp.swift in Sources */,
+				2C1345A191E2492DA7EE04AB /* ContentGenerator.swift in Sources */,
+				E3D4EA457787132C9F9D21EF /* ContentValidator.swift in Sources */,
+				F1CAF8DF1DBBCDF958AC9ED3 /* Models.swift in Sources */,
+				44D3C80FCDADA3550E84824B /* ProductCatalog.swift in Sources */,
+				CE9CE7A1FCAE93F6F85A663D /* RootView.swift in Sources */,
+				16AF2481F3F44D639AD03A1F /* Theme.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A0373CC7023F31ECC5C4177C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9331BB0492B401CDC8210612 /* ApexPromoter */;
+			targetProxy = AF7539703293CA6D5DE94065 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		07FF0BF6F2988614BB0F039F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kingtop.ApexPromoterTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ApexPromoter.app/ApexPromoter";
+			};
+			name = Release;
+		};
+		35D03F81CABF93E2C66C90AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		405117C602F63A38B1F10400 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kingtop.ApexPromoterTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ApexPromoter.app/ApexPromoter";
+			};
+			name = Debug;
+		};
+		6AF90FBEF3EF878A3600D079 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_KEY_CFBundleDisplayName = "Apex 宣传台";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kingtop.apexpromoter;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A0D264ED203F3DF5076657ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		B61E3EC10B1E1ABA7C297B48 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_KEY_CFBundleDisplayName = "Apex 宣传台";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kingtop.apexpromoter;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4C034478AE7A16FEBE0D99B6 /* Build configuration list for PBXNativeTarget "ApexPromoter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B61E3EC10B1E1ABA7C297B48 /* Debug */,
+				6AF90FBEF3EF878A3600D079 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A814827E2086A83AC604FA31 /* Build configuration list for PBXNativeTarget "ApexPromoterTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				405117C602F63A38B1F10400 /* Debug */,
+				07FF0BF6F2988614BB0F039F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F61347A5C14FB01F47C5AA2F /* Build configuration list for PBXProject "ApexPromoter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				35D03F81CABF93E2C66C90AB /* Debug */,
+				A0D264ED203F3DF5076657ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 85455BFD4811D8E3D79673E0 /* Project object */;
+}
