@@ -10,14 +10,13 @@
 		16AF2481F3F44D639AD03A1F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE5B3DAE7060C98160CDB4 /* Theme.swift */; };
 		2C1345A191E2492DA7EE04AB /* ContentGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D90AE9346FF6B98FC8D52E4 /* ContentGenerator.swift */; };
 		35D4EB008BEAA5A945066C04 /* ContentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CD734E7EEE4161C70E0A85 /* ContentTests.swift */; };
-		3C736194A7641763F6D0F8A8 /* RootViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0481BA1E0B40D24D617A351 /* RootViewTests.swift */; };
 		44D3C80FCDADA3550E84824B /* ProductCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8428C46D1733573E95B8E3 /* ProductCatalog.swift */; };
 		7FDC92C6B17E8179D479E93B /* ApexPromoterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8EAFE69F69D2F1794F6D0 /* ApexPromoterApp.swift */; };
+		8592766F6FDF1D3603F0B5CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE8D632359E0CEC642C1FB2E /* Assets.xcassets */; };
 		B100FCF717C49FAC51DCEC73 /* products.json in Resources */ = {isa = PBXBuildFile; fileRef = C71C7410CE798403930E9317 /* products.json */; };
 		CE9CE7A1FCAE93F6F85A663D /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8F8C8E07B2D1BA5F30EC33 /* RootView.swift */; };
 		E3D4EA457787132C9F9D21EF /* ContentValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5465F8DF136D2A7FDCA0D0F7 /* ContentValidator.swift */; };
 		F1CAF8DF1DBBCDF958AC9ED3 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA774D01FA554386D43EBBA /* Models.swift */; };
-		FB9160108BE73C65EBDC8A63 /* ProductCatalogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6507FE245213ACEA1CE69FEE /* ProductCatalogTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,16 +32,16 @@
 /* Begin PBXFileReference section */
 		5465F8DF136D2A7FDCA0D0F7 /* ContentValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentValidator.swift; sourceTree = "<group>"; };
 		5EFE5B3DAE7060C98160CDB4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
-		6507FE245213ACEA1CE69FEE /* ProductCatalogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCatalogTests.swift; sourceTree = "<group>"; };
 		72A8EAFE69F69D2F1794F6D0 /* ApexPromoterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApexPromoterApp.swift; sourceTree = "<group>"; };
 		7CAEA3362D030E13738D9347 /* ApexPromoterTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ApexPromoterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D90AE9346FF6B98FC8D52E4 /* ContentGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentGenerator.swift; sourceTree = "<group>"; };
-		A0481BA1E0B40D24D617A351 /* RootViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewTests.swift; sourceTree = "<group>"; };
+		AA355050CF2F66B6628266FF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AB8F8C8E07B2D1BA5F30EC33 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		ACA774D01FA554386D43EBBA /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
-		C489D8117C9BFDD47B846984 /* ApexPromoter.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ApexPromoter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C489D8117C9BFDD47B846984 /* ApexPromoter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApexPromoter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C71C7410CE798403930E9317 /* products.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = products.json; sourceTree = "<group>"; };
 		C9CD734E7EEE4161C70E0A85 /* ContentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTests.swift; sourceTree = "<group>"; };
+		CE8D632359E0CEC642C1FB2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FF8428C46D1733573E95B8E3 /* ProductCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCatalog.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,8 +76,6 @@
 			isa = PBXGroup;
 			children = (
 				C9CD734E7EEE4161C70E0A85 /* ContentTests.swift */,
-				6507FE245213ACEA1CE69FEE /* ProductCatalogTests.swift */,
-				A0481BA1E0B40D24D617A351 /* RootViewTests.swift */,
 			);
 			path = ApexPromoterTests;
 			sourceTree = "<group>";
@@ -103,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				72A8EAFE69F69D2F1794F6D0 /* ApexPromoterApp.swift */,
+				AA355050CF2F66B6628266FF /* Info.plist */,
 				8F197C87554BD2674669D893 /* Models */,
 				C89168B72BFDFAEE48CF3BB8 /* Resources */,
 				C4A5C821AA5EFBDC338FD563 /* Services */,
@@ -125,6 +123,7 @@
 		C89168B72BFDFAEE48CF3BB8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE8D632359E0CEC642C1FB2E /* Assets.xcassets */,
 				C71C7410CE798403930E9317 /* products.json */,
 			);
 			path = Resources;
@@ -177,8 +176,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = F61347A5C14FB01F47C5AA2F /* Build configuration list for PBXProject "ApexPromoter" */;
 			developmentRegion = en;
@@ -205,6 +202,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8592766F6FDF1D3603F0B5CE /* Assets.xcassets in Resources */,
 				B100FCF717C49FAC51DCEC73 /* products.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -217,8 +215,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				35D4EB008BEAA5A945066C04 /* ContentTests.swift in Sources */,
-				FB9160108BE73C65EBDC8A63 /* ProductCatalogTests.swift in Sources */,
-				3C736194A7641763F6D0F8A8 /* RootViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,7 +343,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = Z7F8BY55DS;
+				INFOPLIST_FILE = ApexPromoter/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Apex 宣传台";
+				INFOPLIST_KEY_CFBundleExecutable = "$(EXECUTABLE_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -422,7 +421,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = Z7F8BY55DS;
+				INFOPLIST_FILE = ApexPromoter/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Apex 宣传台";
+				INFOPLIST_KEY_CFBundleExecutable = "$(EXECUTABLE_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				LD_RUNPATH_SEARCH_PATHS = (

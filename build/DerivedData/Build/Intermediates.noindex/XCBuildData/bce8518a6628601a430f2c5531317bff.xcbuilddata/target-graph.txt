@@ -1,2 +1,0 @@
-Target dependency graph (1 target)
-Target 'ApexPromoter' in project 'ApexPromoter' (no dependencies)
