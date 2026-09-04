@@ -1,6 +1,89 @@
 import Foundation
 
+enum WebsiteTextCleaner {
+    static func clean(_ html: String) -> String {
+        var text = html
+        text = text.replacingOccurrences(of: #"(?is)<(script|style|noscript|svg|pre|code)[^>]*>.*?</\1>"#, with: " ", options: .regularExpression)
+        text = text.replacingOccurrences(of: #"(?is)<[^>]+>"#, with: " ", options: .regularExpression)
+        text = text.replacingOccurrences(of: "&nbsp;", with: " ").replacingOccurrences(of: "&amp;", with: "&").replacingOccurrences(of: "&lt;", with: "<").replacingOccurrences(of: "&gt;", with: ">")
+        text = text.replacingOccurrences(of: #"https?://[^\s]+|\b[a-zA-Z_$][a-zA-Z0-9_$./:-]{2,}\b"#, with: " ", options: .regularExpression)
+        let lines = text.components(separatedBy: .newlines).map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+        let meaningful = lines.filter { line in
+            guard !line.isEmpty else { return false }
+            let chinese = line.unicodeScalars.filter { (0x4E00...0x9FFF).contains($0.value) }.count
+            let letters = line.unicodeScalars.filter { CharacterSet.letters.contains($0) }.count
+            return chinese >= 4 || (chinese >= 2 && letters <= chinese * 2)
+        }
+        var result = meaningful.joined(separator: "\n")
+        result = result.replacingOccurrences(of: #"[ \t]+"#, with: " ", options: .regularExpression)
+        result = result.replacingOccurrences(of: #"\n{2,}"#, with: "\n", options: .regularExpression)
+        return String(result.prefix(1_200)).trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+}
+
+struct WebsitePromotionBrief {
+    var positioning: String
+    var audience: String
+    var highlights: [String]
+
+    var editableText: String {
+        get { ([positioning, audience] + highlights).filter { !$0.isEmpty }.joined(separator: "\n") }
+        set {
+            let lines = newValue.components(separatedBy: .newlines).map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty }
+            positioning = lines.first ?? ""
+            audience = lines.dropFirst().first ?? ""
+            highlights = Array(lines.dropFirst(2).prefix(6))
+        }
+    }
+
+    static func parse(_ text: String, product: ProductSeed) -> WebsitePromotionBrief {
+        parse(text, fallbackAudience: product.audience, fallbackSummary: product.summary, fallbackBenefits: product.claims)
+    }
+
+    static func parse(_ text: String, fallbackAudience: String, fallbackSummary: String, fallbackBenefits: [String]) -> WebsitePromotionBrief {
+        var seen = Set<String>()
+        let lines = text.components(separatedBy: CharacterSet(charactersIn: "。！？\n"))
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { $0.count >= 6 && seen.insert($0).inserted }
+        let audience = lines.first { line in
+            ["适合", "面向", "用户", "团队", "商户", "开发者", "学生", "学习者"].contains { line.contains($0) }
+        }
+        let highlights = lines.filter { line in
+            ["支持", "提供", "帮助", "可以", "能够", "功能", "优势"].contains { line.contains($0) }
+                && line != audience
+                && line != lines.first
+        }
+        return WebsitePromotionBrief(
+            positioning: lines.first ?? fallbackSummary,
+            audience: audience ?? fallbackAudience,
+            highlights: Array((highlights.isEmpty ? fallbackBenefits : highlights).prefix(6))
+        )
+    }
+}
+
+struct WebsiteImportResult: Identifiable {
+    let sourceURL: URL
+    let cleanedText: String
+    var brief: WebsitePromotionBrief
+    var id: String { sourceURL.absoluteString }
+}
+
 enum WebsiteSyncService {
+    static func fetchPromotionBrief(for product: ProductSeed) async throws -> WebsitePromotionBrief {
+        let url = URL(string: product.websiteURL)!
+        let (data, response) = try await URLSession.shared.data(from: url)
+        guard let http = response as? HTTPURLResponse, 200..<300 ~= http.statusCode else { throw URLError(.badServerResponse) }
+        let html = String(decoding: data, as: UTF8.self)
+        return WebsitePromotionBrief.parse(WebsiteTextCleaner.clean(html), product: product)
+    }
+    static func fetchPromotionBrief(urlString: String, fallbackAudience: String, fallbackSummary: String, fallbackBenefits: [String]) async throws -> WebsiteImportResult {
+        guard let url = URL(string: urlString), let scheme = url.scheme?.lowercased(), ["http", "https"].contains(scheme), url.host != nil else { throw URLError(.badURL) }
+        let (data, response) = try await URLSession.shared.data(from: url)
+        guard let http = response as? HTTPURLResponse, 200..<300 ~= http.statusCode else { throw URLError(.badServerResponse) }
+        let cleaned = WebsiteTextCleaner.clean(String(decoding: data, as: UTF8.self))
+        guard !cleaned.isEmpty else { throw URLError(.cannotDecodeContentData) }
+        return WebsiteImportResult(sourceURL: url, cleanedText: cleaned, brief: WebsitePromotionBrief.parse(cleaned, fallbackAudience: fallbackAudience, fallbackSummary: fallbackSummary, fallbackBenefits: fallbackBenefits))
+    }
     static func fetchStoreLinks() async throws -> [String: String] {
         let url = URL(string: "https://botonwa83-byte.github.io/")!
         let (data, response) = try await URLSession.shared.data(from: url)

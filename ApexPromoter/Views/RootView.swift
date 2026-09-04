@@ -2,12 +2,15 @@ import SwiftUI
 import SwiftData
 import PhotosUI
 import UIKit
+import AVKit
 
 struct RootView: View {
     var body: some View {
         TabView {
             DashboardView().tabItem { Label("首页", systemImage: "square.grid.2x2") }
             ProductsView().tabItem { Label("产品", systemImage: "books.vertical") }
+            BrandCenterView().tabItem { Label("品牌", systemImage: "building.2") }
+            ProjectsView().tabItem { Label("项目", systemImage: "folder") }
             ComposerView().tabItem { Label("创作", systemImage: "square.and.pencil") }
             QueueView().tabItem { Label("队列", systemImage: "calendar") }
         }
@@ -16,6 +19,7 @@ struct RootView: View {
 
 struct DashboardView: View {
     @Query private var drafts: [ContentDraft]
+    @Query private var projects: [PromotionProject]
     @State private var syncMessage = ""
     @State private var syncing = false
     var body: some View {
@@ -29,11 +33,12 @@ struct DashboardView: View {
                     if !syncMessage.isEmpty { Text(syncMessage).font(.caption).foregroundStyle(.secondary) }
                 }
                 Section("工作原则") { Text("所有内容保留产品来源，发布前必须人工审核。App 不保存小红书密码或登录凭证。") .font(.subheadline).foregroundStyle(.secondary) }
-                if !drafts.isEmpty {
+                if !drafts.isEmpty || !projects.isEmpty {
                     let published = drafts.filter { $0.status == .published }
                     Section("发布效果") {
-                        HStack { MetricSummary(label: "曝光", value: published.reduce(0) { $0 + $1.impressions }); MetricSummary(label: "点赞", value: published.reduce(0) { $0 + $1.likes }); MetricSummary(label: "收藏", value: published.reduce(0) { $0 + $1.saves }); MetricSummary(label: "评论", value: published.reduce(0) { $0 + $1.comments }) }
-                        Text("已发布 \(published.count) 条内容").font(.caption).foregroundStyle(.secondary)
+                        HStack { MetricSummary(label: "曝光", value: published.reduce(0) { $0 + $1.impressions } + projects.reduce(0) { $0 + $1.impressions }); MetricSummary(label: "互动", value: published.reduce(0) { $0 + $1.likes + $1.saves + $1.comments } + projects.reduce(0) { $0 + $1.likes + $1.saves + $1.comments }); MetricSummary(label: "点击", value: projects.reduce(0) { $0 + $1.linkClicks }); MetricSummary(label: "下载", value: projects.reduce(0) { $0 + $1.downloads }) }
+                        Text("已发布 \(published.count + projects.filter { !$0.publishedURL.isEmpty }.count) 条内容").font(.caption).foregroundStyle(.secondary)
+                        NavigationLink { GrowthReviewView() } label: { Label("查看推广复盘", systemImage: "chart.xyaxis.line") }
                     }
                 }
             }.navigationTitle("Apex 宣传台")
@@ -56,6 +61,32 @@ struct DashboardView: View {
 
 private struct MetricSummary: View { let label: String; let value: Int; var body: some View { VStack { Text("\(value)").font(.headline); Text(label).font(.caption).foregroundStyle(.secondary) }.frame(maxWidth: .infinity) } }
 
+private struct GrowthReviewView: View {
+    @Query private var projects: [PromotionProject]
+    private var review: PerformanceReview {
+        PerformanceAnalyzer.review(projects.map {
+            PerformanceSnapshot(platform: PublishPlatform(rawValue: $0.platformRaw) ?? .xiaohongshu, angle: $0.sourceAngle, impressions: $0.impressions, likes: $0.likes, saves: $0.saves, comments: $0.comments, linkClicks: $0.linkClicks, downloads: $0.downloads)
+        })
+    }
+    private var totals: (impressions: Int, clicks: Int, downloads: Int) {
+        (projects.reduce(0) { $0 + $1.impressions }, projects.reduce(0) { $0 + $1.linkClicks }, projects.reduce(0) { $0 + $1.downloads })
+    }
+    var body: some View {
+        List {
+            Section("推广漏斗") {
+                HStack { MetricSummary(label: "曝光", value: totals.impressions); MetricSummary(label: "点击", value: totals.clicks); MetricSummary(label: "下载", value: totals.downloads) }
+                if totals.impressions > 0 { Text("点击率 \(Double(totals.clicks) / Double(totals.impressions), format: .percent.precision(.fractionLength(1)))") }
+                if totals.clicks > 0 { Text("下载转化率 \(Double(totals.downloads) / Double(totals.clicks), format: .percent.precision(.fractionLength(1)))") }
+            }
+            Section("下一周期建议") { Label(review.recommendation, systemImage: review.bestPlatform == nil ? "info.circle" : "lightbulb") }
+            if !review.platforms.isEmpty {
+                Section("平台表现") { ForEach(review.platforms) { row in VStack(alignment: .leading, spacing: 5) { Text(row.name).font(.headline); Text("曝光 \(row.impressions) · 互动 \(row.interactions) · 点击 \(row.linkClicks) · 下载 \(row.downloads)").font(.caption).foregroundStyle(.secondary) } } }
+            }
+            Section { Text("复盘仅使用你在项目中手工记录的数据，不连接或抓取平台账号。样本较少时建议只把结论作为下一轮验证方向。") .font(.caption).foregroundStyle(.secondary) }
+        }.navigationTitle("推广复盘")
+    }
+}
+
 struct ProductsView: View {
     var body: some View {
         NavigationStack { List(ProductCatalog.seeds, id: \.id) { p in
@@ -65,6 +96,7 @@ struct ProductsView: View {
 }
 
 struct ComposerView: View {
+    @EnvironmentObject private var entitlements: EntitlementStore
     private enum ComposeMode: String, CaseIterable, Identifiable {
         case text = "纯文字", image = "图文", video = "视频"
         var id: String { rawValue }
@@ -80,21 +112,36 @@ struct ComposerView: View {
     @State private var slideTitles: [String] = []
     @State private var exportedURL: URL?
     @State private var exportedURLs: [URL] = []
+    @State private var exportedScriptURL: URL?
+    @State private var exportedVideoURL: URL?
+    @State private var renderingVideo = false
     @State private var scheduleDate = Date().addingTimeInterval(86400)
     @State private var packageMessage = ""
+    @State private var websiteBrief: WebsitePromotionBrief?
+    @State private var loadingWebsite = false
     @State private var textPlatform: PublishPlatform = .xiaohongshu
     @State private var videoPlatform: PublishPlatform = .douyin
     @State private var mode: ComposeMode = .text
+    @State private var showingPaywall = false
     var selected: ProductSeed { ProductCatalog.seeds.first { $0.id == selectedID } ?? ProductCatalog.seeds[0] }
     var body: some View {
         NavigationStack { Form {
+            if !entitlements.isPremium { Section { Button { showingPaywall = true } label: { Label("解锁后创建并导出自己的项目", systemImage: "lock") } } }
             Section {
                 Picker("内容类型", selection: $mode) {
                     ForEach(ComposeMode.allCases) { Text($0.rawValue).tag($0) }
                 }
                 .pickerStyle(.segmented)
             }
-            Section("内容来源") { Picker("产品", selection: $selectedID) { ForEach(ProductCatalog.seeds, id: \.id) { Text($0.name).tag($0.id) } }; TextField("传播角度（可选）", text: $angle); TextField("语气", text: $tone) }
+            Section("内容来源") {
+                Picker("产品", selection: $selectedID) { ForEach(ProductCatalog.seeds, id: \.id) { Text($0.name).tag($0.id) } }
+                TextField("传播角度（可选）", text: $angle); TextField("语气", text: $tone)
+                Button { loadWebsiteBrief() } label: { Label(loadingWebsite ? "正在读取官网资料" : "读取官网生成文案", systemImage: "globe") }.disabled(loadingWebsite)
+                if websiteBrief != nil {
+                    Text("官网资料预览").font(.caption).foregroundStyle(.secondary)
+                    TextEditor(text: Binding(get: { websiteBrief?.editableText ?? "" }, set: { websiteBrief?.editableText = $0 })).frame(minHeight: 120)
+                }
+            }
             Section("发布计划") { DatePicker("计划发布时间", selection: $scheduleDate, in: Date()..., displayedComponents: [.date, .hourAndMinute]); Text("到点后由你确认并通过系统分享发布，小红书账号凭证不会进入本 App。" ).font(.caption).foregroundStyle(.secondary) }
             if mode != .text {
             Section(mode == .image ? "图文素材" : "视频画面素材") {
@@ -151,7 +198,8 @@ struct ComposerView: View {
             }
             Section {
                 Button {
-                    let generated = LocalContentGenerator().generate(product: selected, angle: angle, tone: tone)
+                    guard entitlements.isPremium else { showingPaywall = true; return }
+                    let generated = LocalContentGenerator().generate(product: selected, angle: angle, tone: tone, websiteBrief: websiteBrief)
                     content = generated
                     findings = ContentValidator.validate(generated, product: selected)
                     if mode == .text {
@@ -200,9 +248,26 @@ struct ComposerView: View {
                         } label: {
                             Label("打开视频平台并分享脚本", systemImage: "video.badge.waveform")
                         }
+                        Button { renderVideo(c) } label: { Label(renderingVideo ? "正在生成视频" : "生成竖屏视频", systemImage: "film") }.disabled(renderingVideo || importedImages.isEmpty)
+                        if let exportedVideoURL {
+                            VideoPlayer(player: AVPlayer(url: exportedVideoURL)).frame(height: 280).cornerRadius(8)
+                            HStack {
+                                ShareLink(item: exportedVideoURL) { Label("分享 MP4 视频", systemImage: "square.and.arrow.up") }
+                                Button { renderVideo(c) } label: { Label("重新生成", systemImage: "arrow.clockwise") }
+                            }
+                        }
+                        Button { exportedScriptURL = exportVideoScript(c) } label: { Label("导出视频脚本", systemImage: "doc.text") }
+                        if let exportedScriptURL {
+                            ShareLink(item: exportedScriptURL) { Label("分享视频脚本文件", systemImage: "square.and.arrow.up") }
+                        }
                     }
                     Button {
+                        guard entitlements.isPremium else { showingPaywall = true; return }
                         let draft = ContentDraft(productID: selected.id, title: c.title, body: c.body, tags: c.tags, sourceIDs: [selected.id])
+                        let project = PromotionProject(title: c.title, productID: selected.id, contentType: mode == .text ? .text : mode == .image ? .image : .video, platform: mode == .video ? videoPlatform.rawValue : textPlatform.rawValue, body: c.body, tags: c.tags)
+                        project.sourceProductName = selected.name; project.sourceAudience = selected.audience; project.sourceSummary = selected.summary; project.sourceBenefits = selected.claims.joined(separator: "\n"); project.sourceURL = selected.sourceURL; project.sourceAngle = angle
+                        project.scheduledAt = scheduleDate; project.publishStatus = .ready
+                        context.insert(project)
                         draft.status = .scheduled
                         draft.scheduledAt = scheduleDate
                         context.insert(draft)
@@ -219,7 +284,7 @@ struct ComposerView: View {
                 }
                 if !findings.isEmpty { Section("校验提醒") { ForEach(findings) { f in Label(f.message, systemImage: f.blocking ? "exclamationmark.triangle" : "info.circle").foregroundStyle(f.blocking ? .orange : .secondary) } } }
             }
-        }.navigationTitle("创作") }
+        }.navigationTitle("创作").sheet(isPresented: $showingPaywall) { NavigationStack { PaywallView() } } }
     }
 
     private func contentBinding(_ keyPath: WritableKeyPath<GeneratedContent, String>) -> Binding<String> {
@@ -234,7 +299,7 @@ struct ComposerView: View {
         let image = renderer.image { ctx in
             UIColor(red: 0.12, green: 0.38, blue: 0.48, alpha: 1).setFill(); ctx.fill(CGRect(origin: .zero, size: size))
             let inset = CGRect(x: 36, y: 36, width: 828, height: 1010)
-            source.draw(in: inset)
+            drawAspectFill(source, in: inset)
             let paragraph = NSMutableParagraphStyle(); paragraph.alignment = .left
             let attrs: [NSAttributedString.Key: Any] = [.font: UIFont.boldSystemFont(ofSize: 46), .foregroundColor: UIColor.white, .paragraphStyle: paragraph]
             (title as NSString).draw(in: CGRect(x: 48, y: 1080, width: 804, height: 80), withAttributes: attrs)
@@ -253,7 +318,7 @@ struct ComposerView: View {
             let title = slideTitles.indices.contains(index) ? slideTitles[index] : selected.name
             let image = renderer.image { ctx in
                 UIColor(red: 0.12, green: 0.38, blue: 0.48, alpha: 1).setFill(); ctx.fill(CGRect(origin: .zero, size: size))
-                source.draw(in: CGRect(x: 36, y: 126, width: 828, height: 920))
+                drawAspectFill(source, in: CGRect(x: 36, y: 126, width: 828, height: 920))
                 drawBrand(on: ctx.cgContext, size: size)
                 let attrs: [NSAttributedString.Key: Any] = [.font: UIFont.boldSystemFont(ofSize: 46), .foregroundColor: UIColor.white]
                 (title as NSString).draw(in: CGRect(x: 48, y: 1080, width: 804, height: 80), withAttributes: attrs)
@@ -273,6 +338,16 @@ struct ComposerView: View {
         (selected.name as NSString).draw(in: CGRect(x: 122, y: 54, width: 700, height: 44), withAttributes: attrs)
     }
 
+    private func drawAspectFill(_ image: UIImage, in rect: CGRect) {
+        guard let cgImage = image.cgImage else { return }
+        let imageSize = CGSize(width: cgImage.width, height: cgImage.height)
+        let scale = max(rect.width / imageSize.width, rect.height / imageSize.height)
+        let drawSize = CGSize(width: imageSize.width * scale, height: imageSize.height * scale)
+        let drawRect = CGRect(x: rect.midX - drawSize.width / 2, y: rect.midY - drawSize.height / 2, width: drawSize.width, height: drawSize.height)
+        UIBezierPath(roundedRect: rect, cornerRadius: 0).addClip()
+        image.draw(in: drawRect)
+    }
+
     private func publishText(_ content: GeneratedContent) -> String {
         "\(content.title)\n\n\(content.body)\n\n\(content.tags)"
     }
@@ -286,6 +361,29 @@ struct ComposerView: View {
 
     private func openVideoPlatform(_ platform: PublishPlatform, content: GeneratedContent) {
         VideoPlatformLauncher.open(platform, script: PlatformFormatter.text(for: platform, content: content))
+    }
+
+    private func exportVideoScript(_ content: GeneratedContent) -> URL? {
+        let script = PlatformFormatter.text(for: videoPlatform, content: content)
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("\(selected.id)-video-script.txt")
+        do { try script.data(using: .utf8)?.write(to: url); return url } catch { return nil }
+    }
+
+    private func renderVideo(_ content: GeneratedContent) {
+        renderingVideo = true
+        let images = importedImages.compactMap(UIImage.init(data:))
+        Task {
+            let result = try? await SlideshowVideoRenderer.render(images: images, title: content.title)
+            await MainActor.run { exportedVideoURL = result; renderingVideo = false; packageMessage = result == nil ? "视频生成失败，请检查图片素材" : "已生成可分享的 MP4 视频" }
+        }
+    }
+
+    private func loadWebsiteBrief() {
+        loadingWebsite = true
+        Task {
+            let brief = try? await WebsiteSyncService.fetchPromotionBrief(for: selected)
+            await MainActor.run { websiteBrief = brief; loadingWebsite = false; packageMessage = brief == nil ? "官网资料读取失败，将使用本地审核资料" : "已读取官网公开资料" }
+        }
     }
 
 }
@@ -328,7 +426,12 @@ private extension UIViewController {
 struct QueueView: View {
     @Environment(\.modelContext) private var context
     @Query(sort: [SortDescriptor<ContentDraft>(\.createdAt, order: .reverse)]) private var drafts: [ContentDraft]
-    var body: some View { NavigationStack { List { ForEach(drafts) { d in VStack(alignment: .leading) { Text(d.title).font(.headline); HStack { Text(d.status.rawValue).font(.caption).foregroundStyle(.secondary); if let date = d.scheduledAt { Text(date, style: .date).font(.caption).foregroundStyle(.secondary) } }; if d.status == .needsReview { Button("批准") { d.status = .approved; try? context.save() } } else if d.status == .approved || d.status == .scheduled { ShareLink(item: "\(d.title)\n\n\(d.body)\n\n\(d.tags)") { Label("复制/分享发布内容", systemImage: "square.and.arrow.up") }; Button("记录已发布") { d.status = .published; try? context.save() } } else if d.status == .published { TextField("粘贴小红书笔记链接", text: Binding(get: { d.publishedURL }, set: { d.publishedURL = $0 })); HStack { MetricField(label: "曝光", value: Binding(get: { d.impressions }, set: { d.impressions = $0 })); MetricField(label: "赞", value: Binding(get: { d.likes }, set: { d.likes = $0 })); MetricField(label: "藏", value: Binding(get: { d.saves }, set: { d.saves = $0 })); MetricField(label: "评", value: Binding(get: { d.comments }, set: { d.comments = $0 })) }; Button("保存数据") { try? context.save() } } } } }.navigationTitle("发布队列") } }
+    @Query(sort: [SortDescriptor<PromotionProject>(\.updatedAt, order: .reverse)]) private var projects: [PromotionProject]
+    var body: some View { NavigationStack { List {
+        let scheduledProjects = projects.filter { $0.scheduledAt != nil }
+        if !scheduledProjects.isEmpty { Section("我的项目") { ForEach(scheduledProjects) { project in NavigationLink { ProjectDetailView(project: project) } label: { VStack(alignment: .leading) { Text(project.title).font(.headline); HStack { Text(project.platformRaw); if let date = project.scheduledAt { Text(date, style: .date) } }.font(.caption).foregroundStyle(.secondary) } } } } }
+        if !drafts.isEmpty { Section("历史草稿") { ForEach(drafts) { d in VStack(alignment: .leading) { Text(d.title).font(.headline); HStack { Text(d.status.rawValue).font(.caption).foregroundStyle(.secondary); if let date = d.scheduledAt { Text(date, style: .date).font(.caption).foregroundStyle(.secondary) } }; if d.status == .approved || d.status == .scheduled { ShareLink(item: "\(d.title)\n\n\(d.body)\n\n\(d.tags)") { Label("复制/分享发布内容", systemImage: "square.and.arrow.up") } } } } } }
+    }.navigationTitle("发布队列") } }
 }
 
 private struct MetricField: View { let label: String; @Binding var value: Int; var body: some View { TextField(label, value: $value, format: .number).keyboardType(.numberPad).frame(width: 62) } }
