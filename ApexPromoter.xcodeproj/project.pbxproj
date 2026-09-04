@@ -18,6 +18,7 @@
 		44D3C80FCDADA3550E84824B /* ProductCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8428C46D1733573E95B8E3 /* ProductCatalog.swift */; };
 		56F45808A802388726B10289 /* chinapex.png in Resources */ = {isa = PBXBuildFile; fileRef = 67029966999F43752160AF3C /* chinapex.png */; };
 		59D0AC43E587555E818F1496 /* engapex.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D32C99538B358E52C997582 /* engapex.png */; };
+		5D8F2A31C91E4D4FB2701001 /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8F2A31C91E4D4FB2701002 /* HelpView.swift */; };
 		6E2D442EDB3539884EE16C1F /* mathapex.png in Resources */ = {isa = PBXBuildFile; fileRef = B928CBF6A8BBD34C0460B5FD /* mathapex.png */; };
 		7902761281A4E46162AB79B5 /* ProjectDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B95A1A0D48C7BEA5C697461 /* ProjectDetailView.swift */; };
 		7FAACE97D9530D521AD6D012 /* chemapex.png in Resources */ = {isa = PBXBuildFile; fileRef = 35321E98E1F20070A26C6BAF /* chemapex.png */; };
@@ -52,6 +53,7 @@
 		2EEA2EE603AD16C672E3DC48 /* histapex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = histapex.png; sourceTree = "<group>"; };
 		35321E98E1F20070A26C6BAF /* chemapex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chemapex.png; sourceTree = "<group>"; };
 		5465F8DF136D2A7FDCA0D0F7 /* ContentValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentValidator.swift; sourceTree = "<group>"; };
+		5D8F2A31C91E4D4FB2701002 /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		5EFE5B3DAE7060C98160CDB4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		67029966999F43752160AF3C /* chinapex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chinapex.png; sourceTree = "<group>"; };
 		6C02837C3B47F64BE2014347 /* PublishAdapters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishAdapters.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				8209FF1F2E8C3587F64EC9F2 /* BrandCenterView.swift */,
+				5D8F2A31C91E4D4FB2701002 /* HelpView.swift */,
 				FD56C2187B8D41AADFEC1607 /* PaywallView.swift */,
 				0B95A1A0D48C7BEA5C697461 /* ProjectDetailView.swift */,
 				FAD9DA9E80165419CD9EF133 /* ProjectsView.swift */,
@@ -300,6 +303,7 @@
 				2C1345A191E2492DA7EE04AB /* ContentGenerator.swift in Sources */,
 				E3D4EA457787132C9F9D21EF /* ContentValidator.swift in Sources */,
 				261F88DE36C54C380F22BBAF /* EntitlementStore.swift in Sources */,
+				5D8F2A31C91E4D4FB2701001 /* HelpView.swift in Sources */,
 				F1CAF8DF1DBBCDF958AC9ED3 /* Models.swift in Sources */,
 				B4C1B3FBDDB52E9164BAE728 /* PaywallView.swift in Sources */,
 				44D3C80FCDADA3550E84824B /* ProductCatalog.swift in Sources */,

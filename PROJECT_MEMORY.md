@@ -44,6 +44,7 @@ Apex is the first real validation customer and a built-in example brand. Product
 - Recommendations prioritize downstream results over raw exposure and remain explicitly framed as directions to validate, not guaranteed conclusions.
 - Customer products can import their own websites through code/noise cleaning, structured positioning/audience/benefit extraction, editable confirmation, and source snapshot preservation.
 - Website imports never overwrite a customer profile until the user explicitly confirms the structured preview; custom project regeneration can re-read the customer website.
+- An in-app seven-step guide covers brand setup, website import, customer insight, goals, plans, publishing, and performance review. It opens on first use and remains available from the dashboard.
 - Next priority: promotion-readiness checks that identify missing product facts, verified customer evidence, goals, and usable media before batch creation.
 
 ## Product Principles

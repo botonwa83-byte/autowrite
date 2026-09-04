@@ -5,19 +5,29 @@ import UIKit
 import AVKit
 
 struct RootView: View {
+    @State private var selectedTab: AppTab = .dashboard
+    @State private var showingHelp = false
+    @AppStorage("hasSeenUserGuideV1") private var hasSeenUserGuide = false
     var body: some View {
-        TabView {
-            DashboardView().tabItem { Label("首页", systemImage: "square.grid.2x2") }
-            ProductsView().tabItem { Label("产品", systemImage: "books.vertical") }
-            BrandCenterView().tabItem { Label("品牌", systemImage: "building.2") }
-            ProjectsView().tabItem { Label("项目", systemImage: "folder") }
-            ComposerView().tabItem { Label("创作", systemImage: "square.and.pencil") }
-            QueueView().tabItem { Label("队列", systemImage: "calendar") }
+        TabView(selection: $selectedTab) {
+            DashboardView(showGuide: { showingHelp = true }).tabItem { Label("首页", systemImage: "square.grid.2x2") }.tag(AppTab.dashboard)
+            ProductsView().tabItem { Label("产品", systemImage: "books.vertical") }.tag(AppTab.products)
+            BrandCenterView().tabItem { Label("品牌", systemImage: "building.2") }.tag(AppTab.brands)
+            ProjectsView().tabItem { Label("项目", systemImage: "folder") }.tag(AppTab.projects)
+            ComposerView().tabItem { Label("创作", systemImage: "square.and.pencil") }.tag(AppTab.composer)
+            QueueView().tabItem { Label("队列", systemImage: "calendar") }.tag(AppTab.queue)
+        }
+        .onAppear { if !hasSeenUserGuide { showingHelp = true } }
+        .sheet(isPresented: $showingHelp, onDismiss: { hasSeenUserGuide = true }) {
+            HelpView(isFirstRun: !hasSeenUserGuide, onNavigate: { destination in
+                hasSeenUserGuide = true; showingHelp = false; selectedTab = destination
+            }, onClose: { hasSeenUserGuide = true; showingHelp = false })
         }
     }
 }
 
 struct DashboardView: View {
+    let showGuide: () -> Void
     @Query private var drafts: [ContentDraft]
     @Query private var projects: [PromotionProject]
     @State private var syncMessage = ""
@@ -25,6 +35,9 @@ struct DashboardView: View {
     var body: some View {
         NavigationStack {
             List {
+                Section("开始使用") {
+                    Button(action: showGuide) { Label("查看 7 步推广教程", systemImage: "questionmark.circle") }
+                }
                 Section("运营概览") {
                     Label("待审核 \(drafts.filter { $0.status == .needsReview }.count) 条", systemImage: "checkmark.seal")
                     Label("已排期 \(drafts.filter { $0.status == .scheduled }.count) 条", systemImage: "clock")

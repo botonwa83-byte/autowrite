@@ -2,6 +2,13 @@ import XCTest
 @testable import ApexPromoter
 
 final class ContentTests: XCTestCase {
+    func testUserGuideCoversCompletePromotionWorkflow() {
+        XCTAssertEqual(UserGuide.steps.count, 7)
+        XCTAssertEqual(UserGuide.steps.first?.destination, .brands)
+        XCTAssertEqual(UserGuide.steps.last?.destination, .projects)
+        XCTAssertEqual(Set(UserGuide.steps.map(\.number)), Set(1...7))
+    }
+
     func testAudienceInsightKeepsEvidenceClassification() {
         let insight = AudienceInsight(
             productID: UUID(),
