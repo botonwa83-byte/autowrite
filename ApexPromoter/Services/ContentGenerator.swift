@@ -84,6 +84,88 @@ enum PromotionPlanBuilder {
     }
 }
 
+enum PromotionProjectFactory {
+    static func makeProject(
+        product: CustomerProduct,
+        brand: BrandWorkspace,
+        goal: PromotionGoal? = nil,
+        insights: [AudienceInsight],
+        angle: String? = nil,
+        platform: PublishPlatform = .xiaohongshu,
+        scheduledAt: Date? = nil,
+        planID: UUID? = nil
+    ) -> PromotionProject {
+        let benefits = product.keyBenefits.components(separatedBy: .newlines)
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+        let insightContext = insights.filter { $0.evidenceState == .verified }
+            .map { "\($0.category.title)：\($0.statement)" }
+            .joined(separator: "\n")
+        let resolvedAngle = angle ?? goal?.kind.title ?? ""
+        let sourceURL = product.websiteURL.isEmpty ? product.storeURL : product.websiteURL
+        let generated = LocalContentGenerator().generate(
+            productName: product.name,
+            audience: product.audience,
+            summary: product.summary,
+            benefits: benefits,
+            sourceURL: sourceURL,
+            goalAction: goal?.primaryAction ?? "",
+            insightContext: insightContext,
+            angle: resolvedAngle,
+            tone: brand.brandVoice
+        )
+        let project = PromotionProject(
+            title: generated.title,
+            productID: product.id.uuidString,
+            contentType: platform.isVideo ? .video : .text,
+            platform: platform.rawValue,
+            body: generated.body,
+            tags: generated.tags
+        )
+        project.sourceProductName = product.name
+        project.sourceAudience = product.audience
+        project.sourceSummary = product.summary
+        project.sourceBenefits = product.keyBenefits
+        project.sourceURL = sourceURL
+        project.brandVoice = brand.brandVoice
+        project.sourceGoalContext = goal?.generationContext ?? ""
+        project.sourceGoalAction = goal?.primaryAction ?? ""
+        project.sourceGoalID = goal?.id
+        project.sourceInsightContext = insightContext
+        project.sourcePlanID = planID
+        project.sourceAngle = resolvedAngle
+        project.scheduledAt = scheduledAt
+        if scheduledAt != nil { project.publishStatus = .ready }
+        return project
+    }
+
+    static func makeBatch(
+        product: CustomerProduct,
+        brand: BrandWorkspace,
+        goal: PromotionGoal?,
+        plan: PromotionPlan,
+        insights: [AudienceInsight]
+    ) -> [PromotionProject] {
+        PromotionPlanBuilder.build(
+            durationDays: plan.durationDays,
+            postsPerWeek: plan.postsPerWeek,
+            startDate: plan.startDate,
+            platforms: plan.platforms
+        ).map { post in
+            makeProject(
+                product: product,
+                brand: brand,
+                goal: goal,
+                insights: insights,
+                angle: post.angle,
+                platform: post.platform,
+                scheduledAt: post.scheduledAt,
+                planID: plan.id
+            )
+        }
+    }
+}
+
 protocol ContentGenerating { func generate(product: ProductSeed, angle: String, tone: String) -> GeneratedContent }
 struct LocalContentGenerator: ContentGenerating {
     func generate(productName: String, audience: String, summary: String, benefits: [String], sourceURL: String, goalAction: String = "", insightContext: String = "", angle: String, tone: String) -> GeneratedContent {
@@ -106,7 +188,8 @@ struct LocalContentGenerator: ContentGenerating {
     func generate(product: ProductSeed, angle: String, tone: String) -> GeneratedContent {
         let hook = product.promoHook
         let title = "\(product.name)｜\(angle.isEmpty ? "把学习方法真正用起来" : angle)"
-        let body = "\(hook)\n\n我会这样用：\n1. 先选一个正在卡住的模块；\n2. 跟着产品里的结构化路径走一遍；\n3. 把没掌握的地方留下标记，下一次复习直接回到现场。\n\n这套产品目前提供：\n· \(product.claims.joined(separator: "\n· "))\n\n它更适合\(product.audience)做长期、低压力的日常学习。先用一个模块感受是否适合自己的节奏，再决定是否购买完整功能。\n\n开发者：\(product.developer)\n下载地址：\(product.storeURL)\n产品介绍：\(product.sourceURL)\n\n*文中信息来自产品公开资料，具体功能和价格请以 App Store 页面为准。*"
+        let availability = product.isReleased ? "下载地址：\(product.storeURL)" : "产品状态：上架准备中，可关注首批体验进展"
+        let body = "\(hook)\n\n产品定位\n\(product.summary)\n\n我会这样用：\n1. 先选一个正在卡住的模块；\n2. 跟着产品里的结构化路径走一遍；\n3. 把没掌握的地方留下标记，下一次复习直接回到现场。\n\n这套产品目前提供：\n· \(product.claims.joined(separator: "\n· "))\n\n它更适合\(product.audience)做长期、低压力的日常学习。先用一个模块感受是否适合自己的节奏，再决定是否购买完整功能。\n\n开发者：\(product.developer)\n\(availability)\n产品介绍：\(product.sourceURL)\n\n*文中信息来自产品公开资料，具体功能和价格请以 App Store 页面为准。*"
         return .init(title: title, body: body, tags: "#\(product.name) #学习方法 #自律学习 #教育App #学习打卡")
     }
 }

@@ -7,6 +7,7 @@ enum AppTab: Hashable {
     case projects
     case composer
     case queue
+    case more
 }
 
 struct UserGuideStep: Identifiable {

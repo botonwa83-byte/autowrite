@@ -5,22 +5,47 @@ import UIKit
 import AVKit
 
 struct RootView: View {
+    let modelContainer: ModelContainer
     @State private var selectedTab: AppTab = .dashboard
     @State private var showingHelp = false
+    @State private var bootstrapError = ""
+    @State private var hasStartedBootstrap = false
     @AppStorage("hasSeenUserGuideV1") private var hasSeenUserGuide = false
     var body: some View {
         TabView(selection: $selectedTab) {
             DashboardView(showGuide: { showingHelp = true }).tabItem { Label("首页", systemImage: "square.grid.2x2") }.tag(AppTab.dashboard)
             ProductsView().tabItem { Label("产品", systemImage: "books.vertical") }.tag(AppTab.products)
-            BrandCenterView().tabItem { Label("品牌", systemImage: "building.2") }.tag(AppTab.brands)
-            ProjectsView().tabItem { Label("项目", systemImage: "folder") }.tag(AppTab.projects)
             ComposerView().tabItem { Label("创作", systemImage: "square.and.pencil") }.tag(AppTab.composer)
             QueueView().tabItem { Label("队列", systemImage: "calendar") }.tag(AppTab.queue)
+            MoreView().tabItem { Label("更多", systemImage: "ellipsis.circle") }.tag(AppTab.more)
         }
-        .onAppear { if !hasSeenUserGuide { showingHelp = true } }
+        .onAppear {
+            if !hasStartedBootstrap {
+                hasStartedBootstrap = true
+                if !ProcessInfo.processInfo.arguments.contains("--ui-testing") {
+                    Task {
+                        // Keep database inserts away from the List-backed main context.
+                        try? await Task.sleep(for: .seconds(2))
+                        do {
+                            let worker = ApexPortfolioSeedWorker(modelContainer: modelContainer)
+                            _ = try await worker.seedIfNeeded()
+                        } catch {
+                            bootstrapError = "Apex 系列初始化失败：\(error.localizedDescription)"
+                        }
+                    }
+                }
+            }
+            if !hasSeenUserGuide { showingHelp = true }
+        }
+        .alert("初始化未完成", isPresented: Binding(get: { !bootstrapError.isEmpty }, set: { if !$0 { bootstrapError = "" } })) {
+            Button("好") { bootstrapError = "" }
+        } message: {
+            Text(bootstrapError)
+        }
         .sheet(isPresented: $showingHelp, onDismiss: { hasSeenUserGuide = true }) {
             HelpView(isFirstRun: !hasSeenUserGuide, onNavigate: { destination in
-                hasSeenUserGuide = true; showingHelp = false; selectedTab = destination
+                hasSeenUserGuide = true; showingHelp = false
+                selectedTab = (destination == .brands || destination == .projects) ? .more : destination
             }, onClose: { hasSeenUserGuide = true; showingHelp = false })
         }
     }
@@ -40,7 +65,7 @@ struct DashboardView: View {
                 }
                 Section("运营概览") {
                     Label("待审核 \(drafts.filter { $0.status == .needsReview }.count) 条", systemImage: "checkmark.seal")
-                    Label("已排期 \(drafts.filter { $0.status == .scheduled }.count) 条", systemImage: "clock")
+                    Label("推广项目已排期 \(projects.filter { $0.scheduledAt != nil && !$0.isPublished }.count) 条", systemImage: "clock")
                     Label("安全发布：人工确认后通过系统分享", systemImage: "lock.shield")
                     Button { syncWebsite() } label: { Label(syncing ? "正在同步官网" : "同步官网产品链接", systemImage: "arrow.triangle.2.circlepath") }
                     if !syncMessage.isEmpty { Text(syncMessage).font(.caption).foregroundStyle(.secondary) }
@@ -50,7 +75,7 @@ struct DashboardView: View {
                     let published = drafts.filter { $0.status == .published }
                     Section("发布效果") {
                         HStack { MetricSummary(label: "曝光", value: published.reduce(0) { $0 + $1.impressions } + projects.reduce(0) { $0 + $1.impressions }); MetricSummary(label: "互动", value: published.reduce(0) { $0 + $1.likes + $1.saves + $1.comments } + projects.reduce(0) { $0 + $1.likes + $1.saves + $1.comments }); MetricSummary(label: "点击", value: projects.reduce(0) { $0 + $1.linkClicks }); MetricSummary(label: "下载", value: projects.reduce(0) { $0 + $1.downloads }) }
-                        Text("已发布 \(published.count + projects.filter { !$0.publishedURL.isEmpty }.count) 条内容").font(.caption).foregroundStyle(.secondary)
+                        Text("已发布 \(published.count + projects.filter(\.isPublished).count) 条内容").font(.caption).foregroundStyle(.secondary)
                         NavigationLink { GrowthReviewView() } label: { Label("查看推广复盘", systemImage: "chart.xyaxis.line") }
                     }
                 }
@@ -103,7 +128,15 @@ private struct GrowthReviewView: View {
 struct ProductsView: View {
     var body: some View {
         NavigationStack { List(ProductCatalog.seeds, id: \.id) { p in
-            VStack(alignment: .leading, spacing: 6) { Text(p.name).font(.headline); Text(p.summary); Text(p.audience).font(.caption).foregroundStyle(.secondary); Text("开发者：\(p.developer)").font(.caption); Link("下载 App", destination: URL(string: p.storeURL)!); Link("查看产品介绍", destination: URL(string: p.sourceURL)!) }
+            VStack(alignment: .leading, spacing: 6) {
+                Text(p.name).font(.headline)
+                Text(p.summary)
+                Text(p.audience).font(.caption).foregroundStyle(.secondary)
+                Text("开发者：\(p.developer)").font(.caption)
+                if p.isReleased { Link("下载 App", destination: URL(string: p.storeURL)!) }
+                else { Label("上架准备中", systemImage: "hammer").font(.caption).foregroundStyle(.secondary) }
+                Link("查看产品介绍", destination: URL(string: p.sourceURL)!)
+            }
         }.navigationTitle("Apex 产品") }
     }
 }

@@ -144,7 +144,7 @@ struct ProjectDetailView: View {
         try? context.save(); generationMessage = "已生成 v\(project.version)，旧内容已保存到版本历史"
     }
     private func schedule() { project.scheduledAt = scheduleDate; project.publishStatus = .ready; project.updatedAt = Date(); try? context.save(); ReminderService.schedule(draftID: project.id, title: project.title, at: scheduleDate); record("加入发布队列", succeeded: true) }
-    private func markPublished() { project.publishStatus = .shared; project.updatedAt = Date(); try? context.save(); record("记录发布结果", succeeded: true, message: project.publishedURL) }
+    private func markPublished() { project.publishStatus = .published; project.updatedAt = Date(); try? context.save(); record("记录发布结果", succeeded: true, message: project.publishedURL) }
 }
 
 private struct ProjectMetricField: View {

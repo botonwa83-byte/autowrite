@@ -184,7 +184,7 @@ enum PromotionGoalKind: String, Codable, CaseIterable, Identifiable {
 enum DraftStatus: String, Codable, CaseIterable { case draft, needsReview, approved, scheduled, published }
 
 enum ProjectContentType: String, Codable, CaseIterable { case text, image, video }
-enum ProjectPublishStatus: String, Codable, CaseIterable { case draft, ready, shared, failed }
+enum ProjectPublishStatus: String, Codable, CaseIterable { case draft, ready, shared, published, failed }
 
 @Model final class PromotionProject {
     var id: UUID = UUID()
@@ -224,6 +224,7 @@ enum ProjectPublishStatus: String, Codable, CaseIterable { case draft, ready, sh
     }
     var contentType: ProjectContentType { get { ProjectContentType(rawValue: contentTypeRaw) ?? .text } set { contentTypeRaw = newValue.rawValue } }
     var publishStatus: ProjectPublishStatus { get { ProjectPublishStatus(rawValue: statusRaw) ?? .draft } set { statusRaw = newValue.rawValue } }
+    var isPublished: Bool { publishStatus == .published || !publishedURL.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
 }
 
 @Model final class ProjectAsset {

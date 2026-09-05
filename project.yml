@@ -11,6 +11,7 @@ targets:
     resources: [ApexPromoter/Resources]
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: com.kingtop.apexpromoter
+      DEVELOPMENT_TEAM: Z7F8BY55DS
       SWIFT_VERSION: 5.9
       INFOPLIST_FILE: ApexPromoter/Info.plist
       INFOPLIST_KEY_CFBundleDisplayName: Apex 宣传台
@@ -22,3 +23,12 @@ targets:
     platform: iOS
     sources: [ApexPromoterTests]
     dependencies: [{target: ApexPromoter}]
+    settings:
+      GENERATE_INFOPLIST_FILE: YES
+  ApexPromoterUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [ApexPromoterUITests]
+    dependencies: [{target: ApexPromoter}]
+    settings:
+      GENERATE_INFOPLIST_FILE: YES

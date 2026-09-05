@@ -46,7 +46,9 @@ struct WebsitePromotionBrief {
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             .filter { $0.count >= 6 && seen.insert($0).inserted }
         let audience = lines.first { line in
-            ["适合", "面向", "用户", "团队", "商户", "开发者", "学生", "学习者"].contains { line.contains($0) }
+            ["适合", "面向", "目标人群", "目标用户"].contains { line.contains($0) }
+        } ?? lines.dropFirst().first { line in
+            ["用户", "团队", "商户", "开发者", "学生", "学习者"].contains { line.contains($0) }
         }
         let highlights = lines.filter { line in
             ["支持", "提供", "帮助", "可以", "能够", "功能", "优势"].contains { line.contains($0) }
@@ -97,9 +99,11 @@ enum WebsiteSyncService {
 }
 
 struct ProductSeed: Codable { let id, name, audience, summary: String; let claims: [String]; let sourceURL: String
+    static let appStoreIDs = ["physicsapex":"6779031451", "mathapex":"6778461030", "chemapex":"6780327495", "bioapex":"6780727579", "chinapex":"6781556016", "engapex":"6784478791", "geogapex":"6783594491", "histapex":"6783254820", "polapex":"6783150236", "wordpulse":"6767762376"]
+    static let releasedIDs: Set<String> = ["physicsapex", "mathapex", "chemapex", "bioapex", "polapex", "engapex", "chinapex", "histapex", "geogapex", "wordpulse"]
     var promoHook: String {
         [
-            "physicsapex": "用守恒、对称、等效俯瞰高考压轴：看到压轴题，一招降维就能秒。",
+            "physicsapex": "用互动模拟和解题工具训练物理思维。",
             "mathapex": "装上 APEX，解锁「降维秒杀」超能力：用大学思维碾压高考压轴。每道题都有常规解法与降维秒杀双解对照。",
             "chemapex": "从初中的瓶瓶罐罐，到高考的守恒推断，看见反应背后的棋局，一招降维就能秒。",
             "bioapex": "不刷题海，只把每个考点教懂、验会、记牢：过程剧场、考点地图、遗传神探，让复杂机制看得见。",
@@ -113,32 +117,32 @@ struct ProductSeed: Codable { let id, name, audience, summary: String; let claim
     }
     var storeURL: String {
         if let cached = UserDefaults.standard.string(forKey: "storeURL.\(id)"), !cached.isEmpty { return cached }
-        let ids = ["physicsapex":"6779031451", "mathapex":"6778461030", "chemapex":"6780327495", "bioapex":"6780727579", "chinapex":"6781556016", "engapex":"6784478791", "geogapex":"6783594491", "histapex":"6783254820", "polapex":"6783150236", "wordpulse":"6767762376"]
-        return "https://apps.apple.com/cn/app/id\(ids[id] ?? "")"
+        return "https://apps.apple.com/cn/app/id\(Self.appStoreIDs[id] ?? "")"
     }
+    var isReleased: Bool { Self.releasedIDs.contains(id) }
     var developer: String { id == "mathapex" ? "Top King" : "Kingtop Education" }
-    var websiteURL: String { "https://botonwa83-byte.github.io/\(id).html" }
+    var websiteURL: String { sourceURL }
     var iconAssetName: String { "ProductIcons/\(id)" }
 }
 
 enum ProductCatalog {
     static let seeds: [ProductSeed] = [
-        .init(id: "physicsapex", name: "PhysicsApex", audience: "高中物理学习者", summary: "用降维推导建立物理模型，覆盖核心考点。", claims: ["覆盖高中物理核心考点", "提供逐步推导与错题复习"], sourceURL: "https://botonwa83-byte.github.io/physicsapex.html"),
-        .init(id: "mathapex", name: "MathApex", audience: "中学数学学习者", summary: "把复杂题型拆成可复用的方法与路径。", claims: ["按知识结构组织训练", "支持错题复习"], sourceURL: "https://botonwa83-byte.github.io/mathapex.html"),
-        .init(id: "chemapex", name: "ChemApex", audience: "高中化学学习者", summary: "识局、记忆、巧算，形成化学解题闭环。", claims: ["覆盖重点知识模块", "提供方法讲解与练习"], sourceURL: "https://botonwa83-byte.github.io/chemapex.html"),
-        .init(id: "bioapex", name: "BioApex", audience: "高中生物学习者", summary: "看见过程与机制，建立考点掌握闭环。", claims: ["围绕机制理解知识", "支持高频易混点复习"], sourceURL: "https://botonwa83-byte.github.io/bioapex.html")
-        , .init(id: "polapex", name: "PolApex", audience: "政治学习者", summary: "用结构化方法梳理概念、时事与答题路径。", claims: ["覆盖核心知识结构", "提供答题方法训练"], sourceURL: "https://botonwa83-byte.github.io/polapex.html")
-        , .init(id: "engapex", name: "EngApex", audience: "英语学习者", summary: "围绕词汇、语法和阅读建立持续学习路径。", claims: ["支持词汇与语法复习", "提供阅读方法训练"], sourceURL: "https://botonwa83-byte.github.io/engapex.html")
-        , .init(id: "chinapex", name: "ChinaApex", audience: "语文学习者", summary: "把阅读、表达与积累变成可执行的学习步骤。", claims: ["覆盖语文重点能力", "支持积累与复习"], sourceURL: "https://botonwa83-byte.github.io/chinapex.html")
-        , .init(id: "histapex", name: "HistApex", audience: "历史学习者", summary: "用时间线和因果关系建立历史知识网络。", claims: ["按时空结构组织知识", "提供重点复习路径"], sourceURL: "https://botonwa83-byte.github.io/histapex.html")
-        , .init(id: "geogapex", name: "GeogApex", audience: "地理学习者", summary: "从地图、过程和区域联系理解地理问题。", claims: ["支持地图与区域分析", "提供考点复习"], sourceURL: "https://botonwa83-byte.github.io/geogapex.html")
-        , .init(id: "wordpulse", name: "WordPulse", audience: "英语词汇学习者", summary: "用短时高频复习保持词汇记忆节奏。", claims: ["支持词汇持续复习", "提供学习进度反馈"], sourceURL: "https://botonwa83-byte.github.io/wordpulse.html")
+        .init(id: "physicsapex", name: "PhysicsApex", audience: "初高中物理学习者", summary: "用互动模拟沙盘、考点地图、错因诊断和智能复习，让物理从抽象公式回到可观察的现象。", claims: ["提供互动模拟沙盘与考点地图", "支持错因诊断和智能复习"], sourceURL: "https://botonwa83-byte.github.io/physicsapex.html"),
+        .init(id: "mathapex", name: "MathApex", audience: "初高中数学学习者", summary: "用高阶思维打通初高中数学关键题，通过常规解与降维解双解对照形成可复用的方法。", claims: ["提供 595 道压轴题与双解对照", "包含 150+ 公式及错题复习"], sourceURL: "https://botonwa83-byte.github.io/mathapex.html"),
+        .init(id: "chemapex", name: "ChemApex", audience: "初高中化学学习者", summary: "从元素星图、方程式剧本库到化学神探，把推断题、守恒题和实验题拆成可复用的识局方法。", claims: ["提供元素星图与方程式库", "覆盖守恒战例和化学推断训练"], sourceURL: "https://botonwa83-byte.github.io/chemapex.html"),
+        .init(id: "bioapex", name: "BioApex", audience: "初高中生物学习者", summary: "通过过程剧场、考点图谱、遗传神探、稳态回路和易混辨析，帮助学生看见生命系统如何运转。", claims: ["提供过程剧场与考点图谱", "包含遗传推理、稳态回路和易混辨析"], sourceURL: "https://botonwa83-byte.github.io/bioapex.html"),
+        .init(id: "polapex", name: "PolApex", audience: "初高中道法与思想政治学习者", summary: "围绕高权重记忆、主体职责、材料切片、答案工厂和选择题排雷，把知识变成可迁移的答案。", claims: ["支持材料切片与主体定位", "提供答案工厂和选择题排雷训练"], sourceURL: "https://botonwa83-byte.github.io/polapex.html"),
+        .init(id: "engapex", name: "EngApex", audience: "初高中英语学习者", summary: "围绕句法解码、完形线索、阅读题型和写作框架，让英语从语感变成可操作的解题流程。", claims: ["提供句法解码和完形线索训练", "覆盖阅读题型与写作框架"], sourceURL: "https://botonwa83-byte.github.io/engapex.html"),
+        .init(id: "chinapex", name: "ChinApex", audience: "初高中语文学习者", summary: "通过原文定位、文言解码、默写星图、作文工坊和阅卷人之眼，把语文变成可操作的采分点训练。", claims: ["提供采分点与阅卷视角训练", "覆盖作文、文言文和默写训练"], sourceURL: "https://botonwa83-byte.github.io/chinapex.html"),
+        .init(id: "histapex", name: "HistApex", audience: "初高中历史学习者", summary: "用时间博物馆、史料相遇、历史规律、专题突破和答案模板，把背事件推进到解释变化与因果。", claims: ["提供时间线与史料题训练", "支持历史规律迁移和答案模板"], sourceURL: "https://botonwa83-byte.github.io/histapex.html"),
+        .init(id: "geogapex", name: "GeogApex", audience: "初高中地理学习者", summary: "围绕空间定位、图表判读、自然过程、人文区位、区域发展和答案工厂，训练稳定的地理解题流程。", claims: ["支持图表判读与空间定位", "提供区位分析和综合题模板"], sourceURL: "https://botonwa83-byte.github.io/geogapex.html"),
+        .init(id: "wordpulse", name: "WordPulse", audience: "英语词汇学习者", summary: "用短时高频复习保持词汇记忆节奏。", claims: ["支持词汇持续复习", "提供学习进度反馈"], sourceURL: "https://botonwa83-byte.github.io/wordpulse.html")
     ]
 
     static let websiteBaseURL = "https://botonwa83-byte.github.io"
+    static var apexSeeds: [ProductSeed] { seeds.filter { $0.id.hasSuffix("apex") } }
     static func applyStoreLinks(_ links: [String: String]) {
-        let ids = ["physicsapex":"6779031451", "mathapex":"6778461030", "chemapex":"6780327495", "bioapex":"6780727579", "chinapex":"6781556016", "engapex":"6784478791", "geogapex":"6783594491", "histapex":"6783254820", "polapex":"6767762376", "wordpulse":"6778461030"]
-        for (product, appID) in ids { if let link = links[appID] { UserDefaults.standard.set(link, forKey: "storeURL.\(product)") } }
+        for (product, appID) in ProductSeed.appStoreIDs { if let link = links[appID] { UserDefaults.standard.set(link, forKey: "storeURL.\(product)") } }
         UserDefaults.standard.set(Date(), forKey: "website.lastSync")
     }
 }

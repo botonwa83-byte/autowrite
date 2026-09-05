@@ -98,4 +98,19 @@ final class ContentTests: XCTestCase {
         let content = GeneratedContent(title: String(repeating: "长", count: 40), body: "正文", tags: "#标签")
         XCTAssertTrue(PlatformFormatter.validation(for: .xiaohongshu, content: content).contains { $0.contains("标题") })
     }
+
+    func testProjectPublishedStateSupportsCurrentAndLegacyRecords() {
+        let current = PromotionProject(title: "PhysicsApex 推广", productID: "physicsapex")
+        current.publishStatus = .published
+        XCTAssertTrue(current.isPublished)
+
+        let legacy = PromotionProject(title: "旧项目", productID: "physicsapex")
+        legacy.publishStatus = .shared
+        legacy.publishedURL = "https://example.com/post"
+        XCTAssertTrue(legacy.isPublished)
+
+        let sharedOnly = PromotionProject(title: "仅打开过分享", productID: "physicsapex")
+        sharedOnly.publishStatus = .shared
+        XCTAssertFalse(sharedOnly.isPublished)
+    }
 }

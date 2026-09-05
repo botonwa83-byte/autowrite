@@ -6,15 +6,13 @@ struct BrandCenterView: View {
     @Query(sort: \BrandWorkspace.updatedAt, order: .reverse) private var brands: [BrandWorkspace]
     @State private var showingNewBrand = false
     var body: some View {
-        NavigationStack {
-            Group {
-                if brands.isEmpty { ContentUnavailableView("建立你的品牌空间", systemImage: "building.2", description: Text("集中管理品牌语气、产品资料和推广约束。")) }
-                else { List(brands) { brand in NavigationLink { BrandDetailView(brand: brand) } label: { VStack(alignment: .leading) { Text(brand.name).font(.headline); Text(brand.brandVoice).font(.caption).foregroundStyle(.secondary) } } } }
-            }
-            .navigationTitle("品牌中心")
-            .toolbar { Button { showingNewBrand = true } label: { Image(systemName: "plus") }.accessibilityLabel("新建品牌") }
-            .sheet(isPresented: $showingNewBrand) { NewBrandView() }
+        Group {
+            if brands.isEmpty { ContentUnavailableView("建立你的品牌空间", systemImage: "building.2", description: Text("集中管理品牌语气、产品资料和推广约束。")) }
+            else { List(brands) { brand in NavigationLink { BrandDetailView(brand: brand) } label: { VStack(alignment: .leading) { Text(brand.name).font(.headline); Text(brand.brandVoice).font(.caption).foregroundStyle(.secondary) } } } }
         }
+        .navigationTitle("品牌中心")
+        .toolbar { Button { showingNewBrand = true } label: { Image(systemName: "plus") }.accessibilityLabel("新建品牌") }
+        .sheet(isPresented: $showingNewBrand) { NewBrandView() }
     }
 }
 
@@ -30,11 +28,27 @@ private struct BrandDetailView: View {
     @Bindable var brand: BrandWorkspace
     @Query private var products: [CustomerProduct]
     @State private var showingNewProduct = false
+    @State private var selectedProduct: CustomerProduct?
     init(brand: BrandWorkspace) { self.brand = brand; let id = brand.id; _products = Query(filter: #Predicate<CustomerProduct> { $0.brandID == id }, sort: [SortDescriptor(\.updatedAt, order: .reverse)]) }
     var body: some View { Form {
         Section("品牌规范") { TextField("品牌名称", text: $brand.name); TextField("品牌语气", text: $brand.brandVoice); TextField("禁用词，用逗号分隔", text: $brand.prohibitedWords) }
-        Section("产品") { ForEach(products) { product in NavigationLink { CustomerProductView(product: product, brand: brand) } label: { Text(product.name) } }; Button { showingNewProduct = true } label: { Label("添加产品", systemImage: "plus") } }
-    }.navigationTitle(brand.name).sheet(isPresented: $showingNewProduct) { NewProductView(brandID: brand.id) }.onDisappear { brand.updatedAt = Date(); try? context.save() } }
+        Section("产品") {
+            ForEach(products) { product in
+                Button { selectedProduct = product } label: {
+                    HStack { Text(product.name); Spacer(); Image(systemName: "chevron.right").foregroundStyle(.tertiary) }
+                }
+                .buttonStyle(.plain)
+            }
+            Button { showingNewProduct = true } label: { Label("添加产品", systemImage: "plus") }
+        }
+    }
+    .navigationTitle(brand.name)
+    .sheet(isPresented: $showingNewProduct) { NewProductView(brandID: brand.id) }
+    .sheet(item: $selectedProduct) { product in
+        NavigationStack { CustomerProductView(product: product, brand: brand) }
+    }
+    .onDisappear { brand.updatedAt = Date(); try? context.save() }
+    }
 }
 
 private struct NewProductView: View {
@@ -88,28 +102,14 @@ private struct CustomerProductView: View {
         try? context.save(); websiteMessage = "已按确认内容更新产品资料"
     }
     private func createPromotionProject(goal: PromotionGoal? = nil) {
-        let benefits = product.keyBenefits.components(separatedBy: .newlines).filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
-        let insightContext = insights.filter { $0.evidenceState == .verified }.map { "\($0.category.title)：\($0.statement)" }.joined(separator: "\n")
-        let generated = LocalContentGenerator().generate(productName: product.name, audience: product.audience, summary: product.summary, benefits: benefits, sourceURL: product.websiteURL.isEmpty ? product.storeURL : product.websiteURL, goalAction: goal?.primaryAction ?? "", insightContext: insightContext, angle: goal?.kind.title ?? "", tone: brand.brandVoice)
-        let project = PromotionProject(title: generated.title, productID: product.id.uuidString, body: generated.body, tags: generated.tags)
-        project.sourceProductName = product.name; project.sourceAudience = product.audience; project.sourceSummary = product.summary; project.sourceBenefits = product.keyBenefits; project.sourceURL = product.websiteURL.isEmpty ? product.storeURL : product.websiteURL; project.brandVoice = brand.brandVoice
-        project.sourceGoalContext = goal?.generationContext ?? ""; project.sourceGoalAction = goal?.primaryAction ?? ""; project.sourceGoalID = goal?.id; project.sourceInsightContext = insightContext; project.sourceAngle = goal?.kind.title ?? ""
+        let project = PromotionProjectFactory.makeProject(product: product, brand: brand, goal: goal, insights: insights)
         context.insert(project); try? context.save(); createdProject = project
     }
     private func generateBatch(for plan: PromotionPlan) {
-        let posts = PromotionPlanBuilder.build(durationDays: plan.durationDays, postsPerWeek: plan.postsPerWeek, startDate: plan.startDate, platforms: plan.platforms)
         let goal = goals.first { $0.id == plan.goalID }
-        let benefits = product.keyBenefits.components(separatedBy: .newlines).filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
-        let insightContext = insights.filter { $0.evidenceState == .verified }.map { "\($0.category.title)：\($0.statement)" }.joined(separator: "\n")
-        for post in posts {
-            let generated = LocalContentGenerator().generate(productName: product.name, audience: product.audience, summary: product.summary, benefits: benefits, sourceURL: product.websiteURL.isEmpty ? product.storeURL : product.websiteURL, goalAction: goal?.primaryAction ?? "", insightContext: insightContext, angle: post.angle, tone: brand.brandVoice)
-            let project = PromotionProject(title: generated.title, productID: product.id.uuidString, contentType: post.platform.isVideo ? .video : .text, platform: post.platform.rawValue, body: generated.body, tags: generated.tags)
-            project.sourceProductName = product.name; project.sourceAudience = product.audience; project.sourceSummary = product.summary; project.sourceBenefits = product.keyBenefits; project.sourceURL = product.websiteURL.isEmpty ? product.storeURL : product.websiteURL; project.brandVoice = brand.brandVoice
-            project.sourceGoalContext = goal?.generationContext ?? ""; project.sourceGoalAction = goal?.primaryAction ?? ""; project.sourceGoalID = goal?.id; project.sourceInsightContext = insightContext; project.sourcePlanID = plan.id; project.sourceAngle = post.angle
-            project.scheduledAt = post.scheduledAt; project.publishStatus = .ready
-            context.insert(project)
-        }
-        plan.generatedAt = Date(); try? context.save(); planMessage = "已生成 \(posts.count) 个推广项目，并加入发布队列"
+        let projects = PromotionProjectFactory.makeBatch(product: product, brand: brand, goal: goal, plan: plan, insights: insights)
+        projects.forEach(context.insert)
+        plan.generatedAt = Date(); try? context.save(); planMessage = "已生成 \(projects.count) 个推广项目，并加入发布队列"
     }
 }
 

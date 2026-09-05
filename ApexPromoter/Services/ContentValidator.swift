@@ -47,6 +47,7 @@ enum ContentValidator {
 
 enum ReminderService {
     static func schedule(draftID: UUID, title: String, at date: Date) {
+        guard !ProcessInfo.processInfo.arguments.contains("--ui-testing") else { return }
         guard date > Date() else { return }
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.alert, .sound]) { granted, _ in
