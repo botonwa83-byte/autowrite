@@ -4,7 +4,7 @@ import SwiftData
 @main
 struct ApexPromoterApp: App {
     #if DEBUG
-    @StateObject private var entitlements = EntitlementStore(previewState: .premium)
+    @StateObject private var entitlements = EntitlementStore(previewState: ProcessInfo.processInfo.arguments.contains("--ui-testing-premium") ? .premium : nil)
     #else
     @StateObject private var entitlements = EntitlementStore()
     #endif

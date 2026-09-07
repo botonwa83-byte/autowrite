@@ -1,0 +1,18 @@
+{
+  "identifier" : "com.kingtop.apexpromoter.storekit",
+  "products" : [
+    {
+      "displayPrice" : "29.00",
+      "familyShareable" : true,
+      "internalID" : "premium",
+      "locale" : "zh_CN",
+      "productID" : "com.kingtop.apexpromoter.premium",
+      "referenceName" : "Apex 宣传台专业版",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "",
+    "_storefront" : "CHN"
+  }
+}

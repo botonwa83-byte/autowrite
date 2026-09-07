@@ -104,9 +104,10 @@ struct ProjectDetailView: View {
     private func copyText() { UIPasteboard.general.string = PlatformFormatter.text(for: platform, content: content); record("复制文案", succeeded: true) }
     private func share() { SharePresenter.present(items: [PlatformFormatter.text(for: platform, content: content)]); record("系统分享", succeeded: true); project.publishStatus = .shared }
     private func importPhotos(_ items: [PhotosPickerItem]) {
+        let baseOrder = (assets.map(\.sortOrder).max() ?? -1) + 1
         Task {
             for (index, item) in items.enumerated() {
-                if let data = try? await item.loadTransferable(type: Data.self) { await MainActor.run { context.insert(ProjectAsset(projectID: project.id, filename: "asset-\(project.version)-\(index).jpg", imageData: data, sortOrder: assets.count + index)); try? context.save() } }
+                if let data = try? await item.loadTransferable(type: Data.self) { await MainActor.run { context.insert(ProjectAsset(projectID: project.id, filename: "asset-\(project.version)-\(index).jpg", imageData: data, sortOrder: baseOrder + index)); try? context.save() } }
             }
             await MainActor.run { selectedPhotos = [] }
         }
@@ -143,7 +144,13 @@ struct ProjectDetailView: View {
         project.title = generated.title; project.body = generated.body; project.tags = generated.tags; project.sourceAngle = angle; project.version += 1; project.updatedAt = Date()
         try? context.save(); generationMessage = "已生成 v\(project.version)，旧内容已保存到版本历史"
     }
-    private func schedule() { project.scheduledAt = scheduleDate; project.publishStatus = .ready; project.updatedAt = Date(); try? context.save(); ReminderService.schedule(draftID: project.id, title: project.title, at: scheduleDate); record("加入发布队列", succeeded: true) }
+    private func schedule() {
+        project.scheduledAt = scheduleDate; project.publishStatus = .ready; project.updatedAt = Date(); try? context.save()
+        Task {
+            let reminderAdded = await ReminderService.schedule(draftID: project.id, title: project.title, at: scheduleDate)
+            await MainActor.run { record("加入发布队列", succeeded: reminderAdded, message: reminderAdded ? "系统提醒已注册" : "项目已保存，但系统提醒未注册") }
+        }
+    }
     private func markPublished() { project.publishStatus = .published; project.updatedAt = Date(); try? context.save(); record("记录发布结果", succeeded: true, message: project.publishedURL) }
 }
 

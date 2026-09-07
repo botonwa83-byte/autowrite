@@ -14,9 +14,9 @@ struct RootView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             DashboardView(showGuide: { showingHelp = true }).tabItem { Label("首页", systemImage: "square.grid.2x2") }.tag(AppTab.dashboard)
-            ProductsView().tabItem { Label("产品", systemImage: "books.vertical") }.tag(AppTab.products)
-            ComposerView().tabItem { Label("创作", systemImage: "square.and.pencil") }.tag(AppTab.composer)
-            QueueView().tabItem { Label("队列", systemImage: "calendar") }.tag(AppTab.queue)
+            ProductsView().tabItem { Label("产品", systemImage: "books.vertical") }.tag(AppTab.products).accessibilityIdentifier("tab.products")
+            ComposerView().tabItem { Label("创作", systemImage: "square.and.pencil") }.tag(AppTab.composer).accessibilityIdentifier("tab.composer")
+            QueueView().tabItem { Label("队列", systemImage: "calendar") }.tag(AppTab.queue).accessibilityIdentifier("tab.queue")
             MoreView().tabItem { Label("更多", systemImage: "ellipsis.circle") }.tag(AppTab.more)
         }
         .onAppear {
@@ -126,16 +126,18 @@ private struct GrowthReviewView: View {
 }
 
 struct ProductsView: View {
+    @Query(sort: \CustomerProduct.createdAt) private var customerProducts: [CustomerProduct]
     var body: some View {
-        NavigationStack { List(ProductCatalog.seeds, id: \.id) { p in
+        let products = customerProducts.isEmpty ? ProductCatalog.seeds : customerProducts.map(ProductCatalog.seed(from:))
+        NavigationStack { List(products, id: \.id) { p in
             VStack(alignment: .leading, spacing: 6) {
                 Text(p.name).font(.headline)
                 Text(p.summary)
                 Text(p.audience).font(.caption).foregroundStyle(.secondary)
                 Text("开发者：\(p.developer)").font(.caption)
-                if p.isReleased { Link("下载 App", destination: URL(string: p.storeURL)!) }
+                if p.isReleased, let url = URL(string: p.storeURL) { Link("下载 App", destination: url) }
                 else { Label("上架准备中", systemImage: "hammer").font(.caption).foregroundStyle(.secondary) }
-                Link("查看产品介绍", destination: URL(string: p.sourceURL)!)
+                if let url = URL(string: p.sourceURL) { Link("查看产品介绍", destination: url) }
             }
         }.navigationTitle("Apex 产品") }
     }
@@ -148,6 +150,7 @@ struct ComposerView: View {
         var id: String { rawValue }
     }
     @Environment(\.modelContext) private var context
+    @Query(sort: \CustomerProduct.createdAt) private var customerProducts: [CustomerProduct]
     @State private var selectedID = ProductCatalog.seeds[0].id
     @State private var angle = ""
     @State private var tone = "真诚分享"
@@ -169,7 +172,8 @@ struct ComposerView: View {
     @State private var videoPlatform: PublishPlatform = .douyin
     @State private var mode: ComposeMode = .text
     @State private var showingPaywall = false
-    var selected: ProductSeed { ProductCatalog.seeds.first { $0.id == selectedID } ?? ProductCatalog.seeds[0] }
+    private var availableProducts: [ProductSeed] { customerProducts.isEmpty ? ProductCatalog.seeds : customerProducts.map(ProductCatalog.seed(from:)) }
+    var selected: ProductSeed { availableProducts.first { $0.id == selectedID } ?? availableProducts[0] }
     var body: some View {
         NavigationStack { Form {
             if !entitlements.isPremium { Section { Button { showingPaywall = true } label: { Label("解锁后创建并导出自己的项目", systemImage: "lock") } } }
@@ -180,7 +184,7 @@ struct ComposerView: View {
                 .pickerStyle(.segmented)
             }
             Section("内容来源") {
-                Picker("产品", selection: $selectedID) { ForEach(ProductCatalog.seeds, id: \.id) { Text($0.name).tag($0.id) } }
+                Picker("产品", selection: $selectedID) { ForEach(availableProducts, id: \.id) { Text($0.name).tag($0.id) } }
                 TextField("传播角度（可选）", text: $angle); TextField("语气", text: $tone)
                 Button { loadWebsiteBrief() } label: { Label(loadingWebsite ? "正在读取官网资料" : "读取官网生成文案", systemImage: "globe") }.disabled(loadingWebsite)
                 if websiteBrief != nil {
@@ -321,7 +325,7 @@ struct ComposerView: View {
                             context.insert(Asset(productID: selected.id, filename: "\(selected.id)-\(index + 1).jpg", imageData: data, sortOrder: index))
                         }
                         try? context.save()
-                        ReminderService.schedule(draftID: draft.id, title: draft.title, at: scheduleDate)
+                        Task { _ = await ReminderService.schedule(draftID: draft.id, title: draft.title, at: scheduleDate) }
                         content = c
                         findings = ContentValidator.validate(c, product: selected)
                     } label: {

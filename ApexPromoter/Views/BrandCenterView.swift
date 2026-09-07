@@ -2,17 +2,20 @@ import SwiftUI
 import SwiftData
 
 struct BrandCenterView: View {
+    @EnvironmentObject private var entitlements: EntitlementStore
     @Environment(\.modelContext) private var context
     @Query(sort: \BrandWorkspace.updatedAt, order: .reverse) private var brands: [BrandWorkspace]
     @State private var showingNewBrand = false
+    @State private var showingPaywall = false
     var body: some View {
         Group {
             if brands.isEmpty { ContentUnavailableView("建立你的品牌空间", systemImage: "building.2", description: Text("集中管理品牌语气、产品资料和推广约束。")) }
             else { List(brands) { brand in NavigationLink { BrandDetailView(brand: brand) } label: { VStack(alignment: .leading) { Text(brand.name).font(.headline); Text(brand.brandVoice).font(.caption).foregroundStyle(.secondary) } } } }
         }
         .navigationTitle("品牌中心")
-        .toolbar { Button { showingNewBrand = true } label: { Image(systemName: "plus") }.accessibilityLabel("新建品牌") }
+        .toolbar { Button { if entitlements.isPremium { showingNewBrand = true } else { showingPaywall = true } } label: { Image(systemName: "plus") }.accessibilityLabel("新建品牌") }
         .sheet(isPresented: $showingNewBrand) { NewBrandView() }
+        .sheet(isPresented: $showingPaywall) { NavigationStack { PaywallView() } }
     }
 }
 
@@ -24,11 +27,13 @@ private struct NewBrandView: View {
 }
 
 private struct BrandDetailView: View {
+    @EnvironmentObject private var entitlements: EntitlementStore
     @Environment(\.modelContext) private var context
     @Bindable var brand: BrandWorkspace
     @Query private var products: [CustomerProduct]
     @State private var showingNewProduct = false
     @State private var selectedProduct: CustomerProduct?
+    @State private var showingPaywall = false
     init(brand: BrandWorkspace) { self.brand = brand; let id = brand.id; _products = Query(filter: #Predicate<CustomerProduct> { $0.brandID == id }, sort: [SortDescriptor(\.updatedAt, order: .reverse)]) }
     var body: some View { Form {
         Section("品牌规范") { TextField("品牌名称", text: $brand.name); TextField("品牌语气", text: $brand.brandVoice); TextField("禁用词，用逗号分隔", text: $brand.prohibitedWords) }
@@ -39,11 +44,12 @@ private struct BrandDetailView: View {
                 }
                 .buttonStyle(.plain)
             }
-            Button { showingNewProduct = true } label: { Label("添加产品", systemImage: "plus") }
+            Button { if entitlements.isPremium { showingNewProduct = true } else { showingPaywall = true } } label: { Label("添加产品", systemImage: "plus") }
         }
     }
     .navigationTitle(brand.name)
     .sheet(isPresented: $showingNewProduct) { NewProductView(brandID: brand.id) }
+    .sheet(isPresented: $showingPaywall) { NavigationStack { PaywallView() } }
     .sheet(item: $selectedProduct) { product in
         NavigationStack { CustomerProductView(product: product, brand: brand) }
     }

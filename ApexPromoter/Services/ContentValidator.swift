@@ -46,19 +46,22 @@ enum ContentValidator {
 }
 
 enum ReminderService {
-    static func schedule(draftID: UUID, title: String, at date: Date) {
-        guard !ProcessInfo.processInfo.arguments.contains("--ui-testing") else { return }
-        guard date > Date() else { return }
+    static func schedule(draftID: UUID, title: String, at date: Date) async -> Bool {
+        guard !ProcessInfo.processInfo.arguments.contains("--ui-testing"), date > Date() else { return false }
         let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .sound]) { granted, _ in
-            guard granted else { return }
+        do {
+            let granted = try await center.requestAuthorization(options: [.alert, .sound])
+            guard granted else { return false }
             let content = UNMutableNotificationContent()
             content.title = "Apex 发布提醒"
             content.body = "\(title) 已到计划时间，请打开队列确认并分享。"
             content.sound = .default
             let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
             let request = UNNotificationRequest(identifier: draftID.uuidString, content: content, trigger: UNCalendarNotificationTrigger(dateMatching: components, repeats: false))
-            center.add(request)
+            try await center.add(request)
+            return true
+        } catch {
+            return false
         }
     }
 }

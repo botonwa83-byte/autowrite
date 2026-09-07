@@ -99,6 +99,7 @@ enum WebsiteSyncService {
 }
 
 struct ProductSeed: Codable { let id, name, audience, summary: String; let claims: [String]; let sourceURL: String
+    var storeURLOverride: String? = nil
     static let appStoreIDs = ["physicsapex":"6779031451", "mathapex":"6778461030", "chemapex":"6780327495", "bioapex":"6780727579", "chinapex":"6781556016", "engapex":"6784478791", "geogapex":"6783594491", "histapex":"6783254820", "polapex":"6783150236", "wordpulse":"6767762376"]
     static let releasedIDs: Set<String> = ["physicsapex", "mathapex", "chemapex", "bioapex", "polapex", "engapex", "chinapex", "histapex", "geogapex", "wordpulse"]
     var promoHook: String {
@@ -116,16 +117,23 @@ struct ProductSeed: Codable { let id, name, audience, summary: String; let claim
         ][id] ?? summary
     }
     var storeURL: String {
+        if let storeURLOverride, !storeURLOverride.isEmpty { return storeURLOverride }
         if let cached = UserDefaults.standard.string(forKey: "storeURL.\(id)"), !cached.isEmpty { return cached }
         return "https://apps.apple.com/cn/app/id\(Self.appStoreIDs[id] ?? "")"
     }
-    var isReleased: Bool { Self.releasedIDs.contains(id) }
+    var isReleased: Bool {
+        if let storeURLOverride, !storeURLOverride.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return true }
+        return Self.releasedIDs.contains(id)
+    }
     var developer: String { id == "mathapex" ? "Top King" : "Kingtop Education" }
     var websiteURL: String { sourceURL }
     var iconAssetName: String { "ProductIcons/\(id)" }
 }
 
 enum ProductCatalog {
+    static func seed(from product: CustomerProduct) -> ProductSeed {
+        ProductSeed(id: product.id.uuidString, name: product.name, audience: product.audience, summary: product.summary, claims: product.keyBenefits.components(separatedBy: .newlines).filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }, sourceURL: product.websiteURL, storeURLOverride: product.storeURL)
+    }
     static let seeds: [ProductSeed] = [
         .init(id: "physicsapex", name: "PhysicsApex", audience: "初高中物理学习者", summary: "用互动模拟沙盘、考点地图、错因诊断和智能复习，让物理从抽象公式回到可观察的现象。", claims: ["提供互动模拟沙盘与考点地图", "支持错因诊断和智能复习"], sourceURL: "https://botonwa83-byte.github.io/physicsapex.html"),
         .init(id: "mathapex", name: "MathApex", audience: "初高中数学学习者", summary: "用高阶思维打通初高中数学关键题，通过常规解与降维解双解对照形成可复用的方法。", claims: ["提供 595 道压轴题与双解对照", "包含 150+ 公式及错题复习"], sourceURL: "https://botonwa83-byte.github.io/mathapex.html"),

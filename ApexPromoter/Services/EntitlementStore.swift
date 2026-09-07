@@ -7,7 +7,19 @@ final class EntitlementStore: ObservableObject {
     @Published private(set) var state: State = .loading
     let productID: String
     private var product: StoreKit.Product?
-    init(productID: String = "com.kingtop.apexpromoter.premium", previewState: State? = nil) { self.productID = productID; if let previewState { state = previewState } }
+    private var updatesTask: Task<Void, Never>? = nil
+    init(productID: String = "com.kingtop.apexpromoter.premium", previewState: State? = nil) {
+        self.productID = productID
+        if let previewState { state = previewState }
+        updatesTask = Task { [weak self] in
+            for await result in Transaction.updates {
+                guard case .verified(let transaction) = result, transaction.productID == productID else { continue }
+                await transaction.finish()
+                await self?.refresh()
+            }
+        }
+    }
+    deinit { updatesTask?.cancel() }
     var isPremium: Bool { state == .premium }
     func refresh() async {
         guard productID.isEmpty == false else { state = .unavailable; return }

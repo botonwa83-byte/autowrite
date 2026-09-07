@@ -2,6 +2,31 @@ import XCTest
 @testable import ApexPromoter
 
 final class ContentTests: XCTestCase {
+    func testCustomerProductConvertsToProductSeed() {
+        let product = CustomerProduct(
+            brandID: UUID(),
+            name: "我的产品",
+            websiteURL: "https://example.com",
+            storeURL: "https://apps.apple.com/app/id1",
+            audience: "学生",
+            summary: "帮助学习",
+            keyBenefits: "亮点一\n亮点二"
+        )
+
+        let seed = ProductCatalog.seed(from: product)
+
+        XCTAssertEqual(seed.id, product.id.uuidString)
+        XCTAssertEqual(seed.name, product.name)
+        XCTAssertEqual(seed.claims, ["亮点一", "亮点二"])
+        XCTAssertEqual(seed.storeURL, product.storeURL)
+        XCTAssertTrue(seed.isReleased)
+    }
+
+    func testBundledCatalogRemainsAvailableWithoutPremium() {
+        XCTAssertFalse(ProductCatalog.seeds.isEmpty)
+        XCTAssertTrue(ProductCatalog.seeds.allSatisfy { !$0.name.isEmpty && !$0.sourceURL.isEmpty })
+    }
+
     func testUserGuideCoversCompletePromotionWorkflow() {
         XCTAssertEqual(UserGuide.steps.count, 7)
         XCTAssertEqual(UserGuide.steps.first?.destination, .brands)
