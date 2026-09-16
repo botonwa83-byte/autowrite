@@ -12,6 +12,9 @@ schemes:
       storeKitConfiguration: ApexPromoter/ApexPromoter.storekit
     test:
       storeKitConfiguration: ApexPromoter/ApexPromoter.storekit
+      targets:
+        - ApexPromoterTests
+        - ApexPromoterUITests
 targets:
   ApexPromoter:
     type: application

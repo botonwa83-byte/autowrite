@@ -1,5 +1,7 @@
 # App Store Release Preparation Implementation Plan
 
+> **Superseded in part:** the free/premium boundary changed after this plan was written. The Apex series is now fully usable for free (generate, export, schedule, review) and the unlock only gates creating and promoting user-owned brands and products. See `docs/superpowers/specs/2026-09-04-apex-commercialization-design.md` and `ApexPromoter/Services/ProductAccess.swift` for the current rule.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Prepare Apex 宣传台 for App Store submission with a one-time premium unlock while keeping the bundled Apex product catalog free for observation and promotion.

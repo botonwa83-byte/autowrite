@@ -39,6 +39,28 @@
          </BuildableReference>
       </MacroExpansion>
       <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E8F4DD2404599F3C69958F0D"
+               BuildableName = "ApexPromoterTests.xctest"
+               BlueprintName = "ApexPromoterTests"
+               ReferencedContainer = "container:ApexPromoter.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "7A2CE4ACE784923A3755BD12"
+               BuildableName = "ApexPromoterUITests.xctest"
+               BlueprintName = "ApexPromoterUITests"
+               ReferencedContainer = "container:ApexPromoter.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <CommandLineArguments>
       </CommandLineArguments>

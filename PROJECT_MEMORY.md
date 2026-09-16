@@ -17,9 +17,11 @@ Apex is the first real validation customer and a built-in example brand. Product
 
 ## Commercial Model
 
-- Free: browse Apex examples and inspect the workflow.
-- Premium: create brands and products, generate strategies and content plans, manage projects and assets, export/share, schedule, and review performance.
-- Debug builds remain unlocked for local testing. Release builds use StoreKit entitlement verification.
+- Free: use the built-in Apex series products end to end — browse references, generate copy, import media, export packages, schedule into the publishing queue, and record results.
+- Premium (one-time, non-consumable): create and promote your own brands and products. Creating a brand or product, and running a promotion project against a self-owned product, requires the unlock.
+- The Apex series is Kingtop's own product line, kept in the app for Kingtop's own promotion. Free use of it is intentional, not a trial.
+- Entitlement policy lives in `ApexPromoter/Services/ProductAccess.swift`; views never inspect StoreKit transaction details directly.
+- Entitlements are verified with StoreKit 2 on launch and whenever the app returns to the foreground. Unconfigured products or no network must surface as `unavailable`, never as fake premium.
 
 ## Product Roadmap
 
@@ -45,6 +47,7 @@ Apex is the first real validation customer and a built-in example brand. Product
 - Customer products can import their own websites through code/noise cleaning, structured positioning/audience/benefit extraction, editable confirmation, and source snapshot preservation.
 - Website imports never overwrite a customer profile until the user explicitly confirms the structured preview; custom project regeneration can re-read the customer website.
 - An in-app seven-step guide covers brand setup, website import, customer insight, goals, plans, publishing, and performance review. It opens on first use and remains available from the dashboard.
+- Free users get the full workflow on Apex series products; the unlock only gates creating and promoting their own brands and products.
 - Next priority: promotion-readiness checks that identify missing product facts, verified customer evidence, goals, and usable media before batch creation.
 
 ## Product Principles

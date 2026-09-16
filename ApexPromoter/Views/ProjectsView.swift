@@ -5,7 +5,6 @@ struct ProjectsView: View {
     @EnvironmentObject private var entitlements: EntitlementStore
     @Environment(\.modelContext) private var context
     @Query(sort: \PromotionProject.updatedAt, order: .reverse) private var projects: [PromotionProject]
-    @State private var showingPaywall = false
     @State private var searchText = ""
     @State private var selectedPlatform = "全部平台"
     @State private var selectedStatus = "全部状态"
@@ -36,9 +35,9 @@ struct ProjectsView: View {
             .searchable(text: $searchText, prompt: "搜索标题或正文")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) { if entitlements.isPremium { Label("专业版", systemImage: "checkmark.seal.fill").font(.caption).foregroundStyle(.green) } }
-                ToolbarItem(placement: .topBarTrailing) { Button { if entitlements.isPremium { createProject() } else { showingPaywall = true } } label: { Image(systemName: "plus") }.accessibilityLabel("创建项目") }
+                // 新建项目默认挂在官方自研的 Apex 产品上，免费用户也能用。
+                ToolbarItem(placement: .topBarTrailing) { Button { createProject() } label: { Image(systemName: "plus") }.accessibilityLabel("创建项目") }
             }
-        .sheet(isPresented: $showingPaywall) { NavigationStack { PaywallView() } }
     }
     private func createProject() { context.insert(PromotionProject(title: "未命名推广项目", productID: ProductCatalog.seeds.first?.id ?? "")); try? context.save() }
     private func duplicate(_ source: PromotionProject) {

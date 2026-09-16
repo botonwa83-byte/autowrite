@@ -35,9 +35,10 @@ private struct BrandDetailView: View {
     @State private var selectedProduct: CustomerProduct?
     @State private var showingPaywall = false
     init(brand: BrandWorkspace) { self.brand = brand; let id = brand.id; _products = Query(filter: #Predicate<CustomerProduct> { $0.brandID == id }, sort: [SortDescriptor(\.updatedAt, order: .reverse)]) }
+    private var isBuiltInBrand: Bool { ProductAccess.isBuiltIn(brand) }
     var body: some View { Form {
         Section("品牌规范") { TextField("品牌名称", text: $brand.name); TextField("品牌语气", text: $brand.brandVoice); TextField("禁用词，用逗号分隔", text: $brand.prohibitedWords) }
-        Section("产品") {
+        Section {
             ForEach(products) { product in
                 Button { selectedProduct = product } label: {
                     HStack { Text(product.name); Spacer(); Image(systemName: "chevron.right").foregroundStyle(.tertiary) }
@@ -45,6 +46,11 @@ private struct BrandDetailView: View {
                 .buttonStyle(.plain)
             }
             Button { if entitlements.isPremium { showingNewProduct = true } else { showingPaywall = true } } label: { Label("添加产品", systemImage: "plus") }
+        } header: {
+            if isBuiltInBrand { HStack { Text("产品"); Spacer(); Label("官方自研 · 免费可用", systemImage: "checkmark.seal.fill").font(.caption).foregroundStyle(.green).textCase(nil) } }
+            else { Text("产品") }
+        } footer: {
+            if isBuiltInBrand { Text("Apex 系列是我们自研并用于自身推广的产品，免费用户可以直接使用它们生成、导出和排期内容。要推广你自己的产品，请解锁专业版。") }
         }
     }
     .navigationTitle(brand.name)
@@ -64,12 +70,14 @@ private struct NewProductView: View {
 }
 
 private struct CustomerProductView: View {
+    @EnvironmentObject private var entitlements: EntitlementStore
     @Environment(\.modelContext) private var context; @Bindable var product: CustomerProduct; let brand: BrandWorkspace
     @Query private var insights: [AudienceInsight]
     @Query private var goals: [PromotionGoal]
     @Query private var plans: [PromotionPlan]
     @State private var createdProject: PromotionProject?
     @State private var showingNewInsight = false
+    @State private var showingPaywall = false
     init(product: CustomerProduct, brand: BrandWorkspace) {
         self.product = product
         self.brand = brand
@@ -84,7 +92,7 @@ private struct CustomerProductView: View {
     @State private var loadingWebsite = false
     @State private var websiteMessage = ""
     @State private var websiteImport: WebsiteImportResult?
-    var body: some View { Form { Section("基本资料") { TextField("名称", text: $product.name); TextField("官网", text: $product.websiteURL); TextField("下载地址", text: $product.storeURL); TextField("价格说明", text: $product.priceDescription); Button { importWebsite() } label: { Label(loadingWebsite ? "正在读取官网" : "读取官网并整理资料", systemImage: "globe") }.disabled(loadingWebsite || product.websiteURL.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty); if !websiteMessage.isEmpty { Text(websiteMessage).font(.caption).foregroundStyle(.secondary) }; if let importedAt = product.websiteImportedAt { Text("上次确认导入：\(importedAt.formatted(date: .abbreviated, time: .shortened))").font(.caption).foregroundStyle(.secondary) } }; Section("市场表达") { TextField("目标用户", text: $product.audience); TextEditor(text: $product.summary).frame(minHeight: 100); TextEditor(text: $product.keyBenefits).frame(minHeight: 120) }; Section("客户洞察") { ForEach(insights) { insight in InsightRow(insight: insight) }.onDelete(perform: deleteInsights); Button { showingNewInsight = true } label: { Label("添加客户洞察", systemImage: "person.text.rectangle") } }; Section("推广目标") { ForEach(goals) { goal in GoalRow(goal: goal) { createPromotionProject(goal: goal) } }.onDelete(perform: deleteGoals); Button { showingNewGoal = true } label: { Label("制定推广目标", systemImage: "target") } }; Section("推广计划") { ForEach(plans) { plan in PlanRow(plan: plan) { generateBatch(for: plan) } }.onDelete(perform: deletePlans); Button { showingNewPlan = true } label: { Label("制定推广计划", systemImage: "calendar.badge.plus") }; if !planMessage.isEmpty { Text(planMessage).font(.caption).foregroundStyle(.secondary) } }; Section { Button { createPromotionProject() } label: { Label("创建无目标项目", systemImage: "megaphone") } } }.navigationTitle(product.name).navigationDestination(item: $createdProject) { ProjectDetailView(project: $0) }.sheet(isPresented: $showingNewInsight) { NewInsightView(productID: product.id) }.sheet(isPresented: $showingNewGoal) { NewGoalView(productID: product.id) }.sheet(isPresented: $showingNewPlan) { NewPlanView(productID: product.id, goals: goals) }.sheet(item: $websiteImport) { result in WebsiteImportPreview(result: result) { brief in applyWebsiteImport(brief, sourceText: result.cleanedText) } }.onDisappear { product.updatedAt = Date(); try? context.save() } }
+    var body: some View { Form { Section("基本资料") { TextField("名称", text: $product.name); TextField("官网", text: $product.websiteURL); TextField("下载地址", text: $product.storeURL); TextField("价格说明", text: $product.priceDescription); Button { importWebsite() } label: { Label(loadingWebsite ? "正在读取官网" : "读取官网并整理资料", systemImage: "globe") }.disabled(loadingWebsite || product.websiteURL.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty); if !websiteMessage.isEmpty { Text(websiteMessage).font(.caption).foregroundStyle(.secondary) }; if let importedAt = product.websiteImportedAt { Text("上次确认导入：\(importedAt.formatted(date: .abbreviated, time: .shortened))").font(.caption).foregroundStyle(.secondary) } }; Section("市场表达") { TextField("目标用户", text: $product.audience); TextEditor(text: $product.summary).frame(minHeight: 100); TextEditor(text: $product.keyBenefits).frame(minHeight: 120) }; Section("客户洞察") { ForEach(insights) { insight in InsightRow(insight: insight) }.onDelete(perform: deleteInsights); Button { showingNewInsight = true } label: { Label("添加客户洞察", systemImage: "person.text.rectangle") } }; Section("推广目标") { ForEach(goals) { goal in GoalRow(goal: goal) { createPromotionProject(goal: goal) } }.onDelete(perform: deleteGoals); Button { showingNewGoal = true } label: { Label("制定推广目标", systemImage: "target") } }; Section("推广计划") { ForEach(plans) { plan in PlanRow(plan: plan) { generateBatch(for: plan) } }.onDelete(perform: deletePlans); Button { showingNewPlan = true } label: { Label("制定推广计划", systemImage: "calendar.badge.plus") }; if !planMessage.isEmpty { Text(planMessage).font(.caption).foregroundStyle(.secondary) } }; Section { Button { createPromotionProject() } label: { Label("创建无目标项目", systemImage: "megaphone") } } }.navigationTitle(product.name).navigationDestination(item: $createdProject) { ProjectDetailView(project: $0) }.sheet(isPresented: $showingNewInsight) { NewInsightView(productID: product.id) }.sheet(isPresented: $showingNewGoal) { NewGoalView(productID: product.id) }.sheet(isPresented: $showingNewPlan) { NewPlanView(productID: product.id, goals: goals) }.sheet(item: $websiteImport) { result in WebsiteImportPreview(result: result) { brief in applyWebsiteImport(brief, sourceText: result.cleanedText) } }.sheet(isPresented: $showingPaywall) { NavigationStack { PaywallView() } }.onDisappear { product.updatedAt = Date(); try? context.save() } }
     private func deleteInsights(at offsets: IndexSet) { for index in offsets { context.delete(insights[index]) }; try? context.save() }
     private func deleteGoals(at offsets: IndexSet) { for index in offsets { context.delete(goals[index]) }; try? context.save() }
     private func deletePlans(at offsets: IndexSet) { for index in offsets { context.delete(plans[index]) }; try? context.save() }
@@ -107,11 +115,15 @@ private struct CustomerProductView: View {
         product.websiteSourceExcerpt = String(sourceText.prefix(1_200)); product.websiteImportedAt = Date(); product.updatedAt = Date()
         try? context.save(); websiteMessage = "已按确认内容更新产品资料"
     }
+    /// 内置的 Apex 系列产品免费可用；推广用户自己的产品需要专业版。
+    private var canPromote: Bool { entitlements.isPremium || ProductAccess.isBuiltIn(brand) }
     private func createPromotionProject(goal: PromotionGoal? = nil) {
+        guard canPromote else { showingPaywall = true; return }
         let project = PromotionProjectFactory.makeProject(product: product, brand: brand, goal: goal, insights: insights)
         context.insert(project); try? context.save(); createdProject = project
     }
     private func generateBatch(for plan: PromotionPlan) {
+        guard canPromote else { showingPaywall = true; return }
         let goal = goals.first { $0.id == plan.goalID }
         let projects = PromotionProjectFactory.makeBatch(product: product, brand: brand, goal: goal, plan: plan, insights: insights)
         projects.forEach(context.insert)

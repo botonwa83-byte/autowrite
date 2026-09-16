@@ -151,6 +151,7 @@ struct ComposerView: View {
     }
     @Environment(\.modelContext) private var context
     @Query(sort: \CustomerProduct.createdAt) private var customerProducts: [CustomerProduct]
+    @Query private var brands: [BrandWorkspace]
     @State private var selectedID = ProductCatalog.seeds[0].id
     @State private var angle = ""
     @State private var tone = "真诚分享"
@@ -174,9 +175,16 @@ struct ComposerView: View {
     @State private var showingPaywall = false
     private var availableProducts: [ProductSeed] { customerProducts.isEmpty ? ProductCatalog.seeds : customerProducts.map(ProductCatalog.seed(from:)) }
     var selected: ProductSeed { availableProducts.first { $0.id == selectedID } ?? availableProducts[0] }
+    /// Apex 系列是官方自研产品，免费用户可以直接使用；自有产品需要专业版。
+    private var canPromoteSelected: Bool {
+        ProductAccess.canPromote(productID: selected.id, isPremium: entitlements.isPremium, brands: brands, products: customerProducts)
+    }
+    private var selectedIsBuiltIn: Bool {
+        ProductAccess.isBuiltIn(productID: selected.id, brands: brands, products: customerProducts)
+    }
     var body: some View {
         NavigationStack { Form {
-            if !entitlements.isPremium { Section { Button { showingPaywall = true } label: { Label("解锁后创建并导出自己的项目", systemImage: "lock") } } }
+            if !canPromoteSelected { Section { Button { showingPaywall = true } label: { Label("解锁后推广自己的产品", systemImage: "lock") } } }
             Section {
                 Picker("内容类型", selection: $mode) {
                     ForEach(ComposeMode.allCases) { Text($0.rawValue).tag($0) }
@@ -185,6 +193,9 @@ struct ComposerView: View {
             }
             Section("内容来源") {
                 Picker("产品", selection: $selectedID) { ForEach(availableProducts, id: \.id) { Text($0.name).tag($0.id) } }
+                if selectedIsBuiltIn && !entitlements.isPremium {
+                    Label("Apex 系列产品免费可用", systemImage: "checkmark.seal").font(.caption).foregroundStyle(.green)
+                }
                 TextField("传播角度（可选）", text: $angle); TextField("语气", text: $tone)
                 Button { loadWebsiteBrief() } label: { Label(loadingWebsite ? "正在读取官网资料" : "读取官网生成文案", systemImage: "globe") }.disabled(loadingWebsite)
                 if websiteBrief != nil {
@@ -248,7 +259,7 @@ struct ComposerView: View {
             }
             Section {
                 Button {
-                    guard entitlements.isPremium else { showingPaywall = true; return }
+                    guard canPromoteSelected else { showingPaywall = true; return }
                     let generated = LocalContentGenerator().generate(product: selected, angle: angle, tone: tone, websiteBrief: websiteBrief)
                     content = generated
                     findings = ContentValidator.validate(generated, product: selected)
@@ -312,7 +323,7 @@ struct ComposerView: View {
                         }
                     }
                     Button {
-                        guard entitlements.isPremium else { showingPaywall = true; return }
+                        guard canPromoteSelected else { showingPaywall = true; return }
                         let draft = ContentDraft(productID: selected.id, title: c.title, body: c.body, tags: c.tags, sourceIDs: [selected.id])
                         let project = PromotionProject(title: c.title, productID: selected.id, contentType: mode == .text ? .text : mode == .image ? .image : .video, platform: mode == .video ? videoPlatform.rawValue : textPlatform.rawValue, body: c.body, tags: c.tags)
                         project.sourceProductName = selected.name; project.sourceAudience = selected.audience; project.sourceSummary = selected.summary; project.sourceBenefits = selected.claims.joined(separator: "\n"); project.sourceURL = selected.sourceURL; project.sourceAngle = angle
