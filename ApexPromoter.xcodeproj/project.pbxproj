@@ -538,7 +538,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = Z7F8BY55DS;
 				INFOPLIST_FILE = ApexPromoter/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Apex 宣传台";
@@ -549,7 +549,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kingtop.apexpromoter;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.9;
@@ -618,7 +618,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = Z7F8BY55DS;
 				INFOPLIST_FILE = ApexPromoter/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Apex 宣传台";
@@ -629,7 +629,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kingtop.apexpromoter;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.9;
