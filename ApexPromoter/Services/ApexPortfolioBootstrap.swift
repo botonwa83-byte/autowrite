@@ -20,7 +20,19 @@ enum ApexPortfolioBootstrap {
         let existingProducts = try context.fetch(FetchDescriptor<CustomerProduct>())
         let existingNames = Set(existingProducts.map(\.name))
         let missingSeeds = ProductCatalog.builtInSeeds.filter { !existingNames.contains($0.name) }
-        guard !missingSeeds.isEmpty else { return nil }
+
+        // 同步内置产品的下载地址：产品行创建时会把当时的 storeURL 冻结进库
+        // （例如 Top 系列上架前存的是官网地址），上架拿到 App Store 链接后必须回写，
+        // 否则产品页与生成文案的下载地址一直是旧的。只修正内置产品，不动用户自建产品。
+        var storeURLUpdates = 0
+        for seed in ProductCatalog.builtInSeeds where existingNames.contains(seed.name) {
+            if let product = existingProducts.first(where: { $0.name == seed.name }),
+               product.storeURL != seed.storeURL {
+                product.storeURL = seed.storeURL
+                storeURLUpdates += 1
+            }
+        }
+        guard !missingSeeds.isEmpty || storeURLUpdates > 0 else { return nil }
 
         // 内置品牌：优先按 bootstrap 标记找回，其次按名称，最后才新建。
         let builtInBrandName = ProductAccess.builtInBrandName

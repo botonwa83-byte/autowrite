@@ -155,4 +155,59 @@ final class ApexPortfolioWorkflowTests: XCTestCase {
         // 再跑一次应无事可做。
         XCTAssertNil(try ApexPortfolioBootstrap.seedIfNeeded(in: container.mainContext, defaults: defaults, now: now))
     }
+
+    /// 产品上架状态变化后，老库冻结的下载地址要能同步：ChinTop/EngTop 已上架
+    /// 应回写 App Store 链接；MathTop 仍在审核，保持官网地址。
+    @MainActor
+    func testExistingBuiltInProductsSyncStoreURLAfterRelease() throws {
+        let schema = Schema([
+            BrandWorkspace.self,
+            CustomerProduct.self,
+            AudienceInsight.self,
+            PromotionGoal.self,
+            PromotionPlan.self,
+            PromotionProject.self
+        ])
+        let container = try ModelContainer(
+            for: schema,
+            configurations: ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+        )
+        let suiteName = "ApexPortfolioWorkflowTests.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+        let now = Date(timeIntervalSince1970: 1_800_000_000)
+
+        // 模拟旧库：全部产品都在，但 storeURL 全是当时冻结的官网地址。
+        let brand = BrandWorkspace(name: "Apex 系列")
+        container.mainContext.insert(brand)
+        for seed in ProductCatalog.builtInSeeds {
+            let product = CustomerProduct(brandID: brand.id, name: seed.name, websiteURL: seed.sourceURL)
+            product.storeURL = seed.sourceURL
+            container.mainContext.insert(product)
+        }
+        try container.mainContext.save()
+        defaults.set(brand.id.uuidString, forKey: ApexPortfolioBootstrap.markerKey)
+
+        let result = try XCTUnwrap(
+            ApexPortfolioBootstrap.seedIfNeeded(in: container.mainContext, defaults: defaults, now: now)
+        )
+        XCTAssertEqual(result.productCount, 0, "没有缺失产品，只做地址同步")
+        XCTAssertEqual(result.projectCount, 0)
+
+        let products = try container.mainContext.fetch(FetchDescriptor<CustomerProduct>())
+        XCTAssertEqual(products.count, 13)
+        for product in products {
+            let seed = try XCTUnwrap(ProductCatalog.builtInSeeds.first { $0.name == product.name })
+            XCTAssertEqual(product.storeURL, seed.storeURL, "\(product.name) 的下载地址应与目录同步")
+        }
+        for name in ["ChinTop", "EngTop"] {
+            let product = try XCTUnwrap(products.first { $0.name == name })
+            XCTAssertTrue(product.storeURL.contains("apps.apple.com"), "\(name) 已上架，下载地址应为 App Store 链接")
+        }
+        let mathTop = try XCTUnwrap(products.first { $0.name == "MathTop" })
+        XCTAssertFalse(mathTop.storeURL.contains("apps.apple.com"), "MathTop 审核中，下载地址应保持官网")
+
+        // 地址已同步，再跑一次应无事可做。
+        XCTAssertNil(try ApexPortfolioBootstrap.seedIfNeeded(in: container.mainContext, defaults: defaults, now: now))
+    }
 }
