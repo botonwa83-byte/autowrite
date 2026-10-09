@@ -99,11 +99,23 @@ enum WebsiteSyncService {
         let url = URL(string: "https://botonwa83-byte.github.io/")!
         let (data, response) = try await syncSession.data(from: url)
         guard let http = response as? HTTPURLResponse, 200..<300 ~= http.statusCode else { throw URLError(.badServerResponse) }
-        let html = String(decoding: data, as: UTF8.self)
+        return parseStoreLinks(from: String(decoding: data, as: UTF8.self))
+    }
+
+    /// 从官网 HTML 提取 App Store 链接，key 为链接末段（App ID）。
+    /// 官网页面会在多个版块重复放置同一链接，必须去重容错——
+    /// 曾因 `Dictionary(uniqueKeysWithValues:)` 遇到重复 key 直接崩溃（SIGTRAP）。
+    static func parseStoreLinks(from html: String) -> [String: String] {
         let pattern = #"https://apps\.apple\.com/[^\"'<> ]+"#
-        let matches = try NSRegularExpression(pattern: pattern).matches(in: html, range: NSRange(html.startIndex..., in: html))
+        guard let regex = try? NSRegularExpression(pattern: pattern) else { return [:] }
+        let matches = regex.matches(in: html, range: NSRange(html.startIndex..., in: html))
         let links = matches.compactMap { Range($0.range, in: html).map { String(html[$0]) } }
-        return Dictionary(uniqueKeysWithValues: links.compactMap { link in link.split(separator: "/").last.map { (String($0), link) } })
+        var result: [String: String] = [:]
+        for link in links {
+            guard let last = link.split(separator: "/").last else { continue }
+            if result[String(last)] == nil { result[String(last)] = link }
+        }
+        return result
     }
 }
 

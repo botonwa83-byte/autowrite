@@ -83,4 +83,19 @@ final class ApexPromoterUITests: XCTestCase {
         }
         XCTAssertTrue(app.buttons["再次分享已导出的封面"].waitForExistence(timeout: 10), "封面应成功导出")
     }
+
+    /// 同步官网期间界面必须保持响应：网络等待只挂起同步任务本身（超时 10 秒），
+    /// 不允许阻塞主线程。曾因 URLSession 默认 7 天资源超时表现为「死机」。
+    func testWebsiteSyncKeepsUIResponsive() {
+        let app = launchApp()
+        XCTAssertTrue(app.buttons["查看 7 步推广教程"].waitForExistence(timeout: 5), "首页应可见")
+
+        app.buttons["同步官网产品链接"].tap()
+        app.tabBars.buttons["产品"].tap()
+        XCTAssertTrue(app.navigationBars["Apex 产品"].waitForExistence(timeout: 3), "同步期间应能立即切换标签页")
+
+        app.tabBars.buttons["首页"].tap()
+        let syncButton = app.buttons["同步官网产品链接"]
+        XCTAssertTrue(syncButton.waitForExistence(timeout: 20), "同步结束（成功或超时失败）后按钮应恢复可点")
+    }
 }

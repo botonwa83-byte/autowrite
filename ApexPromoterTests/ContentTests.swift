@@ -119,6 +119,21 @@ final class ContentTests: XCTestCase {
         return count
     }
 
+    /// 官网会在多个版块重复放置同一条 App Store 链接，解析必须去重容错——
+    /// 曾因 `Dictionary(uniqueKeysWithValues:)` 遇到重复 key 直接崩溃（SIGTRAP，表现为点同步官网死机）。
+    func testStoreLinkParsingToleratesDuplicateLinks() {
+        let html = """
+        <a href="https://apps.apple.com/cn/app/chinapex/id6781556016">ChinApex</a>
+        <a href="https://apps.apple.com/cn/app/chinapex/id6781556016">ChinApex 重复</a>
+        <a href="https://apps.apple.com/cn/app/engtop/id6815115946?uo=4">EngTop</a>
+        <p>没有链接的段落</p>
+        """
+        let links = WebsiteSyncService.parseStoreLinks(from: html)
+        XCTAssertEqual(links["id6781556016"], "https://apps.apple.com/cn/app/chinapex/id6781556016")
+        XCTAssertEqual(links["id6815115946?uo=4"], "https://apps.apple.com/cn/app/engtop/id6815115946?uo=4")
+        XCTAssertEqual(links.count, 2)
+    }
+
     func testUserGuideCoversCompletePromotionWorkflow() {
         XCTAssertEqual(UserGuide.steps.count, 7)
         XCTAssertEqual(UserGuide.steps.first?.destination, .brands)
