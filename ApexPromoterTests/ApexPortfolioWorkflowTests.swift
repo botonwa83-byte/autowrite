@@ -97,4 +97,62 @@ final class ApexPortfolioWorkflowTests: XCTestCase {
         XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<CustomerProduct>()), 13)
         XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<PromotionProject>()), 39)
     }
+
+    /// 目录扩充前的老安装只有 Apex 系列；再次启动必须补齐 WordPulse 与 Top 系列，
+    /// 否则创作页的产品选择器里看不到新家族产品。
+    @MainActor
+    func testExistingInstallTopsUpMissingFamilyProducts() throws {
+        let schema = Schema([
+            BrandWorkspace.self,
+            CustomerProduct.self,
+            AudienceInsight.self,
+            PromotionGoal.self,
+            PromotionPlan.self,
+            PromotionProject.self
+        ])
+        let container = try ModelContainer(
+            for: schema,
+            configurations: ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+        )
+        let suiteName = "ApexPortfolioWorkflowTests.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+        let now = Date(timeIntervalSince1970: 1_800_000_000)
+
+        // 模拟老安装：标记已写入，内置品牌下只有 9 个 Apex 产品，且没有子记录。
+        let brand = BrandWorkspace(name: "Apex 系列")
+        container.mainContext.insert(brand)
+        for seed in ProductCatalog.apexSeeds {
+            container.mainContext.insert(CustomerProduct(
+                brandID: brand.id,
+                name: seed.name,
+                websiteURL: seed.sourceURL
+            ))
+        }
+        try container.mainContext.save()
+        defaults.set(brand.id.uuidString, forKey: ApexPortfolioBootstrap.markerKey)
+
+        let result = try XCTUnwrap(
+            ApexPortfolioBootstrap.seedIfNeeded(in: container.mainContext, defaults: defaults, now: now)
+        )
+
+        let products = try container.mainContext.fetch(FetchDescriptor<CustomerProduct>())
+        XCTAssertEqual(result.productCount, 4, "应补齐 WordPulse 与 Top 系列共 4 个产品")
+        XCTAssertEqual(result.projectCount, 12)
+        XCTAssertEqual(products.count, 13)
+        XCTAssertEqual(Set(products.map(\.name)), Set(ProductCatalog.builtInSeeds.map(\.name)))
+
+        let topProducts = products.filter { ["ChinTop", "MathTop", "EngTop", "WordPulse"].contains($0.name) }
+        XCTAssertEqual(Set(topProducts.map(\.brandID)), Set([brand.id]), "补齐产品应挂在内置品牌下")
+        for product in topProducts {
+            let id = product.id
+            XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<AudienceInsight>(predicate: #Predicate { $0.productID == id })), 2)
+            XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<PromotionGoal>(predicate: #Predicate { $0.productID == id })), 1)
+            XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<PromotionPlan>(predicate: #Predicate { $0.productID == id })), 1)
+            XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<PromotionProject>(predicate: #Predicate { $0.productID == id.uuidString })), 3)
+        }
+
+        // 再跑一次应无事可做。
+        XCTAssertNil(try ApexPortfolioBootstrap.seedIfNeeded(in: container.mainContext, defaults: defaults, now: now))
+    }
 }
