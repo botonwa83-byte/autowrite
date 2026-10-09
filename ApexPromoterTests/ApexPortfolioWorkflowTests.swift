@@ -30,8 +30,8 @@ final class ApexPortfolioWorkflowTests: XCTestCase {
             )
         )
 
-        XCTAssertEqual(result.productCount, 9)
-        XCTAssertEqual(result.projectCount, 27)
+        XCTAssertEqual(result.productCount, 13)
+        XCTAssertEqual(result.projectCount, 39)
 
         let brands = try container.mainContext.fetch(FetchDescriptor<BrandWorkspace>())
         let products = try container.mainContext.fetch(FetchDescriptor<CustomerProduct>())
@@ -41,29 +41,30 @@ final class ApexPortfolioWorkflowTests: XCTestCase {
         let projects = try container.mainContext.fetch(FetchDescriptor<PromotionProject>())
 
         XCTAssertEqual(brands.map(\.name), ["Apex 系列"])
-        XCTAssertEqual(products.count, 9)
-        XCTAssertEqual(insights.count, 18)
-        XCTAssertEqual(goals.count, 9)
-        XCTAssertEqual(plans.count, 9)
-        XCTAssertEqual(projects.count, 27)
-        XCTAssertEqual(Set(products.map(\.name)), Set(ProductCatalog.apexSeeds.map(\.name)))
+        XCTAssertEqual(products.count, 13)
+        XCTAssertEqual(insights.count, 26)
+        XCTAssertEqual(goals.count, 13)
+        XCTAssertEqual(plans.count, 13)
+        XCTAssertEqual(projects.count, 39)
+        XCTAssertEqual(Set(products.map(\.name)), Set(ProductCatalog.builtInSeeds.map(\.name)))
         XCTAssertTrue(ProductCatalog.apexSeeds.allSatisfy(\.isReleased))
         XCTAssertTrue(products.allSatisfy { !$0.storeURL.isEmpty && !$0.websiteSourceExcerpt.isEmpty })
         XCTAssertTrue(insights.allSatisfy { $0.evidenceState == .verified && !$0.sourceURL.isEmpty })
-        XCTAssertTrue(goals.allSatisfy { $0.kind == .downloadGrowth && $0.primaryAction.contains("App Store") })
+        XCTAssertTrue(goals.allSatisfy { $0.kind == .downloadGrowth && $0.primaryAction.contains("下载") })
         XCTAssertTrue(plans.allSatisfy { $0.generatedAt == now && $0.plannedPostCount == 3 })
         XCTAssertEqual(Set(projects.map(\.platformRaw)), Set(["小红书", "微信公众号", "抖音"]))
         XCTAssertTrue(projects.allSatisfy { project in
             project.publishStatus == .ready
                 && project.scheduledAt != nil
                 && project.body.contains("下一步")
-                && project.body.contains("App Store")
+                && project.body.contains("官网")
+                && project.body.contains("下载地址")
                 && !project.sourceInsightContext.isEmpty
                 && project.sourcePlanID != nil
         })
 
         for project in projects {
-            let seed = try XCTUnwrap(ProductCatalog.apexSeeds.first { $0.name == project.sourceProductName })
+            let seed = try XCTUnwrap(ProductCatalog.builtInSeeds.first { $0.name == project.sourceProductName })
             let content = GeneratedContent(title: project.title, body: project.body, tags: project.tags)
             XCTAssertFalse(ContentValidator.validate(content, product: seed).contains(where: \.blocking))
             XCTAssertFalse(PublishAdapterRegistry.adapter(for: PublishPlatform(rawValue: project.platformRaw)!).plan(for: content).formattedText.isEmpty)
@@ -93,7 +94,7 @@ final class ApexPortfolioWorkflowTests: XCTestCase {
         XCTAssertEqual(review.bestAngle, published.sourceAngle)
 
         XCTAssertNil(try ApexPortfolioBootstrap.seedIfNeeded(in: container.mainContext, defaults: defaults, now: now))
-        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<CustomerProduct>()), 9)
-        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<PromotionProject>()), 27)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<CustomerProduct>()), 13)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<PromotionProject>()), 39)
     }
 }

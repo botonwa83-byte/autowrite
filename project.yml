@@ -8,10 +8,7 @@ schemes:
     build:
       targets:
         ApexPromoter: all
-    run:
-      storeKitConfiguration: ApexPromoter/ApexPromoter.storekit
     test:
-      storeKitConfiguration: ApexPromoter/ApexPromoter.storekit
       targets:
         - ApexPromoterTests
         - ApexPromoterUITests
@@ -20,7 +17,7 @@ targets:
     type: application
     platform: iOS
     sources: [ApexPromoter]
-    resources: [ApexPromoter/Resources, ApexPromoter/ApexPromoter.storekit, ApexPromoter/PrivacyInfo.xcprivacy]
+    resources: [ApexPromoter/Resources, ApexPromoter/PrivacyInfo.xcprivacy]
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: com.kingtop.apexpromoter
       DEVELOPMENT_TEAM: Z7F8BY55DS

@@ -103,12 +103,14 @@ enum PromotionProjectFactory {
             .joined(separator: "\n")
         let resolvedAngle = angle ?? goal?.kind.title ?? ""
         let sourceURL = product.websiteURL.isEmpty ? product.storeURL : product.websiteURL
+        let downloadURL = product.storeURL.isEmpty ? sourceURL : product.storeURL
         let generated = LocalContentGenerator().generate(
             productName: product.name,
             audience: product.audience,
             summary: product.summary,
             benefits: benefits,
             sourceURL: sourceURL,
+            downloadURL: downloadURL,
             goalAction: goal?.primaryAction ?? "",
             insightContext: insightContext,
             angle: resolvedAngle,
@@ -168,28 +170,34 @@ enum PromotionProjectFactory {
 
 protocol ContentGenerating { func generate(product: ProductSeed, angle: String, tone: String) -> GeneratedContent }
 struct LocalContentGenerator: ContentGenerating {
-    func generate(productName: String, audience: String, summary: String, benefits: [String], sourceURL: String, goalAction: String = "", insightContext: String = "", angle: String, tone: String) -> GeneratedContent {
+    static func linkSection(sourceURL: String, downloadURL: String) -> String {
+        let resolvedDownload = downloadURL.isEmpty ? sourceURL : downloadURL
+        return "官网：\(sourceURL)\n下载地址：\(resolvedDownload)"
+    }
+
+    func generate(productName: String, audience: String, summary: String, benefits: [String], sourceURL: String, downloadURL: String = "", goalAction: String = "", insightContext: String = "", angle: String, tone: String) -> GeneratedContent {
         let focus = angle.isEmpty ? "产品如何解决真实问题" : angle
         let points = benefits.isEmpty ? [summary] : benefits
         let title = "\(productName)｜\(focus)"
         let actionSection = goalAction.isEmpty ? "" : "\n\n下一步\n\(goalAction)"
         let insightSection = insightContext.isEmpty ? "" : "\n\n客户洞察\n\(insightContext)"
-        let body = "如果你正在寻找适合\(audience)的解决方案，可以先了解 \(productName)。\n\n产品定位\n\(summary)\n\n核心价值\n" + points.filter { !$0.isEmpty }.map { "· \($0)" }.joined(separator: "\n") + insightSection + actionSection + "\n\n建议先从一个真实使用场景开始体验，再判断它是否适合自己的需求。\n\n了解更多\n\(sourceURL)"
+        let linkSection = Self.linkSection(sourceURL: sourceURL, downloadURL: downloadURL)
+        let body = "如果你正在寻找适合\(audience)的解决方案，可以先了解 \(productName)。\n\n产品定位\n\(summary)\n\n核心价值\n" + points.filter { !$0.isEmpty }.map { "· \($0)" }.joined(separator: "\n") + insightSection + actionSection + "\n\n建议先从一个真实使用场景开始体验，再判断它是否适合自己的需求。\n\n\(linkSection)"
         return GeneratedContent(title: title, body: body, tags: "#\(productName) #产品体验 #效率工具 #独立开发")
     }
     func generate(product: ProductSeed, angle: String, tone: String, websiteBrief: WebsitePromotionBrief? = nil) -> GeneratedContent {
         var generated = generate(product: product, angle: angle, tone: tone)
         if let brief = websiteBrief {
             let points = brief.highlights.isEmpty ? product.claims : brief.highlights
-            generated.body = "\(product.promoHook)\n\n产品定位\n\(brief.positioning)\n\n适合人群\n\(brief.audience)\n\n核心亮点\n" + points.map { "· \($0)" }.joined(separator: "\n") + "\n\n了解更多\n\(product.sourceURL)"
+            generated.body = "\(product.promoHook)\n\n产品定位\n\(brief.positioning)\n\n适合人群\n\(brief.audience)\n\n核心亮点\n" + points.map { "· \($0)" }.joined(separator: "\n") + "\n\n\(product.linkSection)\n\n*文中信息来自产品公开资料，具体功能请以产品页面为准。*"
         }
         return generated
     }
     func generate(product: ProductSeed, angle: String, tone: String) -> GeneratedContent {
         let hook = product.promoHook
         let title = "\(product.name)｜\(angle.isEmpty ? "把学习方法真正用起来" : angle)"
-        let availability = product.isReleased ? "下载地址：\(product.storeURL)" : "产品状态：上架准备中，可关注首批体验进展"
-        let body = "\(hook)\n\n产品定位\n\(product.summary)\n\n我会这样用：\n1. 先选一个正在卡住的模块；\n2. 跟着产品里的结构化路径走一遍；\n3. 把没掌握的地方留下标记，下一次复习直接回到现场。\n\n这套产品目前提供：\n· \(product.claims.joined(separator: "\n· "))\n\n它更适合\(product.audience)做长期、低压力的日常学习。先用一个模块感受是否适合自己的节奏，再决定是否购买完整功能。\n\n开发者：\(product.developer)\n\(availability)\n产品介绍：\(product.sourceURL)\n\n*文中信息来自产品公开资料，具体功能和价格请以 App Store 页面为准。*"
+        let availability = product.availabilityLine
+        let body = "\(hook)\n\n产品定位\n\(product.summary)\n\n我会这样用：\n1. 先选一个正在卡住的模块；\n2. 跟着产品里的结构化路径走一遍；\n3. 把没掌握的地方留下标记，下一次复习直接回到现场。\n\n这套产品目前提供：\n· \(product.claims.joined(separator: "\n· "))\n\n它更适合\(product.audience)做长期、低压力的日常学习，全部功能免费使用。\n\n\(product.linkSection)\n\n*文中信息来自产品公开资料，具体功能请以产品页面为准。*"
         return .init(title: title, body: body, tags: "#\(product.name) #学习方法 #自律学习 #教育App #学习打卡")
     }
 }

@@ -17,11 +17,11 @@ Apex is the first real validation customer and a built-in example brand. Product
 
 ## Commercial Model
 
-- Free: use the built-in Apex series products end to end — browse references, generate copy, import media, export packages, schedule into the publishing queue, and record results.
-- Premium (one-time, non-consumable): create and promote your own brands and products. Creating a brand or product, and running a promotion project against a self-owned product, requires the unlock.
-- The Apex series is Kingtop's own product line, kept in the app for Kingtop's own promotion. Free use of it is intentional, not a trial.
-- Entitlement policy lives in `ApexPromoter/Services/ProductAccess.swift`; views never inspect StoreKit transaction details directly.
-- Entitlements are verified with StoreKit 2 on launch and whenever the app returns to the foreground. Unconfigured products or no network must surface as `unavailable`, never as fake premium.
+- The app is completely free — no premium tier, no in-app purchases. As of 2026-10-09 the StoreKit entitlement module (EntitlementStore, PaywallView, .storekit config) has been removed.
+- Everything is available to everyone: browse the built-in Kingtop family products, generate copy, import media, export packages, schedule into the publishing queue, record results, and create/promote your own brands and products.
+- The built-in catalog covers Kingtop's own product family: the Apex series, WordPulse, and the Top series (ChinTop 语文 / MathTop 数学 / EngTop 英语). All are official, self-developed products kept in the app for Kingtop's own promotion, free by design — not a trial.
+- Generated copy always ends with the official site and a download address: released products use the App Store link, unreleased ones fall back to the official site.
+- `ProductAccess.canPromote` now always returns true; `isBuiltIn` is kept only to display the "官方自研" badge. Views contain no purchase or entitlement logic.
 
 ## Product Roadmap
 
@@ -47,7 +47,7 @@ Apex is the first real validation customer and a built-in example brand. Product
 - Customer products can import their own websites through code/noise cleaning, structured positioning/audience/benefit extraction, editable confirmation, and source snapshot preservation.
 - Website imports never overwrite a customer profile until the user explicitly confirms the structured preview; custom project regeneration can re-read the customer website.
 - An in-app seven-step guide covers brand setup, website import, customer insight, goals, plans, publishing, and performance review. It opens on first use and remains available from the dashboard.
-- Free users get the full workflow on Apex series products; the unlock only gates creating and promoting their own brands and products.
+- Every user gets the full workflow on the built-in Kingtop family products and on their own brands and products — nothing is gated.
 - Next priority: promotion-readiness checks that identify missing product facts, verified customer evidence, goals, and usable media before batch creation.
 
 ## Product Principles

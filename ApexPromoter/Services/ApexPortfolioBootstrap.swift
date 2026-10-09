@@ -25,7 +25,7 @@ enum ApexPortfolioBootstrap {
         context.insert(brand)
 
         var projectCount = 0
-        for (index, seed) in ProductCatalog.apexSeeds.enumerated() {
+        for (index, seed) in ProductCatalog.builtInSeeds.enumerated() {
             let product = CustomerProduct(
                 brandID: brand.id,
                 name: seed.name,
@@ -63,7 +63,7 @@ enum ApexPortfolioBootstrap {
                 kind: .downloadGrowth,
                 targetValue: 100,
                 deadline: now.addingTimeInterval(30 * 86400),
-                primaryAction: "前往 App Store 下载并体验 \(seed.name)"
+                primaryAction: seed.isReleased ? "前往 App Store 下载并体验 \(seed.name)" : "前往官网了解 \(seed.name) 的上架进展与下载方式"
             )
             context.insert(goal)
 
@@ -93,7 +93,7 @@ enum ApexPortfolioBootstrap {
             try context.save()
             defaults.set(brand.id.uuidString, forKey: markerKey)
             return ApexPortfolioBootstrapResult(
-                productCount: ProductCatalog.apexSeeds.count,
+                productCount: ProductCatalog.builtInSeeds.count,
                 projectCount: projectCount
             )
         } catch {

@@ -11,8 +11,6 @@
 		07A6EFC0782DBD5BE5AEA59D /* PublishAdapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C02837C3B47F64BE2014347 /* PublishAdapters.swift */; };
 		10A0B21FAC76D1B00C2AE8B6 /* physicsapex.png in Resources */ = {isa = PBXBuildFile; fileRef = E3AB402E32C744C8E13285CD /* physicsapex.png */; };
 		16AF2481F3F44D639AD03A1F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE5B3DAE7060C98160CDB4 /* Theme.swift */; };
-		1C3625E4C1A9AE6767FE2D75 /* EntitlementStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55827EEE7C962C4ED1B649FD /* EntitlementStoreTests.swift */; };
-		261F88DE36C54C380F22BBAF /* EntitlementStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBA720F93043778E409EC02 /* EntitlementStore.swift */; };
 		2C1345A191E2492DA7EE04AB /* ContentGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D90AE9346FF6B98FC8D52E4 /* ContentGenerator.swift */; };
 		33779C07F515C43BB013AE85 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 30F70CC85B327982E590A8EB /* PrivacyInfo.xcprivacy */; };
 		35D4EB008BEAA5A945066C04 /* ContentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CD734E7EEE4161C70E0A85 /* ContentTests.swift */; };
@@ -28,7 +26,6 @@
 		7FAACE97D9530D521AD6D012 /* chemapex.png in Resources */ = {isa = PBXBuildFile; fileRef = 35321E98E1F20070A26C6BAF /* chemapex.png */; };
 		7FDC92C6B17E8179D479E93B /* ApexPromoterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A8EAFE69F69D2F1794F6D0 /* ApexPromoterApp.swift */; };
 		81E71B948ABA7B9F5802D783 /* bioapex.png in Resources */ = {isa = PBXBuildFile; fileRef = BA8771641DE0D8B12A47C3E2 /* bioapex.png */; };
-		8361F1EACE3BCD9C24C98441 /* ApexPromoter.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 653D0E37869B2A7E1D8E2FC3 /* ApexPromoter.storekit */; };
 		8592766F6FDF1D3603F0B5CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE8D632359E0CEC642C1FB2E /* Assets.xcassets */; };
 		898F217D89CEE084825EB4DB /* ProjectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD9DA9E80165419CD9EF133 /* ProjectsView.swift */; };
 		8F19B8D867E70F0B008CBAC7 /* SlideshowVideoRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B5D11CDDCDD0C7373409A2 /* SlideshowVideoRenderer.swift */; };
@@ -36,7 +33,6 @@
 		98F890066835002324137BF4 /* ApexPortfolioBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9729C34191C743EFCC9E99F /* ApexPortfolioBootstrap.swift */; };
 		9CED2A08AF7461782091FAC3 /* WebsiteTextCleanerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817B13CB8789ADFDF8B44878 /* WebsiteTextCleanerTests.swift */; };
 		B100FCF717C49FAC51DCEC73 /* products.json in Resources */ = {isa = PBXBuildFile; fileRef = C71C7410CE798403930E9317 /* products.json */; };
-		B4C1B3FBDDB52E9164BAE728 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD56C2187B8D41AADFEC1607 /* PaywallView.swift */; };
 		B6CFE9187355C0B40973618D /* histapex.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EEA2EE603AD16C672E3DC48 /* histapex.png */; };
 		C08438A0D130172BEAF94FF9 /* BrandCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8209FF1F2E8C3587F64EC9F2 /* BrandCenterView.swift */; };
 		CE9CE7A1FCAE93F6F85A663D /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8F8C8E07B2D1BA5F30EC33 /* RootView.swift */; };
@@ -72,9 +68,7 @@
 		30F70CC85B327982E590A8EB /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		35321E98E1F20070A26C6BAF /* chemapex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chemapex.png; sourceTree = "<group>"; };
 		5465F8DF136D2A7FDCA0D0F7 /* ContentValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentValidator.swift; sourceTree = "<group>"; };
-		55827EEE7C962C4ED1B649FD /* EntitlementStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitlementStoreTests.swift; sourceTree = "<group>"; };
 		5EFE5B3DAE7060C98160CDB4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
-		653D0E37869B2A7E1D8E2FC3 /* ApexPromoter.storekit */ = {isa = PBXFileReference; path = ApexPromoter.storekit; sourceTree = "<group>"; };
 		67029966999F43752160AF3C /* chinapex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chinapex.png; sourceTree = "<group>"; };
 		6C02837C3B47F64BE2014347 /* PublishAdapters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishAdapters.swift; sourceTree = "<group>"; };
 		72A8EAFE69F69D2F1794F6D0 /* ApexPromoterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApexPromoterApp.swift; sourceTree = "<group>"; };
@@ -100,12 +94,10 @@
 		C9CD734E7EEE4161C70E0A85 /* ContentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTests.swift; sourceTree = "<group>"; };
 		CE8D632359E0CEC642C1FB2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D4BE4AD18A9F050DB7238FF9 /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
-		DFBA720F93043778E409EC02 /* EntitlementStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitlementStore.swift; sourceTree = "<group>"; };
 		E3AB402E32C744C8E13285CD /* physicsapex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = physicsapex.png; sourceTree = "<group>"; };
 		F36D401FD3E82D8DFF7ED81A /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
 		F9729C34191C743EFCC9E99F /* ApexPortfolioBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApexPortfolioBootstrap.swift; sourceTree = "<group>"; };
 		FAD9DA9E80165419CD9EF133 /* ProjectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsView.swift; sourceTree = "<group>"; };
-		FD56C2187B8D41AADFEC1607 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		FF8428C46D1733573E95B8E3 /* ProductCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCatalog.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,7 +118,6 @@
 				8209FF1F2E8C3587F64EC9F2 /* BrandCenterView.swift */,
 				D4BE4AD18A9F050DB7238FF9 /* HelpView.swift */,
 				F36D401FD3E82D8DFF7ED81A /* MoreView.swift */,
-				FD56C2187B8D41AADFEC1607 /* PaywallView.swift */,
 				0B95A1A0D48C7BEA5C697461 /* ProjectDetailView.swift */,
 				FAD9DA9E80165419CD9EF133 /* ProjectsView.swift */,
 				AB8F8C8E07B2D1BA5F30EC33 /* RootView.swift */,
@@ -149,7 +140,6 @@
 			children = (
 				A0BE6C0370264DB1343D1AF6 /* ApexPortfolioWorkflowTests.swift */,
 				C9CD734E7EEE4161C70E0A85 /* ContentTests.swift */,
-				55827EEE7C962C4ED1B649FD /* EntitlementStoreTests.swift */,
 				0A89C32887AC2DE58E86A67A /* ProductAccessTests.swift */,
 				7C17AC0EED64016BE38C75FA /* PublishAdapterTests.swift */,
 				817B13CB8789ADFDF8B44878 /* WebsiteTextCleanerTests.swift */,
@@ -192,7 +182,6 @@
 		AFD3C5B051321A1D5E305A85 /* ApexPromoter */ = {
 			isa = PBXGroup;
 			children = (
-				653D0E37869B2A7E1D8E2FC3 /* ApexPromoter.storekit */,
 				72A8EAFE69F69D2F1794F6D0 /* ApexPromoterApp.swift */,
 				AA355050CF2F66B6628266FF /* Info.plist */,
 				30F70CC85B327982E590A8EB /* PrivacyInfo.xcprivacy */,
@@ -211,7 +200,6 @@
 				F9729C34191C743EFCC9E99F /* ApexPortfolioBootstrap.swift */,
 				8D90AE9346FF6B98FC8D52E4 /* ContentGenerator.swift */,
 				5465F8DF136D2A7FDCA0D0F7 /* ContentValidator.swift */,
-				DFBA720F93043778E409EC02 /* EntitlementStore.swift */,
 				979D614F864EB7C49393604F /* ProductAccess.swift */,
 				FF8428C46D1733573E95B8E3 /* ProductCatalog.swift */,
 				6C02837C3B47F64BE2014347 /* PublishAdapters.swift */,
@@ -338,7 +326,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8361F1EACE3BCD9C24C98441 /* ApexPromoter.storekit in Resources */,
 				8592766F6FDF1D3603F0B5CE /* Assets.xcassets in Resources */,
 				33779C07F515C43BB013AE85 /* PrivacyInfo.xcprivacy in Resources */,
 				81E71B948ABA7B9F5802D783 /* bioapex.png in Resources */,
@@ -371,7 +358,6 @@
 			files = (
 				F5B48DD455E8FB22EB9216E0 /* ApexPortfolioWorkflowTests.swift in Sources */,
 				35D4EB008BEAA5A945066C04 /* ContentTests.swift in Sources */,
-				1C3625E4C1A9AE6767FE2D75 /* EntitlementStoreTests.swift in Sources */,
 				538959E82D445360D70CF4D4 /* ProductAccessTests.swift in Sources */,
 				000752ED12292F14994879A2 /* PublishAdapterTests.swift in Sources */,
 				9CED2A08AF7461782091FAC3 /* WebsiteTextCleanerTests.swift in Sources */,
@@ -387,11 +373,9 @@
 				C08438A0D130172BEAF94FF9 /* BrandCenterView.swift in Sources */,
 				2C1345A191E2492DA7EE04AB /* ContentGenerator.swift in Sources */,
 				E3D4EA457787132C9F9D21EF /* ContentValidator.swift in Sources */,
-				261F88DE36C54C380F22BBAF /* EntitlementStore.swift in Sources */,
 				98E583C771F6D1CF1D566869 /* HelpView.swift in Sources */,
 				F1CAF8DF1DBBCDF958AC9ED3 /* Models.swift in Sources */,
 				59F9D062C2FEA84C67869A88 /* MoreView.swift in Sources */,
-				B4C1B3FBDDB52E9164BAE728 /* PaywallView.swift in Sources */,
 				6274CE2870BEC85943200C06 /* ProductAccess.swift in Sources */,
 				44D3C80FCDADA3550E84824B /* ProductCatalog.swift in Sources */,
 				7902761281A4E46162AB79B5 /* ProjectDetailView.swift in Sources */,

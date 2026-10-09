@@ -3,12 +3,6 @@ import SwiftData
 
 @main
 struct ApexPromoterApp: App {
-    #if DEBUG
-    @StateObject private var entitlements = EntitlementStore(previewState: ProcessInfo.processInfo.arguments.contains("--ui-testing-premium") ? .premium : nil)
-    #else
-    @StateObject private var entitlements = EntitlementStore()
-    #endif
-    @Environment(\.scenePhase) private var scenePhase
     private let modelContainer: ModelContainer = {
         let schema = Schema([BrandWorkspace.self, CustomerProduct.self, AudienceInsight.self, PromotionGoal.self, PromotionPlan.self, Product.self, ContentDraft.self, ReviewEvent.self, Asset.self, PromotionProject.self, ProjectAsset.self, ProjectVersion.self, PublishAttempt.self])
         let fileManager = FileManager.default
@@ -46,16 +40,8 @@ struct ApexPromoterApp: App {
     }()
     var body: some Scene {
         WindowGroup {
-            // 启动就必须加载商品并校验权益，否则购买按钮在首次点击时只会加载商品、
-            // 不会弹出购买面板。
-            RootView(modelContainer: modelContainer).environmentObject(entitlements)
-                .task { await entitlements.refresh() }
+            RootView(modelContainer: modelContainer)
         }
         .modelContainer(modelContainer)
-        .onChange(of: scenePhase) { _, phase in
-            // 回到前台时重新校验，覆盖退款、其他设备购买以及漏发的交易更新。
-            guard phase == .active else { return }
-            Task { await entitlements.refresh() }
-        }
     }
 }

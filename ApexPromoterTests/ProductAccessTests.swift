@@ -13,9 +13,10 @@ final class ProductAccessTests: XCTestCase {
 
     func testBuiltInCatalogCoversEveryBundledProduct() {
         XCTAssertEqual(ProductAccess.builtInCatalogIDs, Set(ProductCatalog.seeds.map(\.id)))
-        // WordPulse 也是官方自研产品，但不以 "apex" 结尾，不能只依赖 apexSeeds。
-        XCTAssertTrue(ProductAccess.builtInCatalogIDs.contains("wordpulse"))
-        XCTAssertEqual(ProductAccess.builtInCatalogIDs.count, ProductCatalog.apexSeeds.count + 1)
+        // WordPulse 与 Top 系列（语数外）也是同族官方自研产品，但不以 "apex" 结尾，不能只依赖 apexSeeds。
+        let nonApexBuiltIns = ["wordpulse", "chintop", "mathtop", "engtop"]
+        XCTAssertTrue(nonApexBuiltIns.allSatisfy { ProductAccess.builtInCatalogIDs.contains($0) })
+        XCTAssertEqual(ProductAccess.builtInCatalogIDs.count, ProductCatalog.apexSeeds.count + nonApexBuiltIns.count)
     }
 
     @MainActor
@@ -28,27 +29,20 @@ final class ProductAccessTests: XCTestCase {
         let result = try XCTUnwrap(
             ApexPortfolioBootstrap.seedIfNeeded(in: container.mainContext, defaults: defaults)
         )
-        let brands = try container.mainContext.fetch(FetchDescriptor<BrandWorkspace>())
         let products = try container.mainContext.fetch(FetchDescriptor<CustomerProduct>())
         XCTAssertEqual(products.count, result.productCount)
 
-        // 免费用户必须能直接用完 Apex 系列的全部产品。
+        // 全部免费后，内置产品依然可以直接推广。
         for product in products {
             XCTAssertTrue(
-                ProductAccess.canPromote(
-                    productID: product.id.uuidString,
-                    isPremium: false,
-                    brands: brands,
-                    products: products,
-                    in: defaults
-                ),
+                ProductAccess.canPromote(productID: product.id.uuidString),
                 "\(product.name) 应保持免费可用"
             )
         }
     }
 
     @MainActor
-    func testUserOwnedProductsRequirePremium() throws {
+    func testUserOwnedProductsAreAlsoFree() throws {
         let container = try makeContainer()
         let suiteName = "ProductAccessTests.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
@@ -60,28 +54,9 @@ final class ProductAccessTests: XCTestCase {
         let ownProduct = CustomerProduct(brandID: ownBrand.id, name: "我的产品")
         container.mainContext.insert(ownProduct)
 
-        let brands = try container.mainContext.fetch(FetchDescriptor<BrandWorkspace>())
-        let products = try container.mainContext.fetch(FetchDescriptor<CustomerProduct>())
-
         XCTAssertFalse(ProductAccess.isBuiltIn(ownBrand, in: defaults))
-        XCTAssertFalse(
-            ProductAccess.canPromote(
-                productID: ownProduct.id.uuidString,
-                isPremium: false,
-                brands: brands,
-                products: products,
-                in: defaults
-            )
-        )
-        XCTAssertTrue(
-            ProductAccess.canPromote(
-                productID: ownProduct.id.uuidString,
-                isPremium: true,
-                brands: brands,
-                products: products,
-                in: defaults
-            )
-        )
+        // App 已全面免费：自有产品不再需要解锁，一律可以直接推广。
+        XCTAssertTrue(ProductAccess.canPromote(productID: ownProduct.id.uuidString))
     }
 
     @MainActor

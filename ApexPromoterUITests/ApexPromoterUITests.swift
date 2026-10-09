@@ -30,17 +30,17 @@ final class ApexPromoterUITests: XCTestCase {
         XCTAssertTrue(app.tabBars.buttons["更多"].exists)
     }
 
-    /// 免费用户必须能直接对内置 Apex 产品生成内容，不能弹出付费页。
+    /// App 已全面免费：内置产品要能直接生成内容，任何情况下都不应出现付费墙。
     func testFreeUserCanComposeForBuiltInApexProduct() {
         let app = launchApp()
         app.tabBars.buttons["创作"].tap()
 
         XCTAssertTrue(app.buttons["生成纯文字发布包"].waitForExistence(timeout: 5), "创作页应可直接使用")
-        XCTAssertFalse(app.staticTexts["一次性解锁专业版"].exists, "内置 Apex 产品不应触发付费页")
+        XCTAssertFalse(app.staticTexts["一次性解锁专业版"].exists, "不应存在付费页")
 
         app.buttons["生成纯文字发布包"].tap()
 
-        XCTAssertTrue(app.staticTexts["纯文字草稿已生成。"].waitForExistence(timeout: 5), "免费用户应能生成草稿")
-        XCTAssertFalse(app.staticTexts["一次性解锁专业版"].exists, "免费生成不应弹出付费页")
+        XCTAssertTrue(app.staticTexts["纯文字草稿已生成。"].waitForExistence(timeout: 5), "应能直接生成草稿")
+        XCTAssertFalse(app.staticTexts["一次性解锁专业版"].exists, "生成不应弹出付费页")
     }
 }

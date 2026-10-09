@@ -144,7 +144,6 @@ struct ProductsView: View {
 }
 
 struct ComposerView: View {
-    @EnvironmentObject private var entitlements: EntitlementStore
     private enum ComposeMode: String, CaseIterable, Identifiable {
         case text = "纯文字", image = "图文", video = "视频"
         var id: String { rawValue }
@@ -172,19 +171,13 @@ struct ComposerView: View {
     @State private var textPlatform: PublishPlatform = .xiaohongshu
     @State private var videoPlatform: PublishPlatform = .douyin
     @State private var mode: ComposeMode = .text
-    @State private var showingPaywall = false
     private var availableProducts: [ProductSeed] { customerProducts.isEmpty ? ProductCatalog.seeds : customerProducts.map(ProductCatalog.seed(from:)) }
     var selected: ProductSeed { availableProducts.first { $0.id == selectedID } ?? availableProducts[0] }
-    /// Apex 系列是官方自研产品，免费用户可以直接使用；自有产品需要专业版。
-    private var canPromoteSelected: Bool {
-        ProductAccess.canPromote(productID: selected.id, isPremium: entitlements.isPremium, brands: brands, products: customerProducts)
-    }
     private var selectedIsBuiltIn: Bool {
         ProductAccess.isBuiltIn(productID: selected.id, brands: brands, products: customerProducts)
     }
     var body: some View {
         NavigationStack { Form {
-            if !canPromoteSelected { Section { Button { showingPaywall = true } label: { Label("解锁后推广自己的产品", systemImage: "lock") } } }
             Section {
                 Picker("内容类型", selection: $mode) {
                     ForEach(ComposeMode.allCases) { Text($0.rawValue).tag($0) }
@@ -193,8 +186,8 @@ struct ComposerView: View {
             }
             Section("内容来源") {
                 Picker("产品", selection: $selectedID) { ForEach(availableProducts, id: \.id) { Text($0.name).tag($0.id) } }
-                if selectedIsBuiltIn && !entitlements.isPremium {
-                    Label("Apex 系列产品免费可用", systemImage: "checkmark.seal").font(.caption).foregroundStyle(.green)
+                if selectedIsBuiltIn {
+                    Label("官方自研产品，免费可用", systemImage: "checkmark.seal").font(.caption).foregroundStyle(.green)
                 }
                 TextField("传播角度（可选）", text: $angle); TextField("语气", text: $tone)
                 Button { loadWebsiteBrief() } label: { Label(loadingWebsite ? "正在读取官网资料" : "读取官网生成文案", systemImage: "globe") }.disabled(loadingWebsite)
@@ -259,7 +252,6 @@ struct ComposerView: View {
             }
             Section {
                 Button {
-                    guard canPromoteSelected else { showingPaywall = true; return }
                     let generated = LocalContentGenerator().generate(product: selected, angle: angle, tone: tone, websiteBrief: websiteBrief)
                     content = generated
                     findings = ContentValidator.validate(generated, product: selected)
@@ -323,7 +315,6 @@ struct ComposerView: View {
                         }
                     }
                     Button {
-                        guard canPromoteSelected else { showingPaywall = true; return }
                         let draft = ContentDraft(productID: selected.id, title: c.title, body: c.body, tags: c.tags, sourceIDs: [selected.id])
                         let project = PromotionProject(title: c.title, productID: selected.id, contentType: mode == .text ? .text : mode == .image ? .image : .video, platform: mode == .video ? videoPlatform.rawValue : textPlatform.rawValue, body: c.body, tags: c.tags)
                         project.sourceProductName = selected.name; project.sourceAudience = selected.audience; project.sourceSummary = selected.summary; project.sourceBenefits = selected.claims.joined(separator: "\n"); project.sourceURL = selected.sourceURL; project.sourceAngle = angle
@@ -345,7 +336,7 @@ struct ComposerView: View {
                 }
                 if !findings.isEmpty { Section("校验提醒") { ForEach(findings) { f in Label(f.message, systemImage: f.blocking ? "exclamationmark.triangle" : "info.circle").foregroundStyle(f.blocking ? .orange : .secondary) } } }
             }
-        }.navigationTitle("创作").sheet(isPresented: $showingPaywall) { NavigationStack { PaywallView() } } }
+        }.navigationTitle("创作") }
     }
 
     private func contentBinding(_ keyPath: WritableKeyPath<GeneratedContent, String>) -> Binding<String> {

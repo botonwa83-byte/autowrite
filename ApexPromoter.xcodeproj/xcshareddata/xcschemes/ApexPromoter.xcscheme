@@ -85,11 +85,6 @@
             ReferencedContainer = "container:ApexPromoter.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <CommandLineArguments>
-      </CommandLineArguments>
-      <StoreKitConfigurationFileReference
-         identifier = "../../ApexPromoter/ApexPromoter.storekit">
-      </StoreKitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

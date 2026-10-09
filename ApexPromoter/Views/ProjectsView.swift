@@ -2,7 +2,6 @@ import SwiftUI
 import SwiftData
 
 struct ProjectsView: View {
-    @EnvironmentObject private var entitlements: EntitlementStore
     @Environment(\.modelContext) private var context
     @Query(sort: \PromotionProject.updatedAt, order: .reverse) private var projects: [PromotionProject]
     @State private var searchText = ""
@@ -34,8 +33,7 @@ struct ProjectsView: View {
         .navigationTitle("我的项目")
             .searchable(text: $searchText, prompt: "搜索标题或正文")
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) { if entitlements.isPremium { Label("专业版", systemImage: "checkmark.seal.fill").font(.caption).foregroundStyle(.green) } }
-                // 新建项目默认挂在官方自研的 Apex 产品上，免费用户也能用。
+                // 新建项目默认挂在官方自研的 Apex 产品上，免费可用。
                 ToolbarItem(placement: .topBarTrailing) { Button { createProject() } label: { Image(systemName: "plus") }.accessibilityLabel("创建项目") }
             }
     }

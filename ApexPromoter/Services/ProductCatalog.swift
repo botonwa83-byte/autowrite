@@ -113,17 +113,33 @@ struct ProductSeed: Codable { let id, name, audience, summary: String; let claim
             "polapex": "从死记硬背的口号，到材料分析与答案输出，看清材料主体与考点，一步步写出像答案的答案。",
             "chinapex": "从字词默写到阅读文言与高考作文，看见答案背后的采分点，把语文从玄学变成可操作。",
             "engapex": "高考英语 150 分拆开建模，用算法导航，按提分性价比走最短路径。",
-            "wordpulse": "用短时高频复习保持词汇节奏，把今天背过的词真正带到下一次复习。"
+            "wordpulse": "用短时高频复习保持词汇节奏，把今天背过的词真正带到下一次复习。",
+            "chintop": "语文不是凭感觉：现代文、文言文、古诗词、作文、综合学习五大专题，逐题解析加错因定位加能力地图。官方自研，永久免费。",
+            "mathtop": "数学不是刷题量：88 个知识点各 10 道固定题组，答完就出解析；错题自动进变身器重做。官方自研，永久免费。",
+            "engtop": "英语提分不靠刷题量：提分雷达告诉你先打哪一关，错因诊断告诉你分丢在哪。主线七关加两个写作工坊，官方自研，永久免费。"
         ][id] ?? summary
     }
     var storeURL: String {
         if let storeURLOverride, !storeURLOverride.isEmpty { return storeURLOverride }
         if let cached = UserDefaults.standard.string(forKey: "storeURL.\(id)"), !cached.isEmpty { return cached }
-        return "https://apps.apple.com/cn/app/id\(Self.appStoreIDs[id] ?? "")"
+        guard let appID = Self.appStoreIDs[id], !appID.isEmpty else { return sourceURL }
+        return "https://apps.apple.com/cn/app/id\(appID)"
     }
     var isReleased: Bool {
         if let storeURLOverride, !storeURLOverride.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return true }
         return Self.releasedIDs.contains(id)
+    }
+    /// 官网地址：始终指向官方产品页，也是未上架产品的下载地址入口。
+    var officialSiteURL: String { sourceURL }
+    /// 下载地址：已上架取 App Store 链接，未上架回退到官网。
+    var downloadURL: String { isReleased ? storeURL : officialSiteURL }
+    /// 文案末尾的下载与官网信息，保证每条生成内容都带官网和下载地址。
+    var availabilityLine: String {
+        isReleased ? "下载地址（App Store）：\(storeURL)" : "下载地址（官网，上架准备中）：\(officialSiteURL)"
+    }
+    var linkSection: String {
+        let lines = ["开发者：\(developer)", availabilityLine]
+        return isReleased ? (lines + ["官网：\(officialSiteURL)"]).joined(separator: "\n") : lines.joined(separator: "\n")
     }
     var developer: String { id == "mathapex" ? "Top King" : "Kingtop Education" }
     var websiteURL: String { sourceURL }
@@ -144,10 +160,15 @@ enum ProductCatalog {
         .init(id: "chinapex", name: "ChinApex", audience: "初高中语文学习者", summary: "通过原文定位、文言解码、默写星图、作文工坊和阅卷人之眼，把语文变成可操作的采分点训练。", claims: ["提供采分点与阅卷视角训练", "覆盖作文、文言文和默写训练"], sourceURL: "https://botonwa83-byte.github.io/chinapex.html"),
         .init(id: "histapex", name: "HistApex", audience: "初高中历史学习者", summary: "用时间博物馆、史料相遇、历史规律、专题突破和答案模板，把背事件推进到解释变化与因果。", claims: ["提供时间线与史料题训练", "支持历史规律迁移和答案模板"], sourceURL: "https://botonwa83-byte.github.io/histapex.html"),
         .init(id: "geogapex", name: "GeogApex", audience: "初高中地理学习者", summary: "围绕空间定位、图表判读、自然过程、人文区位、区域发展和答案工厂，训练稳定的地理解题流程。", claims: ["支持图表判读与空间定位", "提供区位分析和综合题模板"], sourceURL: "https://botonwa83-byte.github.io/geogapex.html"),
-        .init(id: "wordpulse", name: "WordPulse", audience: "英语词汇学习者", summary: "用短时高频复习保持词汇记忆节奏。", claims: ["支持词汇持续复习", "提供学习进度反馈"], sourceURL: "https://botonwa83-byte.github.io/wordpulse.html")
+        .init(id: "wordpulse", name: "WordPulse", audience: "英语词汇学习者", summary: "用短时高频复习保持词汇记忆节奏。", claims: ["支持词汇持续复习", "提供学习进度反馈"], sourceURL: "https://botonwa83-byte.github.io/wordpulse.html"),
+        .init(id: "chintop", name: "ChinTop", audience: "小升初到初中语文学习者", summary: "把语文拆成现代文阅读、文言文解码、古诗词鉴赏、考场作文升格和综合性学习五个能练的专题，每题带逐条解析和错因定位，练完就知道分丢在哪。", claims: ["五个专题共 307 道题，每题带逐条解析", "能力地图量化证据提取、结构推理、规范表达、创意写作与复盘迁移", "12 张方法卡加每日短任务，练方法而不是背答案", "五大专题全部免费开放，官方自研永久免费"], sourceURL: "https://botonwa83-byte.github.io/ChinTop/"),
+        .init(id: "mathtop", name: "MathTop", audience: "小学高年级到初中数学学习者", summary: "把初中到小学高年级的数学拆成 88 个能练的知识点，每个知识点一组 10 道题，从基础到变式再到应用，答完立刻出解析，错题自动进「错题变身器」。", claims: ["88 个知识点各 10 道固定题组，答完出解析并定位错因", "错题变身器：错题重做加变式，直到真正过掉", "能力地图量化数感、空间、推理、建模、数据五项能力", "全部知识点与仿真题组免费开放，官方自研永久免费"], sourceURL: "https://botonwa83-byte.github.io/MathTop/"),
+        .init(id: "engtop", name: "EngTop", audience: "中考到高考英语学习者", summary: "不只告诉你错了，还告诉你分丢在哪、下一步先打哪一关：主线七关配套题与即时诊断，配合提分雷达和错因诊断安排练习顺序。", claims: ["主线七关覆盖语法填空、完形、七选五、阅读、应用文、读后续写与听力", "提分雷达按「规则强度 × 你的失分」推荐先打哪一关", "错因诊断把错误归到四类根因并给出对应建议", "主线七关与提分雷达、考点图谱全部免费，官方自研永久免费"], sourceURL: "https://botonwa83-byte.github.io/EngTop/")
     ]
 
     static let websiteBaseURL = "https://botonwa83-byte.github.io"
+    /// 官方内置目录：Apex 系列、WordPulse 与 Top 系列（语数外）同属一个产品家族，免费用户均可推广。
+    static var builtInSeeds: [ProductSeed] { seeds }
     static var apexSeeds: [ProductSeed] { seeds.filter { $0.id.hasSuffix("apex") } }
     static func applyStoreLinks(_ links: [String: String]) {
         for (product, appID) in ProductSeed.appStoreIDs { if let link = links[appID] { UserDefaults.standard.set(link, forKey: "storeURL.\(product)") } }

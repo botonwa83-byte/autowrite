@@ -22,6 +22,31 @@ final class ContentTests: XCTestCase {
         XCTAssertTrue(seed.isReleased)
     }
 
+    func testGeneratedCopyCarriesOfficialSiteAndDownloadAddress() {
+        for seed in ProductCatalog.seeds {
+            let content = LocalContentGenerator().generate(product: seed, angle: "高效复习", tone: "真诚")
+            XCTAssertTrue(content.body.contains(seed.officialSiteURL), seed.name)
+            XCTAssertTrue(content.body.contains("下载地址"), seed.name)
+            XCTAssertTrue(content.body.contains(seed.downloadURL), seed.name)
+        }
+    }
+
+    func testWebsiteBriefCopyKeepsOfficialSiteAndDownloadAddress() {
+        let seed = ProductCatalog.seeds[0]
+        let brief = WebsitePromotionBrief(positioning: "定位说明", audience: "目标人群", highlights: ["亮点一", "亮点二"])
+        let content = LocalContentGenerator().generate(product: seed, angle: "", tone: "", websiteBrief: brief)
+        XCTAssertTrue(content.body.contains(seed.officialSiteURL))
+        XCTAssertTrue(content.body.contains("下载地址"))
+    }
+
+    func testTopSeriesIsBundledAndFreeToPromote() {
+        let topIDs: Set<String> = ["chintop", "mathtop", "engtop"]
+        XCTAssertTrue(topIDs.isSubset(of: Set(ProductCatalog.seeds.map(\.id))))
+        for id in topIDs {
+            XCTAssertTrue(ProductAccess.canPromote(productID: id), id)
+        }
+    }
+
     func testBundledCatalogRemainsAvailableWithoutPremium() {
         XCTAssertFalse(ProductCatalog.seeds.isEmpty)
         XCTAssertTrue(ProductCatalog.seeds.allSatisfy { !$0.name.isEmpty && !$0.sourceURL.isEmpty })
