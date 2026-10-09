@@ -136,7 +136,7 @@ struct ProductsView: View {
                 Text(p.audience).font(.caption).foregroundStyle(.secondary)
                 Text("开发者：\(p.developer)").font(.caption)
                 if p.isReleased, let url = URL(string: p.storeURL) { Link("下载 App", destination: url) }
-                else { Label("上架准备中", systemImage: "hammer").font(.caption).foregroundStyle(.secondary) }
+                else { Label("上架审核中", systemImage: "hammer").font(.caption).foregroundStyle(.secondary) }
                 if let url = URL(string: p.sourceURL) { Link("查看产品介绍", destination: url) }
             }
         }.navigationTitle("Apex 产品") }

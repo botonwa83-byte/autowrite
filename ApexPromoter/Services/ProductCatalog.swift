@@ -100,8 +100,8 @@ enum WebsiteSyncService {
 
 struct ProductSeed: Codable { let id, name, audience, summary: String; let claims: [String]; let sourceURL: String
     var storeURLOverride: String? = nil
-    static let appStoreIDs = ["physicsapex":"6779031451", "mathapex":"6778461030", "chemapex":"6780327495", "bioapex":"6780727579", "chinapex":"6781556016", "engapex":"6784478791", "geogapex":"6783594491", "histapex":"6783254820", "polapex":"6783150236", "wordpulse":"6767762376"]
-    static let releasedIDs: Set<String> = ["physicsapex", "mathapex", "chemapex", "bioapex", "polapex", "engapex", "chinapex", "histapex", "geogapex", "wordpulse"]
+    static let appStoreIDs = ["physicsapex":"6779031451", "mathapex":"6778461030", "chemapex":"6780327495", "bioapex":"6780727579", "chinapex":"6781556016", "engapex":"6784478791", "geogapex":"6783594491", "histapex":"6783254820", "polapex":"6783150236", "wordpulse":"6767762376", "chintop":"6815168238", "engtop":"6815115946"]
+    static let releasedIDs: Set<String> = ["physicsapex", "mathapex", "chemapex", "bioapex", "polapex", "engapex", "chinapex", "histapex", "geogapex", "wordpulse", "chintop", "engtop"]
     var promoHook: String {
         [
             "physicsapex": "用互动模拟和解题工具训练物理思维。",
@@ -135,7 +135,7 @@ struct ProductSeed: Codable { let id, name, audience, summary: String; let claim
     var downloadURL: String { isReleased ? storeURL : officialSiteURL }
     /// 文案末尾的下载与官网信息，保证每条生成内容都带官网和下载地址。
     var availabilityLine: String {
-        isReleased ? "下载地址（App Store）：\(storeURL)" : "下载地址（官网，上架准备中）：\(officialSiteURL)"
+        isReleased ? "下载地址（App Store）：\(storeURL)" : "下载地址（官网，上架审核中）：\(officialSiteURL)"
     }
     var linkSection: String {
         let lines = ["开发者：\(developer)", availabilityLine]
