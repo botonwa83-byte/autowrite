@@ -67,7 +67,11 @@ struct DashboardView: View {
                     Label("待审核 \(drafts.filter { $0.status == .needsReview }.count) 条", systemImage: "checkmark.seal")
                     Label("推广项目已排期 \(projects.filter { $0.scheduledAt != nil && !$0.isPublished }.count) 条", systemImage: "clock")
                     Label("安全发布：人工确认后通过系统分享", systemImage: "lock.shield")
-                    Button { syncWebsite() } label: { Label(syncing ? "正在同步官网" : "同步官网产品链接", systemImage: "arrow.triangle.2.circlepath") }
+                    Button { syncWebsite() } label: {
+                        if syncing { HStack { ProgressView(); Text("正在同步官网") } }
+                        else { Label("同步官网产品链接", systemImage: "arrow.triangle.2.circlepath") }
+                    }
+                    .disabled(syncing)
                     if !syncMessage.isEmpty { Text(syncMessage).font(.caption).foregroundStyle(.secondary) }
                 }
                 Section("工作原则") { Text("所有内容保留产品来源，发布前必须人工审核。App 不保存小红书密码或登录凭证。") .font(.subheadline).foregroundStyle(.secondary) }

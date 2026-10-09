@@ -71,16 +71,25 @@ struct WebsiteImportResult: Identifiable {
 }
 
 enum WebsiteSyncService {
+    /// 官网抓取专用短超时会话：GitHub Pages 在部分网络下会长时间停滞，
+    /// URLSession 默认请求超时 60 秒、资源超时 7 天，表现为界面一直卡在「正在同步」。
+    private static let syncSession: URLSession = {
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 10
+        configuration.timeoutIntervalForResource = 20
+        return URLSession(configuration: configuration)
+    }()
+
     static func fetchPromotionBrief(for product: ProductSeed) async throws -> WebsitePromotionBrief {
         let url = URL(string: product.websiteURL)!
-        let (data, response) = try await URLSession.shared.data(from: url)
+        let (data, response) = try await syncSession.data(from: url)
         guard let http = response as? HTTPURLResponse, 200..<300 ~= http.statusCode else { throw URLError(.badServerResponse) }
         let html = String(decoding: data, as: UTF8.self)
         return WebsitePromotionBrief.parse(WebsiteTextCleaner.clean(html), product: product)
     }
     static func fetchPromotionBrief(urlString: String, fallbackAudience: String, fallbackSummary: String, fallbackBenefits: [String]) async throws -> WebsiteImportResult {
         guard let url = URL(string: urlString), let scheme = url.scheme?.lowercased(), ["http", "https"].contains(scheme), url.host != nil else { throw URLError(.badURL) }
-        let (data, response) = try await URLSession.shared.data(from: url)
+        let (data, response) = try await syncSession.data(from: url)
         guard let http = response as? HTTPURLResponse, 200..<300 ~= http.statusCode else { throw URLError(.badServerResponse) }
         let cleaned = WebsiteTextCleaner.clean(String(decoding: data, as: UTF8.self))
         guard !cleaned.isEmpty else { throw URLError(.cannotDecodeContentData) }
@@ -88,7 +97,7 @@ enum WebsiteSyncService {
     }
     static func fetchStoreLinks() async throws -> [String: String] {
         let url = URL(string: "https://botonwa83-byte.github.io/")!
-        let (data, response) = try await URLSession.shared.data(from: url)
+        let (data, response) = try await syncSession.data(from: url)
         guard let http = response as? HTTPURLResponse, 200..<300 ~= http.statusCode else { throw URLError(.badServerResponse) }
         let html = String(decoding: data, as: UTF8.self)
         let pattern = #"https://apps\.apple\.com/[^\"'<> ]+"#
