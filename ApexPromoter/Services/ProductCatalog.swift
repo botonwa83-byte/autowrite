@@ -128,11 +128,13 @@ struct ProductSeed: Codable { let id, name, audience, summary: String; let claim
             "engtop": "英语提分不靠刷题量：提分雷达告诉你先打哪一关，错因诊断告诉你分丢在哪。主线七关加两个写作工坊，官方自研，永久免费。"
         ][id] ?? summary
     }
+    /// 下载地址：内置 App Store 链接是权威来源，不依赖网络同步。
+    /// 优先级：用户产品的覆盖值 → 代码内置 App Store ID → 可选同步的官网缓存 → 官网。
     var storeURL: String {
         if let storeURLOverride, !storeURLOverride.isEmpty { return storeURLOverride }
+        if let appID = Self.appStoreIDs[id], !appID.isEmpty { return "https://apps.apple.com/cn/app/id\(appID)" }
         if let cached = UserDefaults.standard.string(forKey: "storeURL.\(id)"), !cached.isEmpty { return cached }
-        guard let appID = Self.appStoreIDs[id], !appID.isEmpty else { return sourceURL }
-        return "https://apps.apple.com/cn/app/id\(appID)"
+        return sourceURL
     }
     var isReleased: Bool {
         if let storeURLOverride, !storeURLOverride.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return true }

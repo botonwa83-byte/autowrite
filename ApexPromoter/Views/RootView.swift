@@ -67,11 +67,14 @@ struct DashboardView: View {
                     Label("待审核 \(drafts.filter { $0.status == .needsReview }.count) 条", systemImage: "checkmark.seal")
                     Label("推广项目已排期 \(projects.filter { $0.scheduledAt != nil && !$0.isPublished }.count) 条", systemImage: "clock")
                     Label("安全发布：人工确认后通过系统分享", systemImage: "lock.shield")
+                }
+                Section("可选 · 从官网刷新下载链接") {
                     Button { syncWebsite() } label: {
                         if syncing { HStack { ProgressView(); Text("正在同步官网") } }
                         else { Label("同步官网产品链接", systemImage: "arrow.triangle.2.circlepath") }
                     }
                     .disabled(syncing)
+                    Text("下载链接已内置在 App 中，日常使用无需同步；此项仅用于在 App 更新前手动刷新官网链接。").font(.caption).foregroundStyle(.secondary)
                     if !syncMessage.isEmpty { Text(syncMessage).font(.caption).foregroundStyle(.secondary) }
                 }
                 Section("工作原则") { Text("所有内容保留产品来源，发布前必须人工审核。App 不保存小红书密码或登录凭证。") .font(.subheadline).foregroundStyle(.secondary) }
@@ -93,9 +96,9 @@ struct DashboardView: View {
             do {
                 let links = try await WebsiteSyncService.fetchStoreLinks()
                 ProductCatalog.applyStoreLinks(links)
-                await MainActor.run { syncMessage = "已同步官网链接 \(links.count) 条，产品页已更新"; syncing = false }
+                await MainActor.run { syncMessage = "已从官网刷新 \(links.count) 条下载链接，产品页已更新"; syncing = false }
             } catch {
-                await MainActor.run { syncMessage = "同步失败，已保留本地资料"; syncing = false }
+                await MainActor.run { syncMessage = "同步失败，已保留本地资料（内置下载链接不受影响）"; syncing = false }
             }
         }
     }
