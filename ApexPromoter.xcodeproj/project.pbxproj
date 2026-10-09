@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		000752ED12292F14994879A2 /* PublishAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C17AC0EED64016BE38C75FA /* PublishAdapterTests.swift */; };
+		019CE141B8A1A6D80B35D4DF /* mathtop.png in Resources */ = {isa = PBXBuildFile; fileRef = A32BCE11076CD37B62CBB7B7 /* mathtop.png */; };
 		07A6EFC0782DBD5BE5AEA59D /* PublishAdapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C02837C3B47F64BE2014347 /* PublishAdapters.swift */; };
+		0B108B55449F3128E694980D /* chintop.png in Resources */ = {isa = PBXBuildFile; fileRef = BC58972DA268D186AB9D70FF /* chintop.png */; };
 		10A0B21FAC76D1B00C2AE8B6 /* physicsapex.png in Resources */ = {isa = PBXBuildFile; fileRef = E3AB402E32C744C8E13285CD /* physicsapex.png */; };
 		16AF2481F3F44D639AD03A1F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE5B3DAE7060C98160CDB4 /* Theme.swift */; };
 		2C1345A191E2492DA7EE04AB /* ContentGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D90AE9346FF6B98FC8D52E4 /* ContentGenerator.swift */; };
@@ -33,8 +35,10 @@
 		98F890066835002324137BF4 /* ApexPortfolioBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9729C34191C743EFCC9E99F /* ApexPortfolioBootstrap.swift */; };
 		9CED2A08AF7461782091FAC3 /* WebsiteTextCleanerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817B13CB8789ADFDF8B44878 /* WebsiteTextCleanerTests.swift */; };
 		B100FCF717C49FAC51DCEC73 /* products.json in Resources */ = {isa = PBXBuildFile; fileRef = C71C7410CE798403930E9317 /* products.json */; };
+		B2AA108D191892F37D154434 /* engtop.png in Resources */ = {isa = PBXBuildFile; fileRef = E55C83B693981C288EBEDCE0 /* engtop.png */; };
 		B6CFE9187355C0B40973618D /* histapex.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EEA2EE603AD16C672E3DC48 /* histapex.png */; };
 		C08438A0D130172BEAF94FF9 /* BrandCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8209FF1F2E8C3587F64EC9F2 /* BrandCenterView.swift */; };
+		CC9CC516F256E97716E93E96 /* wordpulse.png in Resources */ = {isa = PBXBuildFile; fileRef = AC9524113E98FCE009F89B5F /* wordpulse.png */; };
 		CE9CE7A1FCAE93F6F85A663D /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8F8C8E07B2D1BA5F30EC33 /* RootView.swift */; };
 		D83EC16FFEDD132984DF4CF2 /* ApexPromoterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6E50A8D198FC527ACCEDB /* ApexPromoterUITests.swift */; };
 		E3D4EA457787132C9F9D21EF /* ContentValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5465F8DF136D2A7FDCA0D0F7 /* ContentValidator.swift */; };
@@ -82,12 +86,15 @@
 		9334A40AA1A414D4315A5338 /* ApexPromoterUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ApexPromoterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		979D614F864EB7C49393604F /* ProductAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductAccess.swift; sourceTree = "<group>"; };
 		A0BE6C0370264DB1343D1AF6 /* ApexPortfolioWorkflowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApexPortfolioWorkflowTests.swift; sourceTree = "<group>"; };
+		A32BCE11076CD37B62CBB7B7 /* mathtop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mathtop.png; sourceTree = "<group>"; };
 		AA355050CF2F66B6628266FF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AB8F8C8E07B2D1BA5F30EC33 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		AC9524113E98FCE009F89B5F /* wordpulse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wordpulse.png; sourceTree = "<group>"; };
 		ACA774D01FA554386D43EBBA /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		B7B5D11CDDCDD0C7373409A2 /* SlideshowVideoRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshowVideoRenderer.swift; sourceTree = "<group>"; };
 		B928CBF6A8BBD34C0460B5FD /* mathapex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mathapex.png; sourceTree = "<group>"; };
 		BA8771641DE0D8B12A47C3E2 /* bioapex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bioapex.png; sourceTree = "<group>"; };
+		BC58972DA268D186AB9D70FF /* chintop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chintop.png; sourceTree = "<group>"; };
 		BF99924F8C9AA7293EA419A5 /* geogapex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = geogapex.png; sourceTree = "<group>"; };
 		C489D8117C9BFDD47B846984 /* ApexPromoter.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ApexPromoter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C71C7410CE798403930E9317 /* products.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = products.json; sourceTree = "<group>"; };
@@ -95,6 +102,7 @@
 		CE8D632359E0CEC642C1FB2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D4BE4AD18A9F050DB7238FF9 /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		E3AB402E32C744C8E13285CD /* physicsapex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = physicsapex.png; sourceTree = "<group>"; };
+		E55C83B693981C288EBEDCE0 /* engtop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = engtop.png; sourceTree = "<group>"; };
 		F36D401FD3E82D8DFF7ED81A /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
 		F9729C34191C743EFCC9E99F /* ApexPortfolioBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApexPortfolioBootstrap.swift; sourceTree = "<group>"; };
 		FAD9DA9E80165419CD9EF133 /* ProjectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsView.swift; sourceTree = "<group>"; };
@@ -161,12 +169,16 @@
 				BA8771641DE0D8B12A47C3E2 /* bioapex.png */,
 				35321E98E1F20070A26C6BAF /* chemapex.png */,
 				67029966999F43752160AF3C /* chinapex.png */,
+				BC58972DA268D186AB9D70FF /* chintop.png */,
 				7D32C99538B358E52C997582 /* engapex.png */,
+				E55C83B693981C288EBEDCE0 /* engtop.png */,
 				BF99924F8C9AA7293EA419A5 /* geogapex.png */,
 				2EEA2EE603AD16C672E3DC48 /* histapex.png */,
 				B928CBF6A8BBD34C0460B5FD /* mathapex.png */,
+				A32BCE11076CD37B62CBB7B7 /* mathtop.png */,
 				E3AB402E32C744C8E13285CD /* physicsapex.png */,
 				7F1F01C58B035D9E343CFFD1 /* polapex.png */,
+				AC9524113E98FCE009F89B5F /* wordpulse.png */,
 			);
 			path = ProductIcons;
 			sourceTree = "<group>";
@@ -331,13 +343,17 @@
 				81E71B948ABA7B9F5802D783 /* bioapex.png in Resources */,
 				7FAACE97D9530D521AD6D012 /* chemapex.png in Resources */,
 				56F45808A802388726B10289 /* chinapex.png in Resources */,
+				0B108B55449F3128E694980D /* chintop.png in Resources */,
 				59D0AC43E587555E818F1496 /* engapex.png in Resources */,
+				B2AA108D191892F37D154434 /* engtop.png in Resources */,
 				FBBCC57ED04CE34A42959292 /* geogapex.png in Resources */,
 				B6CFE9187355C0B40973618D /* histapex.png in Resources */,
 				6E2D442EDB3539884EE16C1F /* mathapex.png in Resources */,
+				019CE141B8A1A6D80B35D4DF /* mathtop.png in Resources */,
 				10A0B21FAC76D1B00C2AE8B6 /* physicsapex.png in Resources */,
 				3D5CC9D19E63397CBF6F28A8 /* polapex.png in Resources */,
 				B100FCF717C49FAC51DCEC73 /* products.json in Resources */,
+				CC9CC516F256E97716E93E96 /* wordpulse.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
