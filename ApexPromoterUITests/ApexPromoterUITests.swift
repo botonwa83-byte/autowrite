@@ -44,11 +44,13 @@ final class ApexPromoterUITests: XCTestCase {
         XCTAssertFalse(app.staticTexts["一次性解锁专业版"].exists, "生成不应弹出付费页")
     }
 
-    /// 走真实导出流程验证封面品牌水印：预置相册图片后，创作页选 ChinTop，
-    /// 从照片图库导入、生成图文发布包并导出轮播页。导出的 PNG 会在测试结束后
-    /// 从 App 容器取出人工目检。
+    /// 走真实导出流程验证封面品牌水印：DEBUG 钩子预置示例截图，创作页选 ChinTop，
+    /// 切图文模式后导出轮播页。导出的 PNG 会在测试结束后从 App 容器取出人工目检。
     func testCarouselExportWatermarkIncludesBrandIcon() throws {
-        let app = launchApp()
+        let app = XCUIApplication()
+        app.launchArguments = ["--ui-testing", "--ui-testing-import-sample"]
+        app.launch()
+        dismissGuideIfPresented(app)
         app.tabBars.buttons["创作"].tap()
         XCTAssertTrue(app.buttons["生成纯文字发布包"].waitForExistence(timeout: 5))
 
@@ -67,28 +69,18 @@ final class ApexPromoterUITests: XCTestCase {
             listRow.tap()
         }
 
-        // 切到图文模式，展开素材导入区，再从照片图库导入（测试前已用 simctl addmedia 预置）。
+        // 切到图文模式，确认示例截图已预置，然后导出全部轮播页。
+        // 注意：Form 是懒加载，屏幕外的行不进可达性层级，需先滚动。
         app.buttons["图文"].tap()
-        app.buttons["从照片图库导入截图"].tap()
-        let photo = [
-            app.scrollViews.otherElements.images.element(boundBy: 0),
-            app.otherElements.images.element(boundBy: 0),
-            app.cells.element(boundBy: 0)
-        ].first { $0.waitForExistence(timeout: 8) }
-        let pickerCell = try XCTUnwrap(photo, "照片选择器中应能看到预置照片")
-        pickerCell.tap()
-        sleep(2)
-        print("L DEBUG after photo tap:\n\(app.debugDescription)")
-        for label in ["添加", "Add", "完成", "Done"] {
-            let button = app.buttons[label]
-            if button.exists && button.isHittable { button.tap(); break }
+        XCTAssertTrue(app.staticTexts["产品功能亮点"].waitForExistence(timeout: 5), "UI 测试钩子应预置示例截图")
+        app.swipeUp()
+        app.swipeUp()
+        let exportButton = app.buttons["导出全部轮播页"]
+        XCTAssertTrue(exportButton.waitForExistence(timeout: 5), "应能看到导出轮播页按钮")
+        exportButton.tap()
+        if !app.buttons["再次分享已导出的封面"].waitForExistence(timeout: 3) {
+            app.swipeUp()
         }
-        sleep(1)
-        print("L DEBUG after confirm:\n\(app.debugDescription)")
-
-        // 导入完成后导出全部轮播页。
-        XCTAssertTrue(app.staticTexts["已导入 1 张，发布前请核对每页截图和标题"].waitForExistence(timeout: 10), "应成功导入 1 张照片")
-        app.buttons["导出全部轮播页"].tap()
         XCTAssertTrue(app.buttons["再次分享已导出的封面"].waitForExistence(timeout: 10), "封面应成功导出")
     }
 }

@@ -53,10 +53,14 @@ final class ContentTests: XCTestCase {
     }
 
     /// 导出封面/轮播的品牌水印按 `ProductSeed.iconBundlePath` 取图。
-    /// xcodegen 把 Resources 图片拍平放进 bundle 根目录，曾经按 "ProductIcons"
-    /// 子目录查找导致所有产品的图标都画不出来，这里复刻水印绘制防回归。
+    /// 完整复刻 exportCarousel 的绘制顺序：背景 → 截图（带裁剪）→ 图标水印 → 产品名 → 标题。
+    /// 曾回归过两次：① 图标按 "ProductIcons" 子目录查找在拍平的 bundle 里永远找不到；
+    /// ② drawAspectFill 的 addClip 未恢复状态，把裁剪区之外的水印和标题全部裁掉。
+    /// 这里用白色像素按区域断言，两类回归都会被拦下。
     func testExportCoverWatermarkRendersBrandIconForEveryCatalogProduct() throws {
-        let size = CGSize(width: 400, height: 120)
+        let size = CGSize(width: 900, height: 1200)
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1
         let teal = UIColor(red: 0.12, green: 0.38, blue: 0.48, alpha: 1)
         let outputDir = FileManager.default.temporaryDirectory.appendingPathComponent("cover-icons", isDirectory: true)
         try? FileManager.default.createDirectory(at: outputDir, withIntermediateDirectories: true)
@@ -65,23 +69,54 @@ final class ContentTests: XCTestCase {
             let path = try XCTUnwrap(seed.iconBundlePath, "\(seed.name) 缺少产品图标文件")
             let icon = try XCTUnwrap(UIImage(contentsOfFile: path), "\(seed.name) 图标无法解码")
 
-            let background = UIGraphicsImageRenderer(size: size).image { ctx in
+            let cover = UIGraphicsImageRenderer(size: size, format: format).image { ctx in
                 teal.setFill(); ctx.fill(CGRect(origin: .zero, size: size))
-            }
-            let watermark = UIGraphicsImageRenderer(size: size).image { ctx in
-                teal.setFill(); ctx.fill(CGRect(origin: .zero, size: size))
-                icon.draw(in: CGRect(x: 14, y: 14, width: 64, height: 64))
-                let attrs: [NSAttributedString.Key: Any] = [.font: UIFont.boldSystemFont(ofSize: 28), .foregroundColor: UIColor.white]
-                (seed.name as NSString).draw(in: CGRect(x: 90, y: 32, width: 300, height: 40), withAttributes: attrs)
+                // 复刻 drawAspectFill：saveGState → addClip → draw → restoreGState
+                ctx.cgContext.saveGState()
+                UIBezierPath(roundedRect: CGRect(x: 36, y: 126, width: 828, height: 920), cornerRadius: 0).addClip()
+                icon.draw(in: CGRect(x: 36, y: 126, width: 828, height: 920))
+                ctx.cgContext.restoreGState()
+                // 复刻 drawBrand 与标题
+                icon.draw(in: CGRect(x: 42, y: 42, width: 64, height: 64))
+                let brandAttrs: [NSAttributedString.Key: Any] = [.font: UIFont.boldSystemFont(ofSize: 30), .foregroundColor: UIColor.white]
+                (seed.name as NSString).draw(in: CGRect(x: 122, y: 54, width: 700, height: 44), withAttributes: brandAttrs)
+                let titleAttrs: [NSAttributedString.Key: Any] = [.font: UIFont.boldSystemFont(ofSize: 46), .foregroundColor: UIColor.white]
+                ("产品功能亮点" as NSString).draw(in: CGRect(x: 48, y: 1080, width: 804, height: 80), withAttributes: titleAttrs)
             }
 
-            // 与纯背景对比必须产生不同像素，证明图标与产品名真实绘制。
-            XCTAssertNotEqual(
-                try XCTUnwrap(background.pngData()), try XCTUnwrap(watermark.pngData()),
-                "\(seed.name) 品牌图标未绘制"
-            )
-            try? watermark.pngData()?.write(to: outputDir.appendingPathComponent("\(seed.id).png"))
+            let iconWhites = whitePixels(in: cover, region: CGRect(x: 0, y: 0, width: 500, height: 130))
+            let nameWhites = whitePixels(in: cover, region: CGRect(x: 100, y: 40, width: 750, height: 70))
+            let titleWhites = whitePixels(in: cover, region: CGRect(x: 40, y: 1070, width: 820, height: 100))
+            let detail = "icon=\(iconWhites) name=\(nameWhites) title=\(titleWhites)"
+            XCTAssertTrue(iconWhites > 50, "\(seed.name) 品牌图标未绘制（\(detail)）")
+            XCTAssertTrue(nameWhites > 50, "\(seed.name) 品牌名未绘制（\(detail)）")
+            XCTAssertTrue(titleWhites > 50, "\(seed.name) 封面标题未绘制（\(detail)）")
+            try? cover.pngData()?.write(to: outputDir.appendingPathComponent("\(seed.id).png"))
         }
+    }
+
+    /// 统计指定区域内接近纯白的像素数（白色文字/图标）。
+    /// 显式重绘到 RGBA8 位图再扫描，避免源图 bitmap 字节序/位深差异导致误判。
+    private func whitePixels(in image: UIImage, region: CGRect) -> Int {
+        guard let cg = image.cgImage else { return 0 }
+        let width = Int(region.width), height = Int(region.height)
+        guard width > 0, height > 0 else { return 0 }
+        var pixels = [UInt8](repeating: 0, count: width * height * 4)
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let ok = pixels.withUnsafeMutableBytes { ptr -> Bool in
+            guard let base = ptr.baseAddress,
+                  let ctx = CGContext(data: base, width: width, height: height, bitsPerComponent: 8, bytesPerRow: width * 4, space: colorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else { return false }
+            ctx.draw(cg, in: CGRect(x: -region.minX, y: -region.minY, width: CGFloat(cg.width), height: CGFloat(cg.height)))
+            return true
+        }
+        guard ok else { return 0 }
+        var count = 0
+        var offset = 0
+        while offset < pixels.count {
+            if pixels[offset] > 235, pixels[offset + 1] > 235, pixels[offset + 2] > 235 { count += 1 }
+            offset += 4
+        }
+        return count
     }
 
     func testUserGuideCoversCompletePromotionWorkflow() {

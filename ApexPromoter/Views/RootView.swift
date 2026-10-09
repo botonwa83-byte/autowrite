@@ -336,8 +336,21 @@ struct ComposerView: View {
                 }
                 if !findings.isEmpty { Section("校验提醒") { ForEach(findings) { f in Label(f.message, systemImage: f.blocking ? "exclamationmark.triangle" : "info.circle").foregroundStyle(f.blocking ? .orange : .secondary) } } }
             }
-        }.navigationTitle("创作") }
+        }.navigationTitle("创作").onAppear { loadSampleImportForUITesting() } }
     }
+
+    #if DEBUG
+    /// UI 测试钩子：预置一张示例截图，绕过系统照片选择器（XCUITest 自动化不稳定）。
+    /// 仅在 DEBUG 构建且显式传入启动参数时生效。
+    private func loadSampleImportForUITesting() {
+        guard ProcessInfo.processInfo.arguments.contains("--ui-testing-import-sample"), importedImages.isEmpty else { return }
+        if let path = Bundle.main.path(forResource: "physicsapex", ofType: "png"),
+           let data = try? Data(contentsOf: URL(fileURLWithPath: path)) {
+            importedImages = [data]
+            slideTitles = ["产品功能亮点"]
+        }
+    }
+    #endif
 
     private func contentBinding(_ keyPath: WritableKeyPath<GeneratedContent, String>) -> Binding<String> {
         Binding(get: { content?[keyPath: keyPath] ?? "" }, set: { newValue in content?[keyPath: keyPath] = newValue })
@@ -351,7 +364,7 @@ struct ComposerView: View {
         let image = renderer.image { ctx in
             UIColor(red: 0.12, green: 0.38, blue: 0.48, alpha: 1).setFill(); ctx.fill(CGRect(origin: .zero, size: size))
             let inset = CGRect(x: 36, y: 36, width: 828, height: 1010)
-            drawAspectFill(source, in: inset)
+            drawAspectFill(source, in: inset, on: ctx.cgContext)
             let paragraph = NSMutableParagraphStyle(); paragraph.alignment = .left
             let attrs: [NSAttributedString.Key: Any] = [.font: UIFont.boldSystemFont(ofSize: 46), .foregroundColor: UIColor.white, .paragraphStyle: paragraph]
             (title as NSString).draw(in: CGRect(x: 48, y: 1080, width: 804, height: 80), withAttributes: attrs)
@@ -370,7 +383,7 @@ struct ComposerView: View {
             let title = slideTitles.indices.contains(index) ? slideTitles[index] : selected.name
             let image = renderer.image { ctx in
                 UIColor(red: 0.12, green: 0.38, blue: 0.48, alpha: 1).setFill(); ctx.fill(CGRect(origin: .zero, size: size))
-                drawAspectFill(source, in: CGRect(x: 36, y: 126, width: 828, height: 920))
+                drawAspectFill(source, in: CGRect(x: 36, y: 126, width: 828, height: 920), on: ctx.cgContext)
                 drawBrand(on: ctx.cgContext, size: size)
                 let attrs: [NSAttributedString.Key: Any] = [.font: UIFont.boldSystemFont(ofSize: 46), .foregroundColor: UIColor.white]
                 (title as NSString).draw(in: CGRect(x: 48, y: 1080, width: 804, height: 80), withAttributes: attrs)
@@ -390,14 +403,17 @@ struct ComposerView: View {
         (selected.name as NSString).draw(in: CGRect(x: 122, y: 54, width: 700, height: 44), withAttributes: attrs)
     }
 
-    private func drawAspectFill(_ image: UIImage, in rect: CGRect) {
+    private func drawAspectFill(_ image: UIImage, in rect: CGRect, on context: CGContext) {
         guard let cgImage = image.cgImage else { return }
         let imageSize = CGSize(width: cgImage.width, height: cgImage.height)
         let scale = max(rect.width / imageSize.width, rect.height / imageSize.height)
         let drawSize = CGSize(width: imageSize.width * scale, height: imageSize.height * scale)
         let drawRect = CGRect(x: rect.midX - drawSize.width / 2, y: rect.midY - drawSize.height / 2, width: drawSize.width, height: drawSize.height)
+        // 裁剪必须限定在保存/恢复的状态内，否则后续水印与标题会被同一裁剪裁掉。
+        context.saveGState()
         UIBezierPath(roundedRect: rect, cornerRadius: 0).addClip()
         image.draw(in: drawRect)
+        context.restoreGState()
     }
 
     private func publishText(_ content: GeneratedContent) -> String {
