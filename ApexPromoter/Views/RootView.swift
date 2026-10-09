@@ -383,7 +383,7 @@ struct ComposerView: View {
     }
 
     private func drawBrand(on context: CGContext, size: CGSize) {
-        if let path = Bundle.main.path(forResource: selected.id, ofType: "png", inDirectory: "ProductIcons"), let icon = UIImage(contentsOfFile: path) {
+        if let path = selected.iconBundlePath, let icon = UIImage(contentsOfFile: path) {
             icon.draw(in: CGRect(x: 42, y: 42, width: 64, height: 64))
         }
         let attrs: [NSAttributedString.Key: Any] = [.font: UIFont.boldSystemFont(ofSize: 30), .foregroundColor: UIColor.white]

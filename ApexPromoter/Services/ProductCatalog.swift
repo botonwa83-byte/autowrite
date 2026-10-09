@@ -143,7 +143,12 @@ struct ProductSeed: Codable { let id, name, audience, summary: String; let claim
     }
     var developer: String { id == "mathapex" ? "Top King" : "Kingtop Education" }
     var websiteURL: String { sourceURL }
-    var iconAssetName: String { "ProductIcons/\(id)" }
+    /// 产品图标在 App bundle 内的路径。xcodegen 会把 Resources 下的图片拍平放进
+    /// bundle 根目录，所以按文件名直接查找；带目录查找仅作打包方式变化的兜底。
+    var iconBundlePath: String? {
+        Bundle.main.path(forResource: id, ofType: "png")
+            ?? Bundle.main.path(forResource: id, ofType: "png", inDirectory: "ProductIcons")
+    }
 }
 
 enum ProductCatalog {

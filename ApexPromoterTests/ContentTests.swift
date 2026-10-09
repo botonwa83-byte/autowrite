@@ -52,6 +52,38 @@ final class ContentTests: XCTestCase {
         XCTAssertTrue(ProductCatalog.seeds.allSatisfy { !$0.name.isEmpty && !$0.sourceURL.isEmpty })
     }
 
+    /// 导出封面/轮播的品牌水印按 `ProductSeed.iconBundlePath` 取图。
+    /// xcodegen 把 Resources 图片拍平放进 bundle 根目录，曾经按 "ProductIcons"
+    /// 子目录查找导致所有产品的图标都画不出来，这里复刻水印绘制防回归。
+    func testExportCoverWatermarkRendersBrandIconForEveryCatalogProduct() throws {
+        let size = CGSize(width: 400, height: 120)
+        let teal = UIColor(red: 0.12, green: 0.38, blue: 0.48, alpha: 1)
+        let outputDir = FileManager.default.temporaryDirectory.appendingPathComponent("cover-icons", isDirectory: true)
+        try? FileManager.default.createDirectory(at: outputDir, withIntermediateDirectories: true)
+
+        for seed in ProductCatalog.seeds {
+            let path = try XCTUnwrap(seed.iconBundlePath, "\(seed.name) 缺少产品图标文件")
+            let icon = try XCTUnwrap(UIImage(contentsOfFile: path), "\(seed.name) 图标无法解码")
+
+            let background = UIGraphicsImageRenderer(size: size).image { ctx in
+                teal.setFill(); ctx.fill(CGRect(origin: .zero, size: size))
+            }
+            let watermark = UIGraphicsImageRenderer(size: size).image { ctx in
+                teal.setFill(); ctx.fill(CGRect(origin: .zero, size: size))
+                icon.draw(in: CGRect(x: 14, y: 14, width: 64, height: 64))
+                let attrs: [NSAttributedString.Key: Any] = [.font: UIFont.boldSystemFont(ofSize: 28), .foregroundColor: UIColor.white]
+                (seed.name as NSString).draw(in: CGRect(x: 90, y: 32, width: 300, height: 40), withAttributes: attrs)
+            }
+
+            // 与纯背景对比必须产生不同像素，证明图标与产品名真实绘制。
+            XCTAssertNotEqual(
+                try XCTUnwrap(background.pngData()), try XCTUnwrap(watermark.pngData()),
+                "\(seed.name) 品牌图标未绘制"
+            )
+            try? watermark.pngData()?.write(to: outputDir.appendingPathComponent("\(seed.id).png"))
+        }
+    }
+
     func testUserGuideCoversCompletePromotionWorkflow() {
         XCTAssertEqual(UserGuide.steps.count, 7)
         XCTAssertEqual(UserGuide.steps.first?.destination, .brands)
