@@ -45,6 +45,7 @@
 		F1CAF8DF1DBBCDF958AC9ED3 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA774D01FA554386D43EBBA /* Models.swift */; };
 		F5B48DD455E8FB22EB9216E0 /* ApexPortfolioWorkflowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0BE6C0370264DB1343D1AF6 /* ApexPortfolioWorkflowTests.swift */; };
 		FBBCC57ED04CE34A42959292 /* geogapex.png in Resources */ = {isa = PBXBuildFile; fileRef = BF99924F8C9AA7293EA419A5 /* geogapex.png */; };
+		CF1A2B3C4D5E6F708192A3B4 /* SeriesCampaignCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1B2C3D4E5F60718293A4B5C /* SeriesCampaignCopy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,7 +108,8 @@
 		F9729C34191C743EFCC9E99F /* ApexPortfolioBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApexPortfolioBootstrap.swift; sourceTree = "<group>"; };
 		FAD9DA9E80165419CD9EF133 /* ProjectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsView.swift; sourceTree = "<group>"; };
 		FF8428C46D1733573E95B8E3 /* ProductCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCatalog.swift; sourceTree = "<group>"; };
-/* End PBXFileReference section */
+		9A1B2C3D4E5F60718293A4B5C /* SeriesCampaignCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesCampaignCopy.swift; sourceTree = "<group>"; };
+		/* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		1BD5A6AE364206CAE478C549 /* Products */ = {
@@ -215,6 +217,7 @@
 				979D614F864EB7C49393604F /* ProductAccess.swift */,
 				FF8428C46D1733573E95B8E3 /* ProductCatalog.swift */,
 				6C02837C3B47F64BE2014347 /* PublishAdapters.swift */,
+				9A1B2C3D4E5F60718293A4B5C /* SeriesCampaignCopy.swift */,
 				B7B5D11CDDCDD0C7373409A2 /* SlideshowVideoRenderer.swift */,
 			);
 			path = Services;
@@ -398,6 +401,7 @@
 				898F217D89CEE084825EB4DB /* ProjectsView.swift in Sources */,
 				07A6EFC0782DBD5BE5AEA59D /* PublishAdapters.swift in Sources */,
 				CE9CE7A1FCAE93F6F85A663D /* RootView.swift in Sources */,
+				CF1A2B3C4D5E6F708192A3B4 /* SeriesCampaignCopy.swift in Sources */,
 				8F19B8D867E70F0B008CBAC7 /* SlideshowVideoRenderer.swift in Sources */,
 				16AF2481F3F44D639AD03A1F /* Theme.swift in Sources */,
 			);

@@ -23,6 +23,8 @@ import SwiftData
     var priceDescription: String
     var websiteSourceExcerpt: String = ""
     var websiteImportedAt: Date?
+    /// 家族宣传语：Apex 系列与 Top 系列共用，用户自建产品默认为空。
+    var seriesMessage: String = ""
     var createdAt: Date = Date()
     var updatedAt: Date = Date()
     init(brandID: UUID, name: String, websiteURL: String = "", storeURL: String = "", audience: String = "", summary: String = "", keyBenefits: String = "", priceDescription: String = "") { self.brandID = brandID; self.name = name; self.websiteURL = websiteURL; self.storeURL = storeURL; self.audience = audience; self.summary = summary; self.keyBenefits = keyBenefits; self.priceDescription = priceDescription }

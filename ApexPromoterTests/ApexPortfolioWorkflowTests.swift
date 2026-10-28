@@ -51,6 +51,11 @@ final class ApexPortfolioWorkflowTests: XCTestCase {
         XCTAssertTrue(products.allSatisfy { !$0.storeURL.isEmpty && !$0.websiteSourceExcerpt.isEmpty })
         XCTAssertTrue(insights.allSatisfy { $0.evidenceState == .verified && !$0.sourceURL.isEmpty })
         XCTAssertTrue(goals.allSatisfy { $0.kind == .downloadGrowth && $0.primaryAction.contains("下载") })
+        // Apex 与 Top 系列共 12 个教育产品带家族宣传语，WordPulse 作为单品不带。
+        let withSeriesCopy = Set(products.filter { !$0.seriesMessage.isEmpty }.map(\.name))
+        XCTAssertEqual(withSeriesCopy, Set(ProductCatalog.builtInSeeds.filter(\.isEducationSeries).map(\.name)))
+        XCTAssertEqual(withSeriesCopy.count, 12)
+        XCTAssertTrue(products.filter { withSeriesCopy.contains($0.name) }.allSatisfy { $0.seriesMessage == SeriesCampaignCopy.message })
         XCTAssertTrue(plans.allSatisfy { $0.generatedAt == now && $0.plannedPostCount == 3 })
         XCTAssertEqual(Set(projects.map(\.platformRaw)), Set(["小红书", "微信公众号", "抖音"]))
         XCTAssertTrue(projects.allSatisfy { project in
@@ -66,6 +71,8 @@ final class ApexPortfolioWorkflowTests: XCTestCase {
         for project in projects {
             let seed = try XCTUnwrap(ProductCatalog.builtInSeeds.first { $0.name == project.sourceProductName })
             let content = GeneratedContent(title: project.title, body: project.body, tags: project.tags)
+            // 品牌中心建项目的路径走 CustomerProduct，宣传语必须随产品字段落到正文。
+            XCTAssertEqual(project.body.contains(SeriesCampaignCopy.slogan), seed.isEducationSeries, seed.name)
             XCTAssertFalse(ContentValidator.validate(content, product: seed).contains(where: \.blocking))
             XCTAssertFalse(PublishAdapterRegistry.adapter(for: PublishPlatform(rawValue: project.platformRaw)!).plan(for: content).formattedText.isEmpty)
         }
@@ -199,6 +206,8 @@ final class ApexPortfolioWorkflowTests: XCTestCase {
         for product in products {
             let seed = try XCTUnwrap(ProductCatalog.builtInSeeds.first { $0.name == product.name })
             XCTAssertEqual(product.storeURL, seed.storeURL, "\(product.name) 的下载地址应与目录同步")
+            // 老库产品行缺宣传语字段，一次同步就要补齐。
+            XCTAssertEqual(product.seriesMessage, seed.seriesMessage, "\(product.name) 的家族宣传语应与目录同步")
         }
         for name in ["ChinTop", "EngTop"] {
             let product = try XCTUnwrap(products.first { $0.name == name })

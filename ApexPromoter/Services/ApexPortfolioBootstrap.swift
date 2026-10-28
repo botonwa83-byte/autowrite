@@ -24,15 +24,20 @@ enum ApexPortfolioBootstrap {
         // 同步内置产品的下载地址：产品行创建时会把当时的 storeURL 冻结进库
         // （例如 Top 系列上架前存的是官网地址），上架拿到 App Store 链接后必须回写，
         // 否则产品页与生成文案的下载地址一直是旧的。只修正内置产品，不动用户自建产品。
-        var storeURLUpdates = 0
+        // 家族宣传语同样要回写：老库的产品行里没有这个字段，不补就只有新装用户看得到。
+        var syncUpdates = 0
         for seed in ProductCatalog.builtInSeeds where existingNames.contains(seed.name) {
-            if let product = existingProducts.first(where: { $0.name == seed.name }),
-               product.storeURL != seed.storeURL {
+            guard let product = existingProducts.first(where: { $0.name == seed.name }) else { continue }
+            if product.storeURL != seed.storeURL {
                 product.storeURL = seed.storeURL
-                storeURLUpdates += 1
+                syncUpdates += 1
+            }
+            if product.seriesMessage != seed.seriesMessage {
+                product.seriesMessage = seed.seriesMessage
+                syncUpdates += 1
             }
         }
-        guard !missingSeeds.isEmpty || storeURLUpdates > 0 else { return nil }
+        guard !missingSeeds.isEmpty || syncUpdates > 0 else { return nil }
 
         // 内置品牌：优先按 bootstrap 标记找回，其次按名称，最后才新建。
         let builtInBrandName = ProductAccess.builtInBrandName
@@ -93,6 +98,7 @@ enum ApexPortfolioBootstrap {
             keyBenefits: seed.claims.joined(separator: "\n"),
             priceDescription: "以 App Store 页面为准"
         )
+        product.seriesMessage = seed.seriesMessage
         product.websiteSourceExcerpt = ([seed.summary] + seed.claims).joined(separator: "\n")
         product.websiteImportedAt = now
         context.insert(product)

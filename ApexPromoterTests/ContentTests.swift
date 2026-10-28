@@ -31,6 +31,57 @@ final class ContentTests: XCTestCase {
         }
     }
 
+    /// Apex 系列与 Top 系列共用一套家族宣传语，生成内容必须带上；WordPulse 等单品不带。
+    func testEducationSeriesCarryFamilyCampaignCopy() {
+        for seed in ProductCatalog.seeds {
+            let content = LocalContentGenerator().generate(product: seed, angle: "高效复习", tone: "真诚")
+            if seed.isEducationSeries {
+                XCTAssertTrue(content.body.contains(SeriesCampaignCopy.slogan), seed.name)
+                XCTAssertTrue(content.body.contains(SeriesCampaignCopy.pillars[0].title), seed.name)
+            } else {
+                XCTAssertFalse(content.body.contains(SeriesCampaignCopy.slogan), seed.name)
+            }
+        }
+        let educationIDs = Set(ProductCatalog.seeds.filter(\.isEducationSeries).map(\.id))
+        XCTAssertTrue(["physicsapex", "chintop", "mathtop", "engtop"].allSatisfy(educationIDs.contains))
+        XCTAssertFalse(educationIDs.contains("wordpulse"))
+    }
+
+    /// 品牌中心里创建项目的路径走 CustomerProduct，宣传语要随产品字段一起进入正文。
+    func testSeriesMessageReachesCustomerProductGeneratedCopy() {
+        let content = LocalContentGenerator().generate(
+            productName: "MathTop",
+            audience: "初中数学学习者",
+            summary: "把知识点拆成能练的题组",
+            benefits: ["答完立刻出解析"],
+            sourceURL: "https://example.com",
+            angle: "核心价值",
+            tone: "真诚",
+            seriesMessage: SeriesCampaignCopy.message
+        )
+        XCTAssertTrue(content.body.hasPrefix(SeriesCampaignCopy.slogan))
+        XCTAssertTrue(content.body.contains("离线学习，把注意力抢回来"))
+
+        let plain = LocalContentGenerator().generate(
+            productName: "自建产品",
+            audience: "开发者",
+            summary: "帮助推广",
+            benefits: ["省时间"],
+            sourceURL: "https://example.com",
+            angle: "核心价值",
+            tone: "真诚"
+        )
+        XCTAssertFalse(plain.body.contains(SeriesCampaignCopy.slogan))
+    }
+
+    /// 宣传语要让视频平台的正文长度仍留在限制内。
+    func testSeriesCopyKeepsVideoPlatformBodyWithinLimit() {
+        for seed in ProductCatalog.seeds where seed.isEducationSeries {
+            let content = LocalContentGenerator().generate(product: seed, angle: "核心价值", tone: "真诚")
+            XCTAssertTrue(PlatformFormatter.validation(for: .douyin, content: content).isEmpty, seed.name)
+        }
+    }
+
     func testWebsiteBriefCopyKeepsOfficialSiteAndDownloadAddress() {
         let seed = ProductCatalog.seeds[0]
         let brief = WebsitePromotionBrief(positioning: "定位说明", audience: "目标人群", highlights: ["亮点一", "亮点二"])

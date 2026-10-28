@@ -152,6 +152,10 @@ struct ProductSeed: Codable { let id, name, audience, summary: String; let claim
         if let storeURLOverride, !storeURLOverride.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return true }
         return Self.releasedIDs.contains(id)
     }
+    /// 是否属于 Apex / Top 教育系列：家族宣传语只覆盖这两个系列，WordPulse 这类单品不带。
+    var isEducationSeries: Bool { id.hasSuffix("apex") || id.hasSuffix("top") }
+    /// 家族宣传语：Apex 系列与 Top 系列共用一套，随产品资料一起进入生成内容。
+    var seriesMessage: String { isEducationSeries ? SeriesCampaignCopy.message : "" }
     /// 官网地址：始终指向官方产品页，也是未上架产品的下载地址入口。
     var officialSiteURL: String { sourceURL }
     /// 下载地址：已上架取 App Store 链接，未上架回退到官网。
