@@ -180,7 +180,25 @@ struct ProductSeed: Codable { let id, name, audience, summary: String; let claim
 
 enum ProductCatalog {
     static func seed(from product: CustomerProduct) -> ProductSeed {
-        ProductSeed(id: product.id.uuidString, name: product.name, audience: product.audience, summary: product.summary, claims: product.keyBenefits.components(separatedBy: .newlines).filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }, sourceURL: product.websiteURL, storeURLOverride: product.storeURL)
+        // 内置产品必须按名称找回目录身份：库里的 id 是 UUID，直接用它会把
+        // promoHook、家族宣传语、App Store ID 和产品图标全部判空——
+        // 创作页生成的草稿正是这样丢掉宣传语和钩子句的。
+        if let builtIn = seeds.first(where: { $0.name == product.name }) {
+            let claims = product.keyBenefits
+                .components(separatedBy: .newlines)
+                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+                .filter { !$0.isEmpty }
+            return ProductSeed(
+                id: builtIn.id,
+                name: builtIn.name,
+                audience: product.audience.isEmpty ? builtIn.audience : product.audience,
+                summary: product.summary.isEmpty ? builtIn.summary : product.summary,
+                claims: claims.isEmpty ? builtIn.claims : claims,
+                sourceURL: product.websiteURL.isEmpty ? builtIn.sourceURL : product.websiteURL,
+                storeURLOverride: product.storeURL
+            )
+        }
+        return ProductSeed(id: product.id.uuidString, name: product.name, audience: product.audience, summary: product.summary, claims: product.keyBenefits.components(separatedBy: .newlines).filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }, sourceURL: product.websiteURL, storeURLOverride: product.storeURL)
     }
     static let seeds: [ProductSeed] = [
         .init(id: "physicsapex", name: "PhysicsApex", audience: "初高中物理学习者", summary: "用互动模拟沙盘、考点地图、错因诊断和智能复习，让物理从抽象公式回到可观察的现象。", claims: ["提供互动模拟沙盘与考点地图", "支持错因诊断和智能复习"], sourceURL: "https://botonwa83-byte.github.io/physicsapex.html"),

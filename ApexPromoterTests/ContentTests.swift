@@ -74,6 +74,34 @@ final class ContentTests: XCTestCase {
         XCTAssertFalse(plain.body.contains(SeriesCampaignCopy.slogan))
     }
 
+    /// 创作页用 `ProductCatalog.seed(from:)` 把库里的 CustomerProduct 转回 seed：
+    /// 内置产品必须按名称找回目录 id，否则 UUID id 会让宣传语、钩子句和图标全部失效——
+    /// 曾因此导致创作页生成的草稿不带家族宣传语。
+    func testSeedFromCustomerProductKeepsBuiltInIdentity() {
+        let builtIn = ProductCatalog.seeds[1] // MathApex
+        let product = CustomerProduct(
+            brandID: UUID(),
+            name: builtIn.name,
+            websiteURL: builtIn.sourceURL,
+            storeURL: builtIn.storeURL,
+            audience: builtIn.audience,
+            summary: builtIn.summary,
+            keyBenefits: builtIn.claims.joined(separator: "\n")
+        )
+
+        let seed = ProductCatalog.seed(from: product)
+
+        XCTAssertEqual(seed.id, builtIn.id)
+        XCTAssertTrue(seed.isEducationSeries)
+        XCTAssertEqual(seed.seriesMessage, SeriesCampaignCopy.message)
+        XCTAssertEqual(seed.promoHook, builtIn.promoHook)
+        XCTAssertNotNil(seed.iconBundlePath)
+
+        let custom = CustomerProduct(brandID: UUID(), name: "自建产品", websiteURL: "https://example.com")
+        XCTAssertFalse(ProductCatalog.seed(from: custom).isEducationSeries)
+        XCTAssertTrue(ProductCatalog.seed(from: custom).seriesMessage.isEmpty)
+    }
+
     /// 宣传语要让视频平台的正文长度仍留在限制内。
     func testSeriesCopyKeepsVideoPlatformBodyWithinLimit() {
         for seed in ProductCatalog.seeds where seed.isEducationSeries {
