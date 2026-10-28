@@ -47,7 +47,15 @@ enum SlideshowVideoRenderer {
             let drawSize = CGSize(width: image.size.width * scale, height: image.size.height * scale)
             image.draw(in: CGRect(x: (size.width - drawSize.width) / 2, y: 180 + (1450 - drawSize.height) / 2, width: drawSize.width, height: drawSize.height))
             let style = NSMutableParagraphStyle(); style.alignment = .center
-            (title as NSString).draw(in: CGRect(x: 70, y: 55, width: 940, height: 110), withAttributes: [.font: UIFont.boldSystemFont(ofSize: 54), .foregroundColor: UIColor.white, .paragraphStyle: style])
+            // 标题过长时按宽度自适应缩小字号，避免整段被截断（曾丢掉后半句）。
+            let maxWidth: CGFloat = 940
+            var fontSize: CGFloat = 54
+            var titleAttrs: [NSAttributedString.Key: Any] = [.font: UIFont.boldSystemFont(ofSize: fontSize), .foregroundColor: UIColor.white, .paragraphStyle: style]
+            while fontSize > 26 && (title as NSString).size(withAttributes: titleAttrs).width > maxWidth {
+                fontSize -= 2
+                titleAttrs[.font] = UIFont.boldSystemFont(ofSize: fontSize)
+            }
+            (title as NSString).draw(in: CGRect(x: 70, y: 55, width: maxWidth, height: 110), withAttributes: titleAttrs)
             ("\(index) / \(total)" as NSString).draw(in: CGRect(x: 70, y: 1690, width: 940, height: 80), withAttributes: [.font: UIFont.systemFont(ofSize: 36), .foregroundColor: UIColor.white, .paragraphStyle: style])
         }
     }
