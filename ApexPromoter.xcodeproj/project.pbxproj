@@ -40,12 +40,12 @@
 		C08438A0D130172BEAF94FF9 /* BrandCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8209FF1F2E8C3587F64EC9F2 /* BrandCenterView.swift */; };
 		CC9CC516F256E97716E93E96 /* wordpulse.png in Resources */ = {isa = PBXBuildFile; fileRef = AC9524113E98FCE009F89B5F /* wordpulse.png */; };
 		CE9CE7A1FCAE93F6F85A663D /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8F8C8E07B2D1BA5F30EC33 /* RootView.swift */; };
+		CF1A2B3C4D5E6F708192A3B4 /* SeriesCampaignCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1B2C3D4E5F60718293A4B5C /* SeriesCampaignCopy.swift */; };
 		D83EC16FFEDD132984DF4CF2 /* ApexPromoterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6E50A8D198FC527ACCEDB /* ApexPromoterUITests.swift */; };
 		E3D4EA457787132C9F9D21EF /* ContentValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5465F8DF136D2A7FDCA0D0F7 /* ContentValidator.swift */; };
 		F1CAF8DF1DBBCDF958AC9ED3 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA774D01FA554386D43EBBA /* Models.swift */; };
 		F5B48DD455E8FB22EB9216E0 /* ApexPortfolioWorkflowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0BE6C0370264DB1343D1AF6 /* ApexPortfolioWorkflowTests.swift */; };
 		FBBCC57ED04CE34A42959292 /* geogapex.png in Resources */ = {isa = PBXBuildFile; fileRef = BF99924F8C9AA7293EA419A5 /* geogapex.png */; };
-		CF1A2B3C4D5E6F708192A3B4 /* SeriesCampaignCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1B2C3D4E5F60718293A4B5C /* SeriesCampaignCopy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,7 +70,7 @@
 		0B95A1A0D48C7BEA5C697461 /* ProjectDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailView.swift; sourceTree = "<group>"; };
 		2EEA2EE603AD16C672E3DC48 /* histapex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = histapex.png; sourceTree = "<group>"; };
 		2FD6E50A8D198FC527ACCEDB /* ApexPromoterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApexPromoterUITests.swift; sourceTree = "<group>"; };
-		30F70CC85B327982E590A8EB /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		30F70CC85B327982E590A8EB /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		35321E98E1F20070A26C6BAF /* chemapex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chemapex.png; sourceTree = "<group>"; };
 		5465F8DF136D2A7FDCA0D0F7 /* ContentValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentValidator.swift; sourceTree = "<group>"; };
 		5EFE5B3DAE7060C98160CDB4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
@@ -86,6 +86,7 @@
 		8D90AE9346FF6B98FC8D52E4 /* ContentGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentGenerator.swift; sourceTree = "<group>"; };
 		9334A40AA1A414D4315A5338 /* ApexPromoterUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ApexPromoterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		979D614F864EB7C49393604F /* ProductAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductAccess.swift; sourceTree = "<group>"; };
+		9A1B2C3D4E5F60718293A4B5C /* SeriesCampaignCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesCampaignCopy.swift; sourceTree = "<group>"; };
 		A0BE6C0370264DB1343D1AF6 /* ApexPortfolioWorkflowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApexPortfolioWorkflowTests.swift; sourceTree = "<group>"; };
 		A32BCE11076CD37B62CBB7B7 /* mathtop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mathtop.png; sourceTree = "<group>"; };
 		AA355050CF2F66B6628266FF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -108,8 +109,7 @@
 		F9729C34191C743EFCC9E99F /* ApexPortfolioBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApexPortfolioBootstrap.swift; sourceTree = "<group>"; };
 		FAD9DA9E80165419CD9EF133 /* ProjectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsView.swift; sourceTree = "<group>"; };
 		FF8428C46D1733573E95B8E3 /* ProductCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCatalog.swift; sourceTree = "<group>"; };
-		9A1B2C3D4E5F60718293A4B5C /* SeriesCampaignCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesCampaignCopy.swift; sourceTree = "<group>"; };
-		/* End PBXFileReference section */
+/* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		1BD5A6AE364206CAE478C549 /* Products */ = {
