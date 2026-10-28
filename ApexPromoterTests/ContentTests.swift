@@ -103,12 +103,13 @@ final class ContentTests: XCTestCase {
     }
 
     /// 第三方排版工具把标题截到 20 字，曾导致「学习不抓瞎」整段丢失：
-    /// 默认标题必须全程 ≤ 20 字（产品名过长时去掉前缀兜底）。
+    /// 默认标题必须全程 ≤ 20 字，且产品名作为标题核心不允许被去掉。
     func testDefaultTitleFitsThirdPartyTwentyCharLimit() {
         for seed in ProductCatalog.seeds {
             let content = LocalContentGenerator().generate(product: seed, angle: "", tone: "真诚")
             XCTAssertLessThanOrEqual(content.title.count, 20, seed.name)
-            XCTAssertTrue(content.title.contains("AI 拆密码"), seed.name)
+            XCTAssertTrue(content.title.hasPrefix("\(seed.name)｜"), seed.name)
+            XCTAssertTrue(content.title.contains("AI 拆题不抓瞎"), seed.name)
         }
     }
 
