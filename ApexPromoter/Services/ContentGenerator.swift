@@ -198,7 +198,7 @@ struct LocalContentGenerator: ContentGenerating {
     }
     func generate(product: ProductSeed, angle: String, tone: String) -> GeneratedContent {
         let hook = product.promoHook
-        let title = "\(product.name)｜\(angle.isEmpty ? "把学习方法真正用起来" : angle)"
+        let title = "\(product.name)｜\(angle.isEmpty ? "AI 解构知识密码，用对学习方法" : angle)"
         let availability = product.availabilityLine
         let seriesSection = product.seriesMessage.isEmpty ? "" : "\(product.seriesMessage)\n\n"
         let body = "\(seriesSection)\(hook)\n\n产品定位\n\(product.summary)\n\n我会这样用：\n1. 先选一个正在卡住的模块；\n2. 跟着产品里的结构化路径走一遍；\n3. 把没掌握的地方留下标记，下一次复习直接回到现场。\n\n这套产品目前提供：\n· \(product.claims.joined(separator: "\n· "))\n\n它更适合\(product.audience)做长期、低压力的日常学习，全部功能免费使用。\n\n\(product.linkSection)\n\n*文中信息来自产品公开资料，具体功能请以产品页面为准。*"
